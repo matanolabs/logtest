@@ -1,0 +1,7 @@
+- name: minimal
+  type: group
+  fields:
+    - name: version
+      type: integer
+      description: |
+        The version as a string.

@@ -1,0 +1,4302 @@
+labels: string
+message: string
+tags:
+- string
+agent:
+  build:
+    original: string
+  ephemeral_id: string
+  id: string
+  name: string
+  type: string
+  version: string
+as:
+  number: long
+  organization:
+    name: string
+client:
+  address: string
+  as:
+    number: long
+    organization:
+      name: string
+  bytes: long
+  domain: string
+  geo:
+    city_name: string
+    continent_code: string
+    continent_name: string
+    country_iso_code: string
+    country_name: string
+    location:
+      lon: float
+      lat: float
+    name: string
+    postal_code: string
+    region_iso_code: string
+    region_name: string
+    timezone: string
+  ip: string
+  mac: string
+  nat:
+    ip: string
+    port: long
+  packets: long
+  port: long
+  registered_domain: string
+  subdomain: string
+  top_level_domain: string
+  user:
+    domain: string
+    email: string
+    full_name: string
+    group:
+      domain: string
+      id: string
+      name: string
+    hash: string
+    id: string
+    name: string
+    risk:
+      calculated_level: string
+      calculated_score: float
+      calculated_score_norm: float
+      static_level: string
+      static_score: float
+      static_score_norm: float
+    roles:
+    - string
+cloud:
+  account:
+    id: string
+    name: string
+  availability_zone: string
+  instance:
+    id: string
+    name: string
+  machine:
+    type: string
+  origin:
+    account:
+      id: string
+      name: string
+    availability_zone: string
+    instance:
+      id: string
+      name: string
+    machine:
+      type: string
+    project:
+      id: string
+      name: string
+    provider: string
+    region: string
+    service:
+      name: string
+  project:
+    id: string
+    name: string
+  provider: string
+  region: string
+  service:
+    name: string
+  target:
+    account:
+      id: string
+      name: string
+    availability_zone: string
+    instance:
+      id: string
+      name: string
+    machine:
+      type: string
+    project:
+      id: string
+      name: string
+    provider: string
+    region: string
+    service:
+      name: string
+code_signature:
+  digest_algorithm: string
+  exists: boolean
+  signing_id: string
+  status: string
+  subject_name: string
+  team_id: string
+  timestamp: timestamp
+  trusted: boolean
+  valid: boolean
+container:
+  cpu:
+    usage: float
+  disk:
+    read:
+      bytes: long
+    write:
+      bytes: long
+  id: string
+  image:
+    hash:
+      all:
+      - string
+    name: string
+    tag:
+    - string
+  labels: string
+  memory:
+    usage: float
+  name: string
+  network:
+    egress:
+      bytes: long
+    ingress:
+      bytes: long
+  runtime: string
+data_stream:
+  dataset: string
+  namespace: string
+  type: string
+destination:
+  address: string
+  as:
+    number: long
+    organization:
+      name: string
+  bytes: long
+  domain: string
+  geo:
+    city_name: string
+    continent_code: string
+    continent_name: string
+    country_iso_code: string
+    country_name: string
+    location:
+      lon: float
+      lat: float
+    name: string
+    postal_code: string
+    region_iso_code: string
+    region_name: string
+    timezone: string
+  ip: string
+  mac: string
+  nat:
+    ip: string
+    port: long
+  packets: long
+  port: long
+  registered_domain: string
+  subdomain: string
+  top_level_domain: string
+  user:
+    domain: string
+    email: string
+    full_name: string
+    group:
+      domain: string
+      id: string
+      name: string
+    hash: string
+    id: string
+    name: string
+    risk:
+      calculated_level: string
+      calculated_score: float
+      calculated_score_norm: float
+      static_level: string
+      static_score: float
+      static_score_norm: float
+    roles:
+    - string
+dll:
+  code_signature:
+    digest_algorithm: string
+    exists: boolean
+    signing_id: string
+    status: string
+    subject_name: string
+    team_id: string
+    timestamp: timestamp
+    trusted: boolean
+    valid: boolean
+  hash:
+    md5: string
+    sha1: string
+    sha256: string
+    sha384: string
+    sha512: string
+    ssdeep: string
+    tlsh: string
+  name: string
+  path: string
+  pe:
+    architecture: string
+    company: string
+    description: string
+    file_version: string
+    imphash: string
+    original_file_name: string
+    pehash: string
+    product: string
+dns:
+  answers:
+  - class: string
+    data: string
+    name: string
+    ttl: long
+    type: string
+  header_flags:
+  - string
+  id: string
+  op_code: string
+  question:
+    class: string
+    name: string
+    registered_domain: string
+    subdomain: string
+    top_level_domain: string
+    type: string
+  resolved_ip:
+  - string
+  response_code: string
+  type: string
+ecs:
+  version: string
+elf:
+  architecture: string
+  byte_order: string
+  cpu_type: string
+  creation_date: timestamp
+  exports:
+  - string
+  header:
+    abi_version: string
+    class: string
+    data: string
+    entrypoint: long
+    object_version: string
+    os_abi: string
+    type: string
+    version: string
+  imports:
+  - string
+  sections:
+  - chi2: long
+    entropy: long
+    flags: string
+    name: string
+    physical_offset: string
+    physical_size: long
+    type: string
+    virtual_address: long
+    virtual_size: long
+  segments:
+  - sections: string
+    type: string
+  shared_libraries:
+  - string
+  telfhash: string
+email:
+  attachments:
+  - file:
+      extension: string
+      hash:
+        md5: string
+        sha1: string
+        sha256: string
+        sha384: string
+        sha512: string
+        ssdeep: string
+        tlsh: string
+      mime_type: string
+      name: string
+      size: long
+  bcc:
+    address:
+    - string
+  cc:
+    address:
+    - string
+  content_type: string
+  delivery_timestamp: timestamp
+  direction: string
+  from:
+    address:
+    - string
+  local_id: string
+  message_id: string
+  origination_timestamp: timestamp
+  reply_to:
+    address:
+    - string
+  sender:
+    address: string
+  subject: string
+  to:
+    address:
+    - string
+  x_mailer: string
+error:
+  code: string
+  id: string
+  message: string
+  stack_trace: string
+  type: string
+event:
+  action: string
+  agent_id_status: string
+  category:
+  - string
+  code: string
+  created: timestamp
+  dataset: string
+  duration: long
+  end: timestamp
+  hash: string
+  id: string
+  ingested: timestamp
+  kind: string
+  module: string
+  original: string
+  outcome: string
+  provider: string
+  reason: string
+  reference: string
+  risk_score: float
+  risk_score_norm: float
+  sequence: long
+  severity: long
+  start: timestamp
+  timezone: string
+  type:
+  - string
+  url: string
+faas:
+  coldstart: boolean
+  execution: string
+  id: string
+  name: string
+  trigger:
+  - request_id: string
+    type: string
+  version: string
+file:
+  accessed: timestamp
+  attributes:
+  - string
+  code_signature:
+    digest_algorithm: string
+    exists: boolean
+    signing_id: string
+    status: string
+    subject_name: string
+    team_id: string
+    timestamp: timestamp
+    trusted: boolean
+    valid: boolean
+  created: timestamp
+  ctime: timestamp
+  device: string
+  directory: string
+  drive_letter: string
+  elf:
+    architecture: string
+    byte_order: string
+    cpu_type: string
+    creation_date: timestamp
+    exports:
+    - string
+    header:
+      abi_version: string
+      class: string
+      data: string
+      entrypoint: long
+      object_version: string
+      os_abi: string
+      type: string
+      version: string
+    imports:
+    - string
+    sections:
+    - chi2: long
+      entropy: long
+      flags: string
+      name: string
+      physical_offset: string
+      physical_size: long
+      type: string
+      virtual_address: long
+      virtual_size: long
+    segments:
+    - sections: string
+      type: string
+    shared_libraries:
+    - string
+    telfhash: string
+  extension: string
+  fork_name: string
+  gid: string
+  group: string
+  hash:
+    md5: string
+    sha1: string
+    sha256: string
+    sha384: string
+    sha512: string
+    ssdeep: string
+    tlsh: string
+  inode: string
+  mime_type: string
+  mode: string
+  mtime: timestamp
+  name: string
+  owner: string
+  path: string
+  pe:
+    architecture: string
+    company: string
+    description: string
+    file_version: string
+    imphash: string
+    original_file_name: string
+    pehash: string
+    product: string
+  size: long
+  target_path: string
+  type: string
+  uid: string
+  x509:
+    alternative_names:
+    - string
+    issuer:
+      common_name:
+      - string
+      country:
+      - string
+      distinguished_name: string
+      locality:
+      - string
+      organization:
+      - string
+      organizational_unit:
+      - string
+      state_or_province:
+      - string
+    not_after: timestamp
+    not_before: timestamp
+    public_key_algorithm: string
+    public_key_curve: string
+    public_key_exponent: long
+    public_key_size: long
+    serial_number: string
+    signature_algorithm: string
+    subject:
+      common_name:
+      - string
+      country:
+      - string
+      distinguished_name: string
+      locality:
+      - string
+      organization:
+      - string
+      organizational_unit:
+      - string
+      state_or_province:
+      - string
+    version_number: string
+geo:
+  city_name: string
+  continent_code: string
+  continent_name: string
+  country_iso_code: string
+  country_name: string
+  location:
+    lon: float
+    lat: float
+  name: string
+  postal_code: string
+  region_iso_code: string
+  region_name: string
+  timezone: string
+group:
+  domain: string
+  id: string
+  name: string
+hash:
+  md5: string
+  sha1: string
+  sha256: string
+  sha384: string
+  sha512: string
+  ssdeep: string
+  tlsh: string
+host:
+  architecture: string
+  boot:
+    id: string
+  cpu:
+    usage: float
+  disk:
+    read:
+      bytes: long
+    write:
+      bytes: long
+  domain: string
+  geo:
+    city_name: string
+    continent_code: string
+    continent_name: string
+    country_iso_code: string
+    country_name: string
+    location:
+      lon: float
+      lat: float
+    name: string
+    postal_code: string
+    region_iso_code: string
+    region_name: string
+    timezone: string
+  hostname: string
+  id: string
+  ip:
+  - string
+  mac:
+  - string
+  name: string
+  network:
+    egress:
+      bytes: long
+      packets: long
+    ingress:
+      bytes: long
+      packets: long
+  os:
+    family: string
+    full: string
+    kernel: string
+    name: string
+    platform: string
+    type: string
+    version: string
+  pid_ns_ino: string
+  risk:
+    calculated_level: string
+    calculated_score: float
+    calculated_score_norm: float
+    static_level: string
+    static_score: float
+    static_score_norm: float
+  type: string
+  uptime: long
+http:
+  request:
+    body:
+      bytes: long
+      content: string
+    bytes: long
+    id: string
+    method: string
+    mime_type: string
+    referrer: string
+  response:
+    body:
+      bytes: long
+      content: string
+    bytes: long
+    mime_type: string
+    status_code: long
+  version: string
+interface:
+  alias: string
+  id: string
+  name: string
+log:
+  file:
+    path: string
+  level: string
+  logger: string
+  origin:
+    file:
+      line: long
+      name: string
+    function: string
+  syslog:
+    appname: string
+    facility:
+      code: long
+      name: string
+    hostname: string
+    msgid: string
+    priority: long
+    procid: string
+    severity:
+      code: long
+      name: string
+    structured_data: string
+    version: string
+network:
+  application: string
+  bytes: long
+  community_id: string
+  direction: string
+  forwarded_ip: string
+  iana_number: string
+  inner:
+    vlan:
+      id: string
+      name: string
+  name: string
+  packets: long
+  protocol: string
+  transport: string
+  type: string
+  vlan:
+    id: string
+    name: string
+observer:
+  egress:
+    interface:
+      alias: string
+      id: string
+      name: string
+    vlan:
+      id: string
+      name: string
+    zone: string
+  geo:
+    city_name: string
+    continent_code: string
+    continent_name: string
+    country_iso_code: string
+    country_name: string
+    location:
+      lon: float
+      lat: float
+    name: string
+    postal_code: string
+    region_iso_code: string
+    region_name: string
+    timezone: string
+  hostname: string
+  ingress:
+    interface:
+      alias: string
+      id: string
+      name: string
+    vlan:
+      id: string
+      name: string
+    zone: string
+  ip:
+  - string
+  mac:
+  - string
+  name: string
+  os:
+    family: string
+    full: string
+    kernel: string
+    name: string
+    platform: string
+    type: string
+    version: string
+  product: string
+  serial_number: string
+  type: string
+  vendor: string
+  version: string
+orchestrator:
+  api_version: string
+  cluster:
+    id: string
+    name: string
+    url: string
+    version: string
+  namespace: string
+  organization: string
+  resource:
+    id: string
+    ip:
+    - string
+    name: string
+    parent:
+      type: string
+    type: string
+  type: string
+organization:
+  id: string
+  name: string
+os:
+  family: string
+  full: string
+  kernel: string
+  name: string
+  platform: string
+  type: string
+  version: string
+package:
+  architecture: string
+  build_version: string
+  checksum: string
+  description: string
+  install_scope: string
+  installed: timestamp
+  license: string
+  name: string
+  path: string
+  reference: string
+  size: long
+  type: string
+  version: string
+pe:
+  architecture: string
+  company: string
+  description: string
+  file_version: string
+  imphash: string
+  original_file_name: string
+  pehash: string
+  product: string
+process:
+  args:
+  - string
+  args_count: long
+  attested_groups:
+    domain: string
+    id: string
+    name: string
+  attested_user:
+    domain: string
+    email: string
+    full_name: string
+    group:
+      domain: string
+      id: string
+      name: string
+    hash: string
+    id: string
+    name: string
+    risk:
+      calculated_level: string
+      calculated_score: float
+      calculated_score_norm: float
+      static_level: string
+      static_score: float
+      static_score_norm: float
+    roles:
+    - string
+  code_signature:
+    digest_algorithm: string
+    exists: boolean
+    signing_id: string
+    status: string
+    subject_name: string
+    team_id: string
+    timestamp: timestamp
+    trusted: boolean
+    valid: boolean
+  command_line: string
+  elf:
+    architecture: string
+    byte_order: string
+    cpu_type: string
+    creation_date: timestamp
+    exports:
+    - string
+    header:
+      abi_version: string
+      class: string
+      data: string
+      entrypoint: long
+      object_version: string
+      os_abi: string
+      type: string
+      version: string
+    imports:
+    - string
+    sections:
+    - chi2: long
+      entropy: long
+      flags: string
+      name: string
+      physical_offset: string
+      physical_size: long
+      type: string
+      virtual_address: long
+      virtual_size: long
+    segments:
+    - sections: string
+      type: string
+    shared_libraries:
+    - string
+    telfhash: string
+  end: timestamp
+  entity_id: string
+  entry_leader:
+    args:
+    - string
+    args_count: long
+    attested_groups:
+      domain: string
+      id: string
+      name: string
+    attested_user:
+      domain: string
+      email: string
+      full_name: string
+      group:
+        domain: string
+        id: string
+        name: string
+      hash: string
+      id: string
+      name: string
+      risk:
+        calculated_level: string
+        calculated_score: float
+        calculated_score_norm: float
+        static_level: string
+        static_score: float
+        static_score_norm: float
+      roles:
+      - string
+    code_signature:
+      digest_algorithm: string
+      exists: boolean
+      signing_id: string
+      status: string
+      subject_name: string
+      team_id: string
+      timestamp: timestamp
+      trusted: boolean
+      valid: boolean
+    command_line: string
+    elf:
+      architecture: string
+      byte_order: string
+      cpu_type: string
+      creation_date: timestamp
+      exports:
+      - string
+      header:
+        abi_version: string
+        class: string
+        data: string
+        entrypoint: long
+        object_version: string
+        os_abi: string
+        type: string
+        version: string
+      imports:
+      - string
+      sections:
+      - chi2: long
+        entropy: long
+        flags: string
+        name: string
+        physical_offset: string
+        physical_size: long
+        type: string
+        virtual_address: long
+        virtual_size: long
+      segments:
+      - sections: string
+        type: string
+      shared_libraries:
+      - string
+      telfhash: string
+    end: timestamp
+    entity_id: string
+    entry_meta:
+      source:
+        address: string
+        as:
+          number: long
+          organization:
+            name: string
+        bytes: long
+        domain: string
+        geo:
+          city_name: string
+          continent_code: string
+          continent_name: string
+          country_iso_code: string
+          country_name: string
+          location:
+            lon: float
+            lat: float
+          name: string
+          postal_code: string
+          region_iso_code: string
+          region_name: string
+          timezone: string
+        ip: string
+        mac: string
+        nat:
+          ip: string
+          port: long
+        packets: long
+        port: long
+        registered_domain: string
+        subdomain: string
+        top_level_domain: string
+      type: string
+    env_vars:
+    - string
+    executable: string
+    exit_code: long
+    group:
+      domain: string
+      id: string
+      name: string
+    hash:
+      md5: string
+      sha1: string
+      sha256: string
+      sha384: string
+      sha512: string
+      ssdeep: string
+      tlsh: string
+    interactive: boolean
+    io:
+      bytes_skipped:
+      - length: double
+        offset: double
+      max_bytes_per_process_exceeded: boolean
+      text: string
+      total_bytes_captured: double
+      total_bytes_skipped: double
+      type: string
+    name: string
+    parent:
+      args:
+      - string
+      args_count: long
+      attested_groups:
+        domain: string
+        id: string
+        name: string
+      attested_user:
+        domain: string
+        email: string
+        full_name: string
+        group:
+          domain: string
+          id: string
+          name: string
+        hash: string
+        id: string
+        name: string
+        risk:
+          calculated_level: string
+          calculated_score: float
+          calculated_score_norm: float
+          static_level: string
+          static_score: float
+          static_score_norm: float
+        roles:
+        - string
+      code_signature:
+        digest_algorithm: string
+        exists: boolean
+        signing_id: string
+        status: string
+        subject_name: string
+        team_id: string
+        timestamp: timestamp
+        trusted: boolean
+        valid: boolean
+      command_line: string
+      elf:
+        architecture: string
+        byte_order: string
+        cpu_type: string
+        creation_date: timestamp
+        exports:
+        - string
+        header:
+          abi_version: string
+          class: string
+          data: string
+          entrypoint: long
+          object_version: string
+          os_abi: string
+          type: string
+          version: string
+        imports:
+        - string
+        sections:
+        - chi2: long
+          entropy: long
+          flags: string
+          name: string
+          physical_offset: string
+          physical_size: long
+          type: string
+          virtual_address: long
+          virtual_size: long
+        segments:
+        - sections: string
+          type: string
+        shared_libraries:
+        - string
+        telfhash: string
+      end: timestamp
+      entity_id: string
+      entry_meta:
+        source:
+          address: string
+          as:
+            number: long
+            organization:
+              name: string
+          bytes: long
+          domain: string
+          geo:
+            city_name: string
+            continent_code: string
+            continent_name: string
+            country_iso_code: string
+            country_name: string
+            location:
+              lon: float
+              lat: float
+            name: string
+            postal_code: string
+            region_iso_code: string
+            region_name: string
+            timezone: string
+          ip: string
+          mac: string
+          nat:
+            ip: string
+            port: long
+          packets: long
+          port: long
+          registered_domain: string
+          subdomain: string
+          top_level_domain: string
+        type: string
+      env_vars:
+      - string
+      executable: string
+      exit_code: long
+      group:
+        domain: string
+        id: string
+        name: string
+      hash:
+        md5: string
+        sha1: string
+        sha256: string
+        sha384: string
+        sha512: string
+        ssdeep: string
+        tlsh: string
+      interactive: boolean
+      io:
+        bytes_skipped:
+        - length: double
+          offset: double
+        max_bytes_per_process_exceeded: boolean
+        text: string
+        total_bytes_captured: double
+        total_bytes_skipped: double
+        type: string
+      name: string
+      pe:
+        architecture: string
+        company: string
+        description: string
+        file_version: string
+        imphash: string
+        original_file_name: string
+        pehash: string
+        product: string
+      pgid: long
+      pid: long
+      real_group:
+        domain: string
+        id: string
+        name: string
+      real_user:
+        domain: string
+        email: string
+        full_name: string
+        group:
+          domain: string
+          id: string
+          name: string
+        hash: string
+        id: string
+        name: string
+        risk:
+          calculated_level: string
+          calculated_score: float
+          calculated_score_norm: float
+          static_level: string
+          static_score: float
+          static_score_norm: float
+        roles:
+        - string
+      same_as_process: boolean
+      saved_group:
+        domain: string
+        id: string
+        name: string
+      saved_user:
+        domain: string
+        email: string
+        full_name: string
+        group:
+          domain: string
+          id: string
+          name: string
+        hash: string
+        id: string
+        name: string
+        risk:
+          calculated_level: string
+          calculated_score: float
+          calculated_score_norm: float
+          static_level: string
+          static_score: float
+          static_score_norm: float
+        roles:
+        - string
+      session_leader:
+        args:
+        - string
+        args_count: long
+        attested_groups:
+          domain: string
+          id: string
+          name: string
+        attested_user:
+          domain: string
+          email: string
+          full_name: string
+          group:
+            domain: string
+            id: string
+            name: string
+          hash: string
+          id: string
+          name: string
+          risk:
+            calculated_level: string
+            calculated_score: float
+            calculated_score_norm: float
+            static_level: string
+            static_score: float
+            static_score_norm: float
+          roles:
+          - string
+        code_signature:
+          digest_algorithm: string
+          exists: boolean
+          signing_id: string
+          status: string
+          subject_name: string
+          team_id: string
+          timestamp: timestamp
+          trusted: boolean
+          valid: boolean
+        command_line: string
+        elf:
+          architecture: string
+          byte_order: string
+          cpu_type: string
+          creation_date: timestamp
+          exports:
+          - string
+          header:
+            abi_version: string
+            class: string
+            data: string
+            entrypoint: long
+            object_version: string
+            os_abi: string
+            type: string
+            version: string
+          imports:
+          - string
+          sections:
+          - chi2: long
+            entropy: long
+            flags: string
+            name: string
+            physical_offset: string
+            physical_size: long
+            type: string
+            virtual_address: long
+            virtual_size: long
+          segments:
+          - sections: string
+            type: string
+          shared_libraries:
+          - string
+          telfhash: string
+        end: timestamp
+        entity_id: string
+        entry_meta:
+          source:
+            address: string
+            as:
+              number: long
+              organization:
+                name: string
+            bytes: long
+            domain: string
+            geo:
+              city_name: string
+              continent_code: string
+              continent_name: string
+              country_iso_code: string
+              country_name: string
+              location:
+                lon: float
+                lat: float
+              name: string
+              postal_code: string
+              region_iso_code: string
+              region_name: string
+              timezone: string
+            ip: string
+            mac: string
+            nat:
+              ip: string
+              port: long
+            packets: long
+            port: long
+            registered_domain: string
+            subdomain: string
+            top_level_domain: string
+          type: string
+        env_vars:
+        - string
+        executable: string
+        exit_code: long
+        group:
+          domain: string
+          id: string
+          name: string
+        hash:
+          md5: string
+          sha1: string
+          sha256: string
+          sha384: string
+          sha512: string
+          ssdeep: string
+          tlsh: string
+        interactive: boolean
+        io:
+          bytes_skipped:
+          - length: double
+            offset: double
+          max_bytes_per_process_exceeded: boolean
+          text: string
+          total_bytes_captured: double
+          total_bytes_skipped: double
+          type: string
+        name: string
+        pe:
+          architecture: string
+          company: string
+          description: string
+          file_version: string
+          imphash: string
+          original_file_name: string
+          pehash: string
+          product: string
+        pgid: long
+        pid: long
+        real_group:
+          domain: string
+          id: string
+          name: string
+        real_user:
+          domain: string
+          email: string
+          full_name: string
+          group:
+            domain: string
+            id: string
+            name: string
+          hash: string
+          id: string
+          name: string
+          risk:
+            calculated_level: string
+            calculated_score: float
+            calculated_score_norm: float
+            static_level: string
+            static_score: float
+            static_score_norm: float
+          roles:
+          - string
+        same_as_process: boolean
+        saved_group:
+          domain: string
+          id: string
+          name: string
+        saved_user:
+          domain: string
+          email: string
+          full_name: string
+          group:
+            domain: string
+            id: string
+            name: string
+          hash: string
+          id: string
+          name: string
+          risk:
+            calculated_level: string
+            calculated_score: float
+            calculated_score_norm: float
+            static_level: string
+            static_score: float
+            static_score_norm: float
+          roles:
+          - string
+        start: timestamp
+        supplemental_groups:
+          domain: string
+          id: string
+          name: string
+        thread:
+          id: long
+          name: string
+        title: string
+        tty:
+          char_device:
+            major: long
+            minor: long
+          columns: long
+          rows: long
+        uptime: long
+        user:
+          domain: string
+          email: string
+          full_name: string
+          group:
+            domain: string
+            id: string
+            name: string
+          hash: string
+          id: string
+          name: string
+          risk:
+            calculated_level: string
+            calculated_score: float
+            calculated_score_norm: float
+            static_level: string
+            static_score: float
+            static_score_norm: float
+          roles:
+          - string
+        working_directory: string
+      start: timestamp
+      supplemental_groups:
+        domain: string
+        id: string
+        name: string
+      thread:
+        id: long
+        name: string
+      title: string
+      tty:
+        char_device:
+          major: long
+          minor: long
+        columns: long
+        rows: long
+      uptime: long
+      user:
+        domain: string
+        email: string
+        full_name: string
+        group:
+          domain: string
+          id: string
+          name: string
+        hash: string
+        id: string
+        name: string
+        risk:
+          calculated_level: string
+          calculated_score: float
+          calculated_score_norm: float
+          static_level: string
+          static_score: float
+          static_score_norm: float
+        roles:
+        - string
+      working_directory: string
+    pe:
+      architecture: string
+      company: string
+      description: string
+      file_version: string
+      imphash: string
+      original_file_name: string
+      pehash: string
+      product: string
+    pgid: long
+    pid: long
+    real_group:
+      domain: string
+      id: string
+      name: string
+    real_user:
+      domain: string
+      email: string
+      full_name: string
+      group:
+        domain: string
+        id: string
+        name: string
+      hash: string
+      id: string
+      name: string
+      risk:
+        calculated_level: string
+        calculated_score: float
+        calculated_score_norm: float
+        static_level: string
+        static_score: float
+        static_score_norm: float
+      roles:
+      - string
+    same_as_process: boolean
+    saved_group:
+      domain: string
+      id: string
+      name: string
+    saved_user:
+      domain: string
+      email: string
+      full_name: string
+      group:
+        domain: string
+        id: string
+        name: string
+      hash: string
+      id: string
+      name: string
+      risk:
+        calculated_level: string
+        calculated_score: float
+        calculated_score_norm: float
+        static_level: string
+        static_score: float
+        static_score_norm: float
+      roles:
+      - string
+    start: timestamp
+    supplemental_groups:
+      domain: string
+      id: string
+      name: string
+    thread:
+      id: long
+      name: string
+    title: string
+    tty:
+      char_device:
+        major: long
+        minor: long
+      columns: long
+      rows: long
+    uptime: long
+    user:
+      domain: string
+      email: string
+      full_name: string
+      group:
+        domain: string
+        id: string
+        name: string
+      hash: string
+      id: string
+      name: string
+      risk:
+        calculated_level: string
+        calculated_score: float
+        calculated_score_norm: float
+        static_level: string
+        static_score: float
+        static_score_norm: float
+      roles:
+      - string
+    working_directory: string
+  entry_meta:
+    source:
+      address: string
+      as:
+        number: long
+        organization:
+          name: string
+      bytes: long
+      domain: string
+      geo:
+        city_name: string
+        continent_code: string
+        continent_name: string
+        country_iso_code: string
+        country_name: string
+        location:
+          lon: float
+          lat: float
+        name: string
+        postal_code: string
+        region_iso_code: string
+        region_name: string
+        timezone: string
+      ip: string
+      mac: string
+      nat:
+        ip: string
+        port: long
+      packets: long
+      port: long
+      registered_domain: string
+      subdomain: string
+      top_level_domain: string
+    type: string
+  env_vars:
+  - string
+  executable: string
+  exit_code: long
+  group:
+    domain: string
+    id: string
+    name: string
+  group_leader:
+    args:
+    - string
+    args_count: long
+    attested_groups:
+      domain: string
+      id: string
+      name: string
+    attested_user:
+      domain: string
+      email: string
+      full_name: string
+      group:
+        domain: string
+        id: string
+        name: string
+      hash: string
+      id: string
+      name: string
+      risk:
+        calculated_level: string
+        calculated_score: float
+        calculated_score_norm: float
+        static_level: string
+        static_score: float
+        static_score_norm: float
+      roles:
+      - string
+    code_signature:
+      digest_algorithm: string
+      exists: boolean
+      signing_id: string
+      status: string
+      subject_name: string
+      team_id: string
+      timestamp: timestamp
+      trusted: boolean
+      valid: boolean
+    command_line: string
+    elf:
+      architecture: string
+      byte_order: string
+      cpu_type: string
+      creation_date: timestamp
+      exports:
+      - string
+      header:
+        abi_version: string
+        class: string
+        data: string
+        entrypoint: long
+        object_version: string
+        os_abi: string
+        type: string
+        version: string
+      imports:
+      - string
+      sections:
+      - chi2: long
+        entropy: long
+        flags: string
+        name: string
+        physical_offset: string
+        physical_size: long
+        type: string
+        virtual_address: long
+        virtual_size: long
+      segments:
+      - sections: string
+        type: string
+      shared_libraries:
+      - string
+      telfhash: string
+    end: timestamp
+    entity_id: string
+    entry_meta:
+      source:
+        address: string
+        as:
+          number: long
+          organization:
+            name: string
+        bytes: long
+        domain: string
+        geo:
+          city_name: string
+          continent_code: string
+          continent_name: string
+          country_iso_code: string
+          country_name: string
+          location:
+            lon: float
+            lat: float
+          name: string
+          postal_code: string
+          region_iso_code: string
+          region_name: string
+          timezone: string
+        ip: string
+        mac: string
+        nat:
+          ip: string
+          port: long
+        packets: long
+        port: long
+        registered_domain: string
+        subdomain: string
+        top_level_domain: string
+      type: string
+    env_vars:
+    - string
+    executable: string
+    exit_code: long
+    group:
+      domain: string
+      id: string
+      name: string
+    hash:
+      md5: string
+      sha1: string
+      sha256: string
+      sha384: string
+      sha512: string
+      ssdeep: string
+      tlsh: string
+    interactive: boolean
+    io:
+      bytes_skipped:
+      - length: double
+        offset: double
+      max_bytes_per_process_exceeded: boolean
+      text: string
+      total_bytes_captured: double
+      total_bytes_skipped: double
+      type: string
+    name: string
+    pe:
+      architecture: string
+      company: string
+      description: string
+      file_version: string
+      imphash: string
+      original_file_name: string
+      pehash: string
+      product: string
+    pgid: long
+    pid: long
+    real_group:
+      domain: string
+      id: string
+      name: string
+    real_user:
+      domain: string
+      email: string
+      full_name: string
+      group:
+        domain: string
+        id: string
+        name: string
+      hash: string
+      id: string
+      name: string
+      risk:
+        calculated_level: string
+        calculated_score: float
+        calculated_score_norm: float
+        static_level: string
+        static_score: float
+        static_score_norm: float
+      roles:
+      - string
+    same_as_process: boolean
+    saved_group:
+      domain: string
+      id: string
+      name: string
+    saved_user:
+      domain: string
+      email: string
+      full_name: string
+      group:
+        domain: string
+        id: string
+        name: string
+      hash: string
+      id: string
+      name: string
+      risk:
+        calculated_level: string
+        calculated_score: float
+        calculated_score_norm: float
+        static_level: string
+        static_score: float
+        static_score_norm: float
+      roles:
+      - string
+    start: timestamp
+    supplemental_groups:
+      domain: string
+      id: string
+      name: string
+    thread:
+      id: long
+      name: string
+    title: string
+    tty:
+      char_device:
+        major: long
+        minor: long
+      columns: long
+      rows: long
+    uptime: long
+    user:
+      domain: string
+      email: string
+      full_name: string
+      group:
+        domain: string
+        id: string
+        name: string
+      hash: string
+      id: string
+      name: string
+      risk:
+        calculated_level: string
+        calculated_score: float
+        calculated_score_norm: float
+        static_level: string
+        static_score: float
+        static_score_norm: float
+      roles:
+      - string
+    working_directory: string
+  hash:
+    md5: string
+    sha1: string
+    sha256: string
+    sha384: string
+    sha512: string
+    ssdeep: string
+    tlsh: string
+  interactive: boolean
+  io:
+    bytes_skipped:
+    - length: double
+      offset: double
+    max_bytes_per_process_exceeded: boolean
+    text: string
+    total_bytes_captured: double
+    total_bytes_skipped: double
+    type: string
+  name: string
+  parent:
+    args:
+    - string
+    args_count: long
+    attested_groups:
+      domain: string
+      id: string
+      name: string
+    attested_user:
+      domain: string
+      email: string
+      full_name: string
+      group:
+        domain: string
+        id: string
+        name: string
+      hash: string
+      id: string
+      name: string
+      risk:
+        calculated_level: string
+        calculated_score: float
+        calculated_score_norm: float
+        static_level: string
+        static_score: float
+        static_score_norm: float
+      roles:
+      - string
+    code_signature:
+      digest_algorithm: string
+      exists: boolean
+      signing_id: string
+      status: string
+      subject_name: string
+      team_id: string
+      timestamp: timestamp
+      trusted: boolean
+      valid: boolean
+    command_line: string
+    elf:
+      architecture: string
+      byte_order: string
+      cpu_type: string
+      creation_date: timestamp
+      exports:
+      - string
+      header:
+        abi_version: string
+        class: string
+        data: string
+        entrypoint: long
+        object_version: string
+        os_abi: string
+        type: string
+        version: string
+      imports:
+      - string
+      sections:
+      - chi2: long
+        entropy: long
+        flags: string
+        name: string
+        physical_offset: string
+        physical_size: long
+        type: string
+        virtual_address: long
+        virtual_size: long
+      segments:
+      - sections: string
+        type: string
+      shared_libraries:
+      - string
+      telfhash: string
+    end: timestamp
+    entity_id: string
+    entry_meta:
+      source:
+        address: string
+        as:
+          number: long
+          organization:
+            name: string
+        bytes: long
+        domain: string
+        geo:
+          city_name: string
+          continent_code: string
+          continent_name: string
+          country_iso_code: string
+          country_name: string
+          location:
+            lon: float
+            lat: float
+          name: string
+          postal_code: string
+          region_iso_code: string
+          region_name: string
+          timezone: string
+        ip: string
+        mac: string
+        nat:
+          ip: string
+          port: long
+        packets: long
+        port: long
+        registered_domain: string
+        subdomain: string
+        top_level_domain: string
+      type: string
+    env_vars:
+    - string
+    executable: string
+    exit_code: long
+    group:
+      domain: string
+      id: string
+      name: string
+    group_leader:
+      args:
+      - string
+      args_count: long
+      attested_groups:
+        domain: string
+        id: string
+        name: string
+      attested_user:
+        domain: string
+        email: string
+        full_name: string
+        group:
+          domain: string
+          id: string
+          name: string
+        hash: string
+        id: string
+        name: string
+        risk:
+          calculated_level: string
+          calculated_score: float
+          calculated_score_norm: float
+          static_level: string
+          static_score: float
+          static_score_norm: float
+        roles:
+        - string
+      code_signature:
+        digest_algorithm: string
+        exists: boolean
+        signing_id: string
+        status: string
+        subject_name: string
+        team_id: string
+        timestamp: timestamp
+        trusted: boolean
+        valid: boolean
+      command_line: string
+      elf:
+        architecture: string
+        byte_order: string
+        cpu_type: string
+        creation_date: timestamp
+        exports:
+        - string
+        header:
+          abi_version: string
+          class: string
+          data: string
+          entrypoint: long
+          object_version: string
+          os_abi: string
+          type: string
+          version: string
+        imports:
+        - string
+        sections:
+        - chi2: long
+          entropy: long
+          flags: string
+          name: string
+          physical_offset: string
+          physical_size: long
+          type: string
+          virtual_address: long
+          virtual_size: long
+        segments:
+        - sections: string
+          type: string
+        shared_libraries:
+        - string
+        telfhash: string
+      end: timestamp
+      entity_id: string
+      entry_meta:
+        source:
+          address: string
+          as:
+            number: long
+            organization:
+              name: string
+          bytes: long
+          domain: string
+          geo:
+            city_name: string
+            continent_code: string
+            continent_name: string
+            country_iso_code: string
+            country_name: string
+            location:
+              lon: float
+              lat: float
+            name: string
+            postal_code: string
+            region_iso_code: string
+            region_name: string
+            timezone: string
+          ip: string
+          mac: string
+          nat:
+            ip: string
+            port: long
+          packets: long
+          port: long
+          registered_domain: string
+          subdomain: string
+          top_level_domain: string
+        type: string
+      env_vars:
+      - string
+      executable: string
+      exit_code: long
+      group:
+        domain: string
+        id: string
+        name: string
+      hash:
+        md5: string
+        sha1: string
+        sha256: string
+        sha384: string
+        sha512: string
+        ssdeep: string
+        tlsh: string
+      interactive: boolean
+      io:
+        bytes_skipped:
+        - length: double
+          offset: double
+        max_bytes_per_process_exceeded: boolean
+        text: string
+        total_bytes_captured: double
+        total_bytes_skipped: double
+        type: string
+      name: string
+      pe:
+        architecture: string
+        company: string
+        description: string
+        file_version: string
+        imphash: string
+        original_file_name: string
+        pehash: string
+        product: string
+      pgid: long
+      pid: long
+      real_group:
+        domain: string
+        id: string
+        name: string
+      real_user:
+        domain: string
+        email: string
+        full_name: string
+        group:
+          domain: string
+          id: string
+          name: string
+        hash: string
+        id: string
+        name: string
+        risk:
+          calculated_level: string
+          calculated_score: float
+          calculated_score_norm: float
+          static_level: string
+          static_score: float
+          static_score_norm: float
+        roles:
+        - string
+      same_as_process: boolean
+      saved_group:
+        domain: string
+        id: string
+        name: string
+      saved_user:
+        domain: string
+        email: string
+        full_name: string
+        group:
+          domain: string
+          id: string
+          name: string
+        hash: string
+        id: string
+        name: string
+        risk:
+          calculated_level: string
+          calculated_score: float
+          calculated_score_norm: float
+          static_level: string
+          static_score: float
+          static_score_norm: float
+        roles:
+        - string
+      start: timestamp
+      supplemental_groups:
+        domain: string
+        id: string
+        name: string
+      thread:
+        id: long
+        name: string
+      title: string
+      tty:
+        char_device:
+          major: long
+          minor: long
+        columns: long
+        rows: long
+      uptime: long
+      user:
+        domain: string
+        email: string
+        full_name: string
+        group:
+          domain: string
+          id: string
+          name: string
+        hash: string
+        id: string
+        name: string
+        risk:
+          calculated_level: string
+          calculated_score: float
+          calculated_score_norm: float
+          static_level: string
+          static_score: float
+          static_score_norm: float
+        roles:
+        - string
+      working_directory: string
+    hash:
+      md5: string
+      sha1: string
+      sha256: string
+      sha384: string
+      sha512: string
+      ssdeep: string
+      tlsh: string
+    interactive: boolean
+    io:
+      bytes_skipped:
+      - length: double
+        offset: double
+      max_bytes_per_process_exceeded: boolean
+      text: string
+      total_bytes_captured: double
+      total_bytes_skipped: double
+      type: string
+    name: string
+    pe:
+      architecture: string
+      company: string
+      description: string
+      file_version: string
+      imphash: string
+      original_file_name: string
+      pehash: string
+      product: string
+    pgid: long
+    pid: long
+    real_group:
+      domain: string
+      id: string
+      name: string
+    real_user:
+      domain: string
+      email: string
+      full_name: string
+      group:
+        domain: string
+        id: string
+        name: string
+      hash: string
+      id: string
+      name: string
+      risk:
+        calculated_level: string
+        calculated_score: float
+        calculated_score_norm: float
+        static_level: string
+        static_score: float
+        static_score_norm: float
+      roles:
+      - string
+    same_as_process: boolean
+    saved_group:
+      domain: string
+      id: string
+      name: string
+    saved_user:
+      domain: string
+      email: string
+      full_name: string
+      group:
+        domain: string
+        id: string
+        name: string
+      hash: string
+      id: string
+      name: string
+      risk:
+        calculated_level: string
+        calculated_score: float
+        calculated_score_norm: float
+        static_level: string
+        static_score: float
+        static_score_norm: float
+      roles:
+      - string
+    start: timestamp
+    supplemental_groups:
+      domain: string
+      id: string
+      name: string
+    thread:
+      id: long
+      name: string
+    title: string
+    tty:
+      char_device:
+        major: long
+        minor: long
+      columns: long
+      rows: long
+    uptime: long
+    user:
+      domain: string
+      email: string
+      full_name: string
+      group:
+        domain: string
+        id: string
+        name: string
+      hash: string
+      id: string
+      name: string
+      risk:
+        calculated_level: string
+        calculated_score: float
+        calculated_score_norm: float
+        static_level: string
+        static_score: float
+        static_score_norm: float
+      roles:
+      - string
+    working_directory: string
+  pe:
+    architecture: string
+    company: string
+    description: string
+    file_version: string
+    imphash: string
+    original_file_name: string
+    pehash: string
+    product: string
+  pgid: long
+  pid: long
+  previous:
+    args:
+    - string
+    args_count: long
+    attested_groups:
+      domain: string
+      id: string
+      name: string
+    attested_user:
+      domain: string
+      email: string
+      full_name: string
+      group:
+        domain: string
+        id: string
+        name: string
+      hash: string
+      id: string
+      name: string
+      risk:
+        calculated_level: string
+        calculated_score: float
+        calculated_score_norm: float
+        static_level: string
+        static_score: float
+        static_score_norm: float
+      roles:
+      - string
+    code_signature:
+      digest_algorithm: string
+      exists: boolean
+      signing_id: string
+      status: string
+      subject_name: string
+      team_id: string
+      timestamp: timestamp
+      trusted: boolean
+      valid: boolean
+    command_line: string
+    elf:
+      architecture: string
+      byte_order: string
+      cpu_type: string
+      creation_date: timestamp
+      exports:
+      - string
+      header:
+        abi_version: string
+        class: string
+        data: string
+        entrypoint: long
+        object_version: string
+        os_abi: string
+        type: string
+        version: string
+      imports:
+      - string
+      sections:
+      - chi2: long
+        entropy: long
+        flags: string
+        name: string
+        physical_offset: string
+        physical_size: long
+        type: string
+        virtual_address: long
+        virtual_size: long
+      segments:
+      - sections: string
+        type: string
+      shared_libraries:
+      - string
+      telfhash: string
+    end: timestamp
+    entity_id: string
+    entry_meta:
+      source:
+        address: string
+        as:
+          number: long
+          organization:
+            name: string
+        bytes: long
+        domain: string
+        geo:
+          city_name: string
+          continent_code: string
+          continent_name: string
+          country_iso_code: string
+          country_name: string
+          location:
+            lon: float
+            lat: float
+          name: string
+          postal_code: string
+          region_iso_code: string
+          region_name: string
+          timezone: string
+        ip: string
+        mac: string
+        nat:
+          ip: string
+          port: long
+        packets: long
+        port: long
+        registered_domain: string
+        subdomain: string
+        top_level_domain: string
+      type: string
+    env_vars:
+    - string
+    executable: string
+    exit_code: long
+    group:
+      domain: string
+      id: string
+      name: string
+    hash:
+      md5: string
+      sha1: string
+      sha256: string
+      sha384: string
+      sha512: string
+      ssdeep: string
+      tlsh: string
+    interactive: boolean
+    io:
+      bytes_skipped:
+      - length: double
+        offset: double
+      max_bytes_per_process_exceeded: boolean
+      text: string
+      total_bytes_captured: double
+      total_bytes_skipped: double
+      type: string
+    name: string
+    pe:
+      architecture: string
+      company: string
+      description: string
+      file_version: string
+      imphash: string
+      original_file_name: string
+      pehash: string
+      product: string
+    pgid: long
+    pid: long
+    real_group:
+      domain: string
+      id: string
+      name: string
+    real_user:
+      domain: string
+      email: string
+      full_name: string
+      group:
+        domain: string
+        id: string
+        name: string
+      hash: string
+      id: string
+      name: string
+      risk:
+        calculated_level: string
+        calculated_score: float
+        calculated_score_norm: float
+        static_level: string
+        static_score: float
+        static_score_norm: float
+      roles:
+      - string
+    same_as_process: boolean
+    saved_group:
+      domain: string
+      id: string
+      name: string
+    saved_user:
+      domain: string
+      email: string
+      full_name: string
+      group:
+        domain: string
+        id: string
+        name: string
+      hash: string
+      id: string
+      name: string
+      risk:
+        calculated_level: string
+        calculated_score: float
+        calculated_score_norm: float
+        static_level: string
+        static_score: float
+        static_score_norm: float
+      roles:
+      - string
+    start: timestamp
+    supplemental_groups:
+      domain: string
+      id: string
+      name: string
+    thread:
+      id: long
+      name: string
+    title: string
+    tty:
+      char_device:
+        major: long
+        minor: long
+      columns: long
+      rows: long
+    uptime: long
+    user:
+      domain: string
+      email: string
+      full_name: string
+      group:
+        domain: string
+        id: string
+        name: string
+      hash: string
+      id: string
+      name: string
+      risk:
+        calculated_level: string
+        calculated_score: float
+        calculated_score_norm: float
+        static_level: string
+        static_score: float
+        static_score_norm: float
+      roles:
+      - string
+    working_directory: string
+  real_group:
+    domain: string
+    id: string
+    name: string
+  real_user:
+    domain: string
+    email: string
+    full_name: string
+    group:
+      domain: string
+      id: string
+      name: string
+    hash: string
+    id: string
+    name: string
+    risk:
+      calculated_level: string
+      calculated_score: float
+      calculated_score_norm: float
+      static_level: string
+      static_score: float
+      static_score_norm: float
+    roles:
+    - string
+  same_as_process: boolean
+  saved_group:
+    domain: string
+    id: string
+    name: string
+  saved_user:
+    domain: string
+    email: string
+    full_name: string
+    group:
+      domain: string
+      id: string
+      name: string
+    hash: string
+    id: string
+    name: string
+    risk:
+      calculated_level: string
+      calculated_score: float
+      calculated_score_norm: float
+      static_level: string
+      static_score: float
+      static_score_norm: float
+    roles:
+    - string
+  session_leader:
+    args:
+    - string
+    args_count: long
+    attested_groups:
+      domain: string
+      id: string
+      name: string
+    attested_user:
+      domain: string
+      email: string
+      full_name: string
+      group:
+        domain: string
+        id: string
+        name: string
+      hash: string
+      id: string
+      name: string
+      risk:
+        calculated_level: string
+        calculated_score: float
+        calculated_score_norm: float
+        static_level: string
+        static_score: float
+        static_score_norm: float
+      roles:
+      - string
+    code_signature:
+      digest_algorithm: string
+      exists: boolean
+      signing_id: string
+      status: string
+      subject_name: string
+      team_id: string
+      timestamp: timestamp
+      trusted: boolean
+      valid: boolean
+    command_line: string
+    elf:
+      architecture: string
+      byte_order: string
+      cpu_type: string
+      creation_date: timestamp
+      exports:
+      - string
+      header:
+        abi_version: string
+        class: string
+        data: string
+        entrypoint: long
+        object_version: string
+        os_abi: string
+        type: string
+        version: string
+      imports:
+      - string
+      sections:
+      - chi2: long
+        entropy: long
+        flags: string
+        name: string
+        physical_offset: string
+        physical_size: long
+        type: string
+        virtual_address: long
+        virtual_size: long
+      segments:
+      - sections: string
+        type: string
+      shared_libraries:
+      - string
+      telfhash: string
+    end: timestamp
+    entity_id: string
+    entry_meta:
+      source:
+        address: string
+        as:
+          number: long
+          organization:
+            name: string
+        bytes: long
+        domain: string
+        geo:
+          city_name: string
+          continent_code: string
+          continent_name: string
+          country_iso_code: string
+          country_name: string
+          location:
+            lon: float
+            lat: float
+          name: string
+          postal_code: string
+          region_iso_code: string
+          region_name: string
+          timezone: string
+        ip: string
+        mac: string
+        nat:
+          ip: string
+          port: long
+        packets: long
+        port: long
+        registered_domain: string
+        subdomain: string
+        top_level_domain: string
+      type: string
+    env_vars:
+    - string
+    executable: string
+    exit_code: long
+    group:
+      domain: string
+      id: string
+      name: string
+    hash:
+      md5: string
+      sha1: string
+      sha256: string
+      sha384: string
+      sha512: string
+      ssdeep: string
+      tlsh: string
+    interactive: boolean
+    io:
+      bytes_skipped:
+      - length: double
+        offset: double
+      max_bytes_per_process_exceeded: boolean
+      text: string
+      total_bytes_captured: double
+      total_bytes_skipped: double
+      type: string
+    name: string
+    parent:
+      args:
+      - string
+      args_count: long
+      attested_groups:
+        domain: string
+        id: string
+        name: string
+      attested_user:
+        domain: string
+        email: string
+        full_name: string
+        group:
+          domain: string
+          id: string
+          name: string
+        hash: string
+        id: string
+        name: string
+        risk:
+          calculated_level: string
+          calculated_score: float
+          calculated_score_norm: float
+          static_level: string
+          static_score: float
+          static_score_norm: float
+        roles:
+        - string
+      code_signature:
+        digest_algorithm: string
+        exists: boolean
+        signing_id: string
+        status: string
+        subject_name: string
+        team_id: string
+        timestamp: timestamp
+        trusted: boolean
+        valid: boolean
+      command_line: string
+      elf:
+        architecture: string
+        byte_order: string
+        cpu_type: string
+        creation_date: timestamp
+        exports:
+        - string
+        header:
+          abi_version: string
+          class: string
+          data: string
+          entrypoint: long
+          object_version: string
+          os_abi: string
+          type: string
+          version: string
+        imports:
+        - string
+        sections:
+        - chi2: long
+          entropy: long
+          flags: string
+          name: string
+          physical_offset: string
+          physical_size: long
+          type: string
+          virtual_address: long
+          virtual_size: long
+        segments:
+        - sections: string
+          type: string
+        shared_libraries:
+        - string
+        telfhash: string
+      end: timestamp
+      entity_id: string
+      entry_meta:
+        source:
+          address: string
+          as:
+            number: long
+            organization:
+              name: string
+          bytes: long
+          domain: string
+          geo:
+            city_name: string
+            continent_code: string
+            continent_name: string
+            country_iso_code: string
+            country_name: string
+            location:
+              lon: float
+              lat: float
+            name: string
+            postal_code: string
+            region_iso_code: string
+            region_name: string
+            timezone: string
+          ip: string
+          mac: string
+          nat:
+            ip: string
+            port: long
+          packets: long
+          port: long
+          registered_domain: string
+          subdomain: string
+          top_level_domain: string
+        type: string
+      env_vars:
+      - string
+      executable: string
+      exit_code: long
+      group:
+        domain: string
+        id: string
+        name: string
+      hash:
+        md5: string
+        sha1: string
+        sha256: string
+        sha384: string
+        sha512: string
+        ssdeep: string
+        tlsh: string
+      interactive: boolean
+      io:
+        bytes_skipped:
+        - length: double
+          offset: double
+        max_bytes_per_process_exceeded: boolean
+        text: string
+        total_bytes_captured: double
+        total_bytes_skipped: double
+        type: string
+      name: string
+      pe:
+        architecture: string
+        company: string
+        description: string
+        file_version: string
+        imphash: string
+        original_file_name: string
+        pehash: string
+        product: string
+      pgid: long
+      pid: long
+      real_group:
+        domain: string
+        id: string
+        name: string
+      real_user:
+        domain: string
+        email: string
+        full_name: string
+        group:
+          domain: string
+          id: string
+          name: string
+        hash: string
+        id: string
+        name: string
+        risk:
+          calculated_level: string
+          calculated_score: float
+          calculated_score_norm: float
+          static_level: string
+          static_score: float
+          static_score_norm: float
+        roles:
+        - string
+      same_as_process: boolean
+      saved_group:
+        domain: string
+        id: string
+        name: string
+      saved_user:
+        domain: string
+        email: string
+        full_name: string
+        group:
+          domain: string
+          id: string
+          name: string
+        hash: string
+        id: string
+        name: string
+        risk:
+          calculated_level: string
+          calculated_score: float
+          calculated_score_norm: float
+          static_level: string
+          static_score: float
+          static_score_norm: float
+        roles:
+        - string
+      session_leader:
+        args:
+        - string
+        args_count: long
+        attested_groups:
+          domain: string
+          id: string
+          name: string
+        attested_user:
+          domain: string
+          email: string
+          full_name: string
+          group:
+            domain: string
+            id: string
+            name: string
+          hash: string
+          id: string
+          name: string
+          risk:
+            calculated_level: string
+            calculated_score: float
+            calculated_score_norm: float
+            static_level: string
+            static_score: float
+            static_score_norm: float
+          roles:
+          - string
+        code_signature:
+          digest_algorithm: string
+          exists: boolean
+          signing_id: string
+          status: string
+          subject_name: string
+          team_id: string
+          timestamp: timestamp
+          trusted: boolean
+          valid: boolean
+        command_line: string
+        elf:
+          architecture: string
+          byte_order: string
+          cpu_type: string
+          creation_date: timestamp
+          exports:
+          - string
+          header:
+            abi_version: string
+            class: string
+            data: string
+            entrypoint: long
+            object_version: string
+            os_abi: string
+            type: string
+            version: string
+          imports:
+          - string
+          sections:
+          - chi2: long
+            entropy: long
+            flags: string
+            name: string
+            physical_offset: string
+            physical_size: long
+            type: string
+            virtual_address: long
+            virtual_size: long
+          segments:
+          - sections: string
+            type: string
+          shared_libraries:
+          - string
+          telfhash: string
+        end: timestamp
+        entity_id: string
+        entry_meta:
+          source:
+            address: string
+            as:
+              number: long
+              organization:
+                name: string
+            bytes: long
+            domain: string
+            geo:
+              city_name: string
+              continent_code: string
+              continent_name: string
+              country_iso_code: string
+              country_name: string
+              location:
+                lon: float
+                lat: float
+              name: string
+              postal_code: string
+              region_iso_code: string
+              region_name: string
+              timezone: string
+            ip: string
+            mac: string
+            nat:
+              ip: string
+              port: long
+            packets: long
+            port: long
+            registered_domain: string
+            subdomain: string
+            top_level_domain: string
+          type: string
+        env_vars:
+        - string
+        executable: string
+        exit_code: long
+        group:
+          domain: string
+          id: string
+          name: string
+        hash:
+          md5: string
+          sha1: string
+          sha256: string
+          sha384: string
+          sha512: string
+          ssdeep: string
+          tlsh: string
+        interactive: boolean
+        io:
+          bytes_skipped:
+          - length: double
+            offset: double
+          max_bytes_per_process_exceeded: boolean
+          text: string
+          total_bytes_captured: double
+          total_bytes_skipped: double
+          type: string
+        name: string
+        pe:
+          architecture: string
+          company: string
+          description: string
+          file_version: string
+          imphash: string
+          original_file_name: string
+          pehash: string
+          product: string
+        pgid: long
+        pid: long
+        real_group:
+          domain: string
+          id: string
+          name: string
+        real_user:
+          domain: string
+          email: string
+          full_name: string
+          group:
+            domain: string
+            id: string
+            name: string
+          hash: string
+          id: string
+          name: string
+          risk:
+            calculated_level: string
+            calculated_score: float
+            calculated_score_norm: float
+            static_level: string
+            static_score: float
+            static_score_norm: float
+          roles:
+          - string
+        same_as_process: boolean
+        saved_group:
+          domain: string
+          id: string
+          name: string
+        saved_user:
+          domain: string
+          email: string
+          full_name: string
+          group:
+            domain: string
+            id: string
+            name: string
+          hash: string
+          id: string
+          name: string
+          risk:
+            calculated_level: string
+            calculated_score: float
+            calculated_score_norm: float
+            static_level: string
+            static_score: float
+            static_score_norm: float
+          roles:
+          - string
+        start: timestamp
+        supplemental_groups:
+          domain: string
+          id: string
+          name: string
+        thread:
+          id: long
+          name: string
+        title: string
+        tty:
+          char_device:
+            major: long
+            minor: long
+          columns: long
+          rows: long
+        uptime: long
+        user:
+          domain: string
+          email: string
+          full_name: string
+          group:
+            domain: string
+            id: string
+            name: string
+          hash: string
+          id: string
+          name: string
+          risk:
+            calculated_level: string
+            calculated_score: float
+            calculated_score_norm: float
+            static_level: string
+            static_score: float
+            static_score_norm: float
+          roles:
+          - string
+        working_directory: string
+      start: timestamp
+      supplemental_groups:
+        domain: string
+        id: string
+        name: string
+      thread:
+        id: long
+        name: string
+      title: string
+      tty:
+        char_device:
+          major: long
+          minor: long
+        columns: long
+        rows: long
+      uptime: long
+      user:
+        domain: string
+        email: string
+        full_name: string
+        group:
+          domain: string
+          id: string
+          name: string
+        hash: string
+        id: string
+        name: string
+        risk:
+          calculated_level: string
+          calculated_score: float
+          calculated_score_norm: float
+          static_level: string
+          static_score: float
+          static_score_norm: float
+        roles:
+        - string
+      working_directory: string
+    pe:
+      architecture: string
+      company: string
+      description: string
+      file_version: string
+      imphash: string
+      original_file_name: string
+      pehash: string
+      product: string
+    pgid: long
+    pid: long
+    real_group:
+      domain: string
+      id: string
+      name: string
+    real_user:
+      domain: string
+      email: string
+      full_name: string
+      group:
+        domain: string
+        id: string
+        name: string
+      hash: string
+      id: string
+      name: string
+      risk:
+        calculated_level: string
+        calculated_score: float
+        calculated_score_norm: float
+        static_level: string
+        static_score: float
+        static_score_norm: float
+      roles:
+      - string
+    same_as_process: boolean
+    saved_group:
+      domain: string
+      id: string
+      name: string
+    saved_user:
+      domain: string
+      email: string
+      full_name: string
+      group:
+        domain: string
+        id: string
+        name: string
+      hash: string
+      id: string
+      name: string
+      risk:
+        calculated_level: string
+        calculated_score: float
+        calculated_score_norm: float
+        static_level: string
+        static_score: float
+        static_score_norm: float
+      roles:
+      - string
+    start: timestamp
+    supplemental_groups:
+      domain: string
+      id: string
+      name: string
+    thread:
+      id: long
+      name: string
+    title: string
+    tty:
+      char_device:
+        major: long
+        minor: long
+      columns: long
+      rows: long
+    uptime: long
+    user:
+      domain: string
+      email: string
+      full_name: string
+      group:
+        domain: string
+        id: string
+        name: string
+      hash: string
+      id: string
+      name: string
+      risk:
+        calculated_level: string
+        calculated_score: float
+        calculated_score_norm: float
+        static_level: string
+        static_score: float
+        static_score_norm: float
+      roles:
+      - string
+    working_directory: string
+  start: timestamp
+  supplemental_groups:
+    domain: string
+    id: string
+    name: string
+  thread:
+    id: long
+    name: string
+  title: string
+  tty:
+    char_device:
+      major: long
+      minor: long
+    columns: long
+    rows: long
+  uptime: long
+  user:
+    domain: string
+    email: string
+    full_name: string
+    group:
+      domain: string
+      id: string
+      name: string
+    hash: string
+    id: string
+    name: string
+    risk:
+      calculated_level: string
+      calculated_score: float
+      calculated_score_norm: float
+      static_level: string
+      static_score: float
+      static_score_norm: float
+    roles:
+    - string
+  working_directory: string
+registry:
+  data:
+    bytes: string
+    strings:
+    - string
+    type: string
+  hive: string
+  key: string
+  path: string
+  value: string
+related:
+  hash:
+  - string
+  hosts:
+  - string
+  ip:
+  - string
+  user:
+  - string
+risk:
+  calculated_level: string
+  calculated_score: float
+  calculated_score_norm: float
+  static_level: string
+  static_score: float
+  static_score_norm: float
+rule:
+  author:
+  - string
+  category: string
+  description: string
+  id: string
+  license: string
+  name: string
+  reference: string
+  ruleset: string
+  uuid: string
+  version: string
+server:
+  address: string
+  as:
+    number: long
+    organization:
+      name: string
+  bytes: long
+  domain: string
+  geo:
+    city_name: string
+    continent_code: string
+    continent_name: string
+    country_iso_code: string
+    country_name: string
+    location:
+      lon: float
+      lat: float
+    name: string
+    postal_code: string
+    region_iso_code: string
+    region_name: string
+    timezone: string
+  ip: string
+  mac: string
+  nat:
+    ip: string
+    port: long
+  packets: long
+  port: long
+  registered_domain: string
+  subdomain: string
+  top_level_domain: string
+  user:
+    domain: string
+    email: string
+    full_name: string
+    group:
+      domain: string
+      id: string
+      name: string
+    hash: string
+    id: string
+    name: string
+    risk:
+      calculated_level: string
+      calculated_score: float
+      calculated_score_norm: float
+      static_level: string
+      static_score: float
+      static_score_norm: float
+    roles:
+    - string
+service:
+  address: string
+  environment: string
+  ephemeral_id: string
+  id: string
+  name: string
+  node:
+    name: string
+    role: string
+    roles:
+    - string
+  origin:
+    address: string
+    environment: string
+    ephemeral_id: string
+    id: string
+    name: string
+    node:
+      name: string
+      role: string
+      roles:
+      - string
+    state: string
+    type: string
+    version: string
+  state: string
+  target:
+    address: string
+    environment: string
+    ephemeral_id: string
+    id: string
+    name: string
+    node:
+      name: string
+      role: string
+      roles:
+      - string
+    state: string
+    type: string
+    version: string
+  type: string
+  version: string
+source:
+  address: string
+  as:
+    number: long
+    organization:
+      name: string
+  bytes: long
+  domain: string
+  geo:
+    city_name: string
+    continent_code: string
+    continent_name: string
+    country_iso_code: string
+    country_name: string
+    location:
+      lon: float
+      lat: float
+    name: string
+    postal_code: string
+    region_iso_code: string
+    region_name: string
+    timezone: string
+  ip: string
+  mac: string
+  nat:
+    ip: string
+    port: long
+  packets: long
+  port: long
+  registered_domain: string
+  subdomain: string
+  top_level_domain: string
+  user:
+    domain: string
+    email: string
+    full_name: string
+    group:
+      domain: string
+      id: string
+      name: string
+    hash: string
+    id: string
+    name: string
+    risk:
+      calculated_level: string
+      calculated_score: float
+      calculated_score_norm: float
+      static_level: string
+      static_score: float
+      static_score_norm: float
+    roles:
+    - string
+threat:
+  enrichments:
+  - indicator:
+      as:
+        number: long
+        organization:
+          name: string
+      confidence: string
+      description: string
+      email:
+        address: string
+      file:
+        accessed: timestamp
+        attributes:
+        - string
+        code_signature:
+          digest_algorithm: string
+          exists: boolean
+          signing_id: string
+          status: string
+          subject_name: string
+          team_id: string
+          timestamp: timestamp
+          trusted: boolean
+          valid: boolean
+        created: timestamp
+        ctime: timestamp
+        device: string
+        directory: string
+        drive_letter: string
+        elf:
+          architecture: string
+          byte_order: string
+          cpu_type: string
+          creation_date: timestamp
+          exports:
+          - string
+          header:
+            abi_version: string
+            class: string
+            data: string
+            entrypoint: long
+            object_version: string
+            os_abi: string
+            type: string
+            version: string
+          imports:
+          - string
+          sections:
+          - chi2: long
+            entropy: long
+            flags: string
+            name: string
+            physical_offset: string
+            physical_size: long
+            type: string
+            virtual_address: long
+            virtual_size: long
+          segments:
+          - sections: string
+            type: string
+          shared_libraries:
+          - string
+          telfhash: string
+        extension: string
+        fork_name: string
+        gid: string
+        group: string
+        hash:
+          md5: string
+          sha1: string
+          sha256: string
+          sha384: string
+          sha512: string
+          ssdeep: string
+          tlsh: string
+        inode: string
+        mime_type: string
+        mode: string
+        mtime: timestamp
+        name: string
+        owner: string
+        path: string
+        pe:
+          architecture: string
+          company: string
+          description: string
+          file_version: string
+          imphash: string
+          original_file_name: string
+          pehash: string
+          product: string
+        size: long
+        target_path: string
+        type: string
+        uid: string
+        x509:
+          alternative_names:
+          - string
+          issuer:
+            common_name:
+            - string
+            country:
+            - string
+            distinguished_name: string
+            locality:
+            - string
+            organization:
+            - string
+            organizational_unit:
+            - string
+            state_or_province:
+            - string
+          not_after: timestamp
+          not_before: timestamp
+          public_key_algorithm: string
+          public_key_curve: string
+          public_key_exponent: long
+          public_key_size: long
+          serial_number: string
+          signature_algorithm: string
+          subject:
+            common_name:
+            - string
+            country:
+            - string
+            distinguished_name: string
+            locality:
+            - string
+            organization:
+            - string
+            organizational_unit:
+            - string
+            state_or_province:
+            - string
+          version_number: string
+      first_seen: timestamp
+      geo:
+        city_name: string
+        continent_code: string
+        continent_name: string
+        country_iso_code: string
+        country_name: string
+        location:
+          lon: float
+          lat: float
+        name: string
+        postal_code: string
+        region_iso_code: string
+        region_name: string
+        timezone: string
+      ip: string
+      last_seen: timestamp
+      marking:
+        tlp: string
+      modified_at: timestamp
+      port: long
+      provider: string
+      reference: string
+      registry:
+        data:
+          bytes: string
+          strings:
+          - string
+          type: string
+        hive: string
+        key: string
+        path: string
+        value: string
+      scanner_stats: long
+      sightings: long
+      type: string
+      url:
+        domain: string
+        extension: string
+        fragment: string
+        full: string
+        original: string
+        password: string
+        path: string
+        port: long
+        query: string
+        registered_domain: string
+        scheme: string
+        subdomain: string
+        top_level_domain: string
+        username: string
+      x509:
+        alternative_names:
+        - string
+        issuer:
+          common_name:
+          - string
+          country:
+          - string
+          distinguished_name: string
+          locality:
+          - string
+          organization:
+          - string
+          organizational_unit:
+          - string
+          state_or_province:
+          - string
+        not_after: timestamp
+        not_before: timestamp
+        public_key_algorithm: string
+        public_key_curve: string
+        public_key_exponent: long
+        public_key_size: long
+        serial_number: string
+        signature_algorithm: string
+        subject:
+          common_name:
+          - string
+          country:
+          - string
+          distinguished_name: string
+          locality:
+          - string
+          organization:
+          - string
+          organizational_unit:
+          - string
+          state_or_province:
+          - string
+        version_number: string
+    matched:
+      atomic: string
+      field: string
+      id: string
+      index: string
+      occurred: timestamp
+      type: string
+  feed:
+    dashboard_id: string
+    description: string
+    name: string
+    reference: string
+  framework: string
+  group:
+    alias:
+    - string
+    id: string
+    name: string
+    reference: string
+  indicator:
+    as:
+      number: long
+      organization:
+        name: string
+    confidence: string
+    description: string
+    email:
+      address: string
+    file:
+      accessed: timestamp
+      attributes:
+      - string
+      code_signature:
+        digest_algorithm: string
+        exists: boolean
+        signing_id: string
+        status: string
+        subject_name: string
+        team_id: string
+        timestamp: timestamp
+        trusted: boolean
+        valid: boolean
+      created: timestamp
+      ctime: timestamp
+      device: string
+      directory: string
+      drive_letter: string
+      elf:
+        architecture: string
+        byte_order: string
+        cpu_type: string
+        creation_date: timestamp
+        exports:
+        - string
+        header:
+          abi_version: string
+          class: string
+          data: string
+          entrypoint: long
+          object_version: string
+          os_abi: string
+          type: string
+          version: string
+        imports:
+        - string
+        sections:
+        - chi2: long
+          entropy: long
+          flags: string
+          name: string
+          physical_offset: string
+          physical_size: long
+          type: string
+          virtual_address: long
+          virtual_size: long
+        segments:
+        - sections: string
+          type: string
+        shared_libraries:
+        - string
+        telfhash: string
+      extension: string
+      fork_name: string
+      gid: string
+      group: string
+      hash:
+        md5: string
+        sha1: string
+        sha256: string
+        sha384: string
+        sha512: string
+        ssdeep: string
+        tlsh: string
+      inode: string
+      mime_type: string
+      mode: string
+      mtime: timestamp
+      name: string
+      owner: string
+      path: string
+      pe:
+        architecture: string
+        company: string
+        description: string
+        file_version: string
+        imphash: string
+        original_file_name: string
+        pehash: string
+        product: string
+      size: long
+      target_path: string
+      type: string
+      uid: string
+      x509:
+        alternative_names:
+        - string
+        issuer:
+          common_name:
+          - string
+          country:
+          - string
+          distinguished_name: string
+          locality:
+          - string
+          organization:
+          - string
+          organizational_unit:
+          - string
+          state_or_province:
+          - string
+        not_after: timestamp
+        not_before: timestamp
+        public_key_algorithm: string
+        public_key_curve: string
+        public_key_exponent: long
+        public_key_size: long
+        serial_number: string
+        signature_algorithm: string
+        subject:
+          common_name:
+          - string
+          country:
+          - string
+          distinguished_name: string
+          locality:
+          - string
+          organization:
+          - string
+          organizational_unit:
+          - string
+          state_or_province:
+          - string
+        version_number: string
+    first_seen: timestamp
+    geo:
+      city_name: string
+      continent_code: string
+      continent_name: string
+      country_iso_code: string
+      country_name: string
+      location:
+        lon: float
+        lat: float
+      name: string
+      postal_code: string
+      region_iso_code: string
+      region_name: string
+      timezone: string
+    ip: string
+    last_seen: timestamp
+    marking:
+      tlp: string
+    modified_at: timestamp
+    port: long
+    provider: string
+    reference: string
+    registry:
+      data:
+        bytes: string
+        strings:
+        - string
+        type: string
+      hive: string
+      key: string
+      path: string
+      value: string
+    scanner_stats: long
+    sightings: long
+    type: string
+    url:
+      domain: string
+      extension: string
+      fragment: string
+      full: string
+      original: string
+      password: string
+      path: string
+      port: long
+      query: string
+      registered_domain: string
+      scheme: string
+      subdomain: string
+      top_level_domain: string
+      username: string
+    x509:
+      alternative_names:
+      - string
+      issuer:
+        common_name:
+        - string
+        country:
+        - string
+        distinguished_name: string
+        locality:
+        - string
+        organization:
+        - string
+        organizational_unit:
+        - string
+        state_or_province:
+        - string
+      not_after: timestamp
+      not_before: timestamp
+      public_key_algorithm: string
+      public_key_curve: string
+      public_key_exponent: long
+      public_key_size: long
+      serial_number: string
+      signature_algorithm: string
+      subject:
+        common_name:
+        - string
+        country:
+        - string
+        distinguished_name: string
+        locality:
+        - string
+        organization:
+        - string
+        organizational_unit:
+        - string
+        state_or_province:
+        - string
+      version_number: string
+  software:
+    alias:
+    - string
+    id: string
+    name: string
+    platforms:
+    - string
+    reference: string
+    type: string
+  tactic:
+    id:
+    - string
+    name:
+    - string
+    reference:
+    - string
+  technique:
+    id:
+    - string
+    name:
+    - string
+    reference:
+    - string
+    subtechnique:
+      id:
+      - string
+      name:
+      - string
+      reference:
+      - string
+tls:
+  cipher: string
+  client:
+    certificate: string
+    certificate_chain:
+    - string
+    hash:
+      md5: string
+      sha1: string
+      sha256: string
+    issuer: string
+    ja3: string
+    not_after: timestamp
+    not_before: timestamp
+    server_name: string
+    subject: string
+    supported_ciphers:
+    - string
+    x509:
+      alternative_names:
+      - string
+      issuer:
+        common_name:
+        - string
+        country:
+        - string
+        distinguished_name: string
+        locality:
+        - string
+        organization:
+        - string
+        organizational_unit:
+        - string
+        state_or_province:
+        - string
+      not_after: timestamp
+      not_before: timestamp
+      public_key_algorithm: string
+      public_key_curve: string
+      public_key_exponent: long
+      public_key_size: long
+      serial_number: string
+      signature_algorithm: string
+      subject:
+        common_name:
+        - string
+        country:
+        - string
+        distinguished_name: string
+        locality:
+        - string
+        organization:
+        - string
+        organizational_unit:
+        - string
+        state_or_province:
+        - string
+      version_number: string
+  curve: string
+  established: boolean
+  next_protocol: string
+  resumed: boolean
+  server:
+    certificate: string
+    certificate_chain:
+    - string
+    hash:
+      md5: string
+      sha1: string
+      sha256: string
+    issuer: string
+    ja3s: string
+    not_after: timestamp
+    not_before: timestamp
+    subject: string
+    x509:
+      alternative_names:
+      - string
+      issuer:
+        common_name:
+        - string
+        country:
+        - string
+        distinguished_name: string
+        locality:
+        - string
+        organization:
+        - string
+        organizational_unit:
+        - string
+        state_or_province:
+        - string
+      not_after: timestamp
+      not_before: timestamp
+      public_key_algorithm: string
+      public_key_curve: string
+      public_key_exponent: long
+      public_key_size: long
+      serial_number: string
+      signature_algorithm: string
+      subject:
+        common_name:
+        - string
+        country:
+        - string
+        distinguished_name: string
+        locality:
+        - string
+        organization:
+        - string
+        organizational_unit:
+        - string
+        state_or_province:
+        - string
+      version_number: string
+  version: string
+  version_protocol: string
+span:
+  id: string
+trace:
+  id: string
+transaction:
+  id: string
+url:
+  domain: string
+  extension: string
+  fragment: string
+  full: string
+  original: string
+  password: string
+  path: string
+  port: long
+  query: string
+  registered_domain: string
+  scheme: string
+  subdomain: string
+  top_level_domain: string
+  username: string
+user:
+  changes:
+    domain: string
+    email: string
+    full_name: string
+    group:
+      domain: string
+      id: string
+      name: string
+    hash: string
+    id: string
+    name: string
+    risk:
+      calculated_level: string
+      calculated_score: float
+      calculated_score_norm: float
+      static_level: string
+      static_score: float
+      static_score_norm: float
+    roles:
+    - string
+  domain: string
+  effective:
+    domain: string
+    email: string
+    full_name: string
+    group:
+      domain: string
+      id: string
+      name: string
+    hash: string
+    id: string
+    name: string
+    risk:
+      calculated_level: string
+      calculated_score: float
+      calculated_score_norm: float
+      static_level: string
+      static_score: float
+      static_score_norm: float
+    roles:
+    - string
+  email: string
+  full_name: string
+  group:
+    domain: string
+    id: string
+    name: string
+  hash: string
+  id: string
+  name: string
+  risk:
+    calculated_level: string
+    calculated_score: float
+    calculated_score_norm: float
+    static_level: string
+    static_score: float
+    static_score_norm: float
+  roles:
+  - string
+  target:
+    domain: string
+    email: string
+    full_name: string
+    group:
+      domain: string
+      id: string
+      name: string
+    hash: string
+    id: string
+    name: string
+    risk:
+      calculated_level: string
+      calculated_score: float
+      calculated_score_norm: float
+      static_level: string
+      static_score: float
+      static_score_norm: float
+    roles:
+    - string
+user_agent:
+  device:
+    name: string
+  name: string
+  original: string
+  os:
+    family: string
+    full: string
+    kernel: string
+    name: string
+    platform: string
+    type: string
+    version: string
+  version: string
+vlan:
+  id: string
+  name: string
+vulnerability:
+  category:
+  - string
+  classification: string
+  description: string
+  enumeration: string
+  id: string
+  reference: string
+  report_id: string
+  scanner:
+    vendor: string
+  score:
+    base: float
+    environmental: float
+    temporal: float
+    version: string
+  severity: string
+x509:
+  alternative_names:
+  - string
+  issuer:
+    common_name:
+    - string
+    country:
+    - string
+    distinguished_name: string
+    locality:
+    - string
+    organization:
+    - string
+    organizational_unit:
+    - string
+    state_or_province:
+    - string
+  not_after: timestamp
+  not_before: timestamp
+  public_key_algorithm: string
+  public_key_curve: string
+  public_key_exponent: long
+  public_key_size: long
+  serial_number: string
+  signature_algorithm: string
+  subject:
+    common_name:
+    - string
+    country:
+    - string
+    distinguished_name: string
+    locality:
+    - string
+    organization:
+    - string
+    organizational_unit:
+    - string
+    state_or_province:
+    - string
+  version_number: string
+ts: timestamp

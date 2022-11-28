@@ -1,0 +1,559 @@
+from fileinput import filename
+from ecs_schema_to_iceberg import *
+from validate import validate_iceberg_schema
+from runner import run_transform_vrl, vrl
+import os
+from pathlib import Path
+import jsonlines
+import tempfile
+import traceback
+import sh
+import editor
+import argparse
+import time
+from rich.panel import Panel
+from random import shuffle
+from itertools import chain
+
+def jsonlines_or_multiline_read(p):
+    rdr = []
+    try:
+        rdr = jsonlines.open(p)
+        rdr = [i for i in rdr]
+    except:
+        f = open(p)
+        dd = f.read()
+        try:
+            rdr = json.loads("[" + dd.replace("}\n{", "},\n{") + "]")
+        except:
+            f.close()
+            rdr = open(p).read().splitlines()
+    return rdr
+
+
+def str2bool(v):
+    if isinstance(v, bool):
+        return v
+    if v.lower() in ('yes', 'true', 't', 'y', '1'):
+        return True
+    elif v.lower() in ('no', 'false', 'f', 'n', '0'):
+        return False
+    else:
+        raise argparse.ArgumentTypeError('Boolean value expected.')
+
+is_clean = defaultdict(lambda: True)
+renamed_fields = set()
+
+difft = sh.Command("difft")
+
+def normalize(e):
+    prog = """
+.ts = .ts || del(."@timestamp")
+
+if .event.type != null && !is_array(.event.type) {
+    if .__expected == true {
+        .event.type = [ .event.type ]
+    } else {
+        abort
+    }
+}
+
+if .__expected == true {
+    if .tls.client.x509.subject != null {
+        .tls.client.x509.subject = map_values(compact(object!(.tls.client.x509.subject))) -> |v| { [v] }
+        if .tls.client.x509.subject.distinguished_name != null {
+            .tls.client.x509.subject.distinguished_name = array!(.tls.client.x509.subject.distinguished_name)[0]
+        }
+    }
+    if .tls.server.x509.subject != null {
+        .tls.server.x509.subject = map_values(compact(object!(.tls.server.x509.subject))) -> |v| { [v] }
+        if .tls.server.x509.subject.distinguished_name != null {
+            .tls.server.x509.subject.distinguished_name = array!(.tls.server.x509.subject.distinguished_name)[0]
+        }
+    }
+    if .tls.server.x509.issuer != null {
+        .tls.server.x509.issuer = map_values(compact(object!(.tls.server.x509.issuer))) -> |v| { [v] }
+        if .tls.server.x509.issuer.distinguished_name != null {
+            .tls.server.x509.issuer.distinguished_name = array!(.tls.server.x509.issuer.distinguished_name)[0]
+        }
+    }
+    if .tls.client.x509.issuer != null {
+        .tls.client.x509.issuer = map_values(compact(object!(.tls.client.x509.issuer))) -> |v| { [v] }
+        if .tls.client.x509.issuer.distinguished_name != null {
+            .tls.client.x509.issuer.distinguished_name = array!(.tls.client.x509.issuer.distinguished_name)[0]
+        }
+    }
+    if .file.x509.issuer != null {
+        .file.x509.issuer = map_values(compact(object!(.file.x509.issuer))) -> |v| { [v] }
+        if .file.x509.issuer.distinguished_name != null {
+            .file.x509.issuer.distinguished_name = array!(.file.x509.issuer.distinguished_name)[0]
+        }
+    }
+    if .file.x509.subject != null {
+        .file.x509.subject = map_values(compact(object!(.file.x509.subject))) -> |v| { [v] }
+        if .file.x509.subject.distinguished_name != null {
+            .file.x509.subject.distinguished_name = array!(.file.x509.subject.distinguished_name)[0]
+        }
+    }
+    .host.ip = [ .host.ip ]
+    .network.application = if .network.application != null { downcase!(.network.application[0]) } else { null }
+}
+
+
+if .event.category != null && !is_array(.event.category) {
+    .event.category = [.event.category]
+}
+if .observer.ip != null && !is_array(.observer.ip) {
+    if .__expected == true {
+
+    .observer.ip = [.observer.ip]
+    } else {
+    abort
+    }
+}
+del(.source.geo)
+del(.source.as)
+del(.observer.geo)
+
+
+# if .process.args != null && .process.args_arr_str == null {
+#     .process.args_arr_str = encode_json(.process.args)
+# }
+
+if .zeek.smb_files.path != null && .zeek.smb_files.name != null { 
+    .file.path = replace!(.file.path, r'\\\\', "\")
+}
+
+del(.threat.indicator.geo)
+del(.threat.indicator.as) 
+
+if .zeek.session_id != null && is_array(.zeek.session_id) {
+    .zeek.session_ids = del(.zeek.session_id)
+    .event.id = join!(.zeek.session_ids, ",")
+}
+
+del(.zeek.weird.name)
+del(.rule.name)
+
+del(.destination.geo)
+del(.destination.as)  
+del(.destination.asn)  
+del(.destination.organization_name) 
+
+del(.event.original)
+del(.event.created)
+
+del(.user_agent)
+
+# wow.. todo fix these.....
+del(.url) 
+del(.threat.indicator.url)
+
+del(.ecs.version)
+del(.tags)
+
+del(.network.community_id)
+
+del(.dns.question.name)
+del(.dns.question.registered_domain)
+del(.dns.question.subdomain)
+del(.dns.question.top_level_domain)
+# if .dns.answers != null {
+#     .dns.answers = map_values(array!(.dns.answers)) -> |d| {
+#         d.ttl = to_float!(d.ttl)
+#     }
+# }
+
+# o365
+if is_string(.o365.audit.ExtendedProperties) {
+    .o365.audit.ExtendedProperties = parse_json!(.o365.audit.ExtendedProperties)
+}
+del(.o365.audit.ExtendedProperties.UserAgent)
+del(.o365.audit.UserAgent)
+if is_string(.o365.audit.Item) {
+    .o365.audit.Item = parse_json!(.o365.audit.Item)
+}
+if is_string(.o365.audit.ExchangeMetaData) {
+    .o365.audit.ExchangeMetaData = parse_json!(.o365.audit.ExchangeMetaData)
+}
+if is_string(.o365.audit.SharePointMetaData) {
+    .o365.audit.SharePointMetaData = parse_json!(.o365.audit.SharePointMetaData)
+}
+if is_array(.rule.id) {
+    .rule.id = join!(.rule.id, ", ")
+}
+if is_array(.rule.reference) {
+    .rule.reference = join!(.rule.reference, ", ")
+}
+if is_array(.destination.user.email) {
+    .destination.user.email = join!(.destination.user.email, ", ")
+}
+
+# remove weird unicode issue encoded /u2229 encoded as slashes by VRL, but removed by es
+. = map_values(., recursive: true) -> |v| { 
+    if is_string(v) {
+        v = string!(v)
+        # v = replace(v, r'\\\\,', "")
+
+        # normalize UTC timestamp strings
+        if match(v, r'^(-?(?:[1-9][0-9]*)?[0-9]{4})-(1[0-2]|0[1-9])-(3[01]|0[1-9]|[12][0-9])T(2[0-3]|[01][0-9]):([0-5][0-9]):([0-5][0-9])(\\.[0-9]+)?(\.?)([0-9]*)?(Z)?$') {
+            # v = slice!(to_string(to_timestamp!(v)), 0, 22)
+            v = slice!(to_string(to_timestamp!(v)), 0, 21) # check only first two decimal places (avoid diff on decimal round differences)
+            v = split(v, "Z")[0]
+        }
+
+        v
+    } else if is_float(v) { 
+        v = float!(v)
+        v = round(v, precision: 20)
+    } else { 
+        v 
+    } 
+}
+
+# o365
+if .o365.audit.Item != null {
+    .o365 = object!(.o365 || {})
+    .o365.audit = object!(.o365.audit || {})
+    .o365.audit.Item = encode_json(.o365.audit.Item)
+}
+if is_object(.o365.audit.ExtendedProperties) {
+    .o365.audit.RawExtendedProperties = del(.o365.audit.ExtendedProperties._raw)
+    .o365.audit.ExtendedProperties = if !is_empty!(.o365.audit.ExtendedProperties) {
+        encode_json(.o365.audit.ExtendedProperties)
+    } else {
+        null
+    }
+}
+if is_object(.o365.audit.ModifiedProperties) {
+    .o365.audit.RawModifiedProperties = del(.o365.audit.ModifiedProperties._raw)
+    .o365.audit.ModifiedProperties = if !is_empty!(.o365.audit.ModifiedProperties) {
+        encode_json(.o365.audit.ModifiedProperties)
+    } else {
+        null
+    }
+}
+if is_object(.o365.audit.Parameters) {
+    .o365.audit.RawParameters = del(.o365.audit.Parameters._raw)
+    .o365.audit.Parameters = if !is_empty!(.o365.audit.Parameters) {
+        encode_json(.o365.audit.Parameters)
+    } else {
+        null
+    }
+}
+if .o365.audit.ExchangeMetaData != null {
+    .o365.audit.ExchangeMetaData = encode_json(.o365.audit.ExchangeMetaData)
+}
+if .o365.audit.SharePointMetaData != null {
+    .o365.audit.SharePointMetaData = encode_json(.o365.audit.SharePointMetaData)
+}
+if is_object(.o365.audit.ExceptionInfo) {
+    .o365.audit.ExceptionInfo = encode_json(.o365.audit.ExceptionInfo)
+}
+if .o365.audit.PolicyDetails != null {
+    .o365.audit.PolicyDetails = map_values(array!(.o365.audit.PolicyDetails)) -> |v| {
+        if is_string(v) {
+            v 
+        } else {
+            encode_json(v)
+        }
+    }
+}
+
+if is_object(.okta.debug_context.debug_data.flattened) {
+    .okta.debug_context.debug_data.flattened = encode_json(.okta.debug_context.debug_data.flattened)
+}
+if .okta.debug_context.debug_data.flattened != null {
+    .okta.debug_context.debug_data.flattened = parse_json!(.okta.debug_context.debug_data.flattened)
+    del(.okta.debug_context.debug_data.flattened.risk)
+    del(.okta.debug_context.debug_data.flattened.behaviors)
+    .okta.debug_context.debug_data.flattened = encode_json(.okta.debug_context.debug_data.flattened)
+}
+
+del(.__expected)
+. = compact(.)
+"""
+    e = vrl(prog, e)[0]
+    return e
+
+def str_presenter(dumper, data):
+    """configures yaml for dumping multiline strings
+    Ref: https://stackoverflow.com/questions/8640959/how-can-i-control-what-scalar-form-pyyaml-uses-for-my-data"""
+    if "\n" in data:  # check for multiline string
+        node = dumper.represent_scalar('tag:yaml.org,2002:str', data, style='|')
+        # breakpoint()
+        return node
+    return dumper.represent_scalar('tag:yaml.org,2002:str', data)
+
+yaml.add_representer(str, str_presenter)
+
+# to use with safe_dump:
+yaml.representer.SafeRepresenter.add_representer(str, str_presenter)
+
+
+def walk(path):
+    for p in Path(path).iterdir():
+        if p.is_dir():
+            yield from walk(p)
+            continue
+        yield p.resolve()
+
+
+def table(s):
+    if "." not in s:
+        return {"log_source": s, "table": "*"}
+    else:
+        log_source, table = s.split(".")
+        return {"log_source": log_source, "table": table}
+
+def run_tests_get_errors(logsource_dir, opts, table_schema, table_file, data):
+    global count_passed
+
+    from_test_seen = opts.from_test is None
+    for test_event_f in chain(logsource_dir.rglob("test/**/*.log"), logsource_dir.rglob("test/**/*.json")):
+        if "-expected.json" in str(test_event_f):
+            continue
+
+        testname = test_event_f.name.split(".")[0]
+
+        from_test = opts.from_test.split(":")[0] if opts.from_test is not None else None
+        from_test_idx = int(opts.from_test.split(":")[1]) if opts.from_test is not None else None
+        just_saw = False
+        if not from_test_seen:
+            if testname == from_test:
+                from_test_seen = True
+                just_saw = True
+            else:
+                print(f"[bold cyan]Skipping {testname}")
+                continue
+
+        print(f"Running testfile: {test_event_f}")
+        console.print(f"\nRunning test: [bold yellow]{testname}")
+
+        if str(test_event_f).endswith(".json"):
+            rdr = json.load(open(test_event_f))["events"] 
+            for i in range(len(rdr)):
+                if "message" in rdr[i]:
+                    d = rdr[i].pop("message")
+                    d = d.split("\n")[0]
+                    rdr[i] = json.loads(d)
+        else:
+            rdr = jsonlines_or_multiline_read(test_event_f)
+
+        try:
+            with open(f"{test_event_f}-expected.json") as f:
+                expected = json.load(f)["expected"]
+        except FileNotFoundError:
+                expected = None
+        except json.decoder.JSONDecodeError:
+                print("\n[red bold]Failed: [reset][bold]Expected test file is not valid json.")
+                editor.edit(filename=f"{test_event_f}-expected.json")
+                return ["errors"]
+
+        if expected is None:
+            shuffle(rdr)
+        for i, test_event in enumerate(rdr):
+            if just_saw and i < from_test_idx:
+                continue
+            if i > 20:
+                print("Skipping remaining events...")
+                break
+            try:
+                if test_event.get("result", {}).get("splunk_server") or test_event.get("result", {}).get("_raw"):
+                    continue
+            except:
+                pass
+
+            try:
+                if expected is not None:
+                    expected[i]["__expected"] = True
+                n_expected = normalize(expected[i]) if expected is not None else None
+                res = run_transform_vrl(data["transform"], test_event)["result"]
+                n_res = normalize(res)
+
+                if n_expected is None:
+                    print(f"[yellow]No expected result for test {test_event_f} to assert against.")
+                    n_expected = n_res
+            except Exception as e:
+                console.print("\n❌ Test failed: ", testname, style="bold red")
+                print("\n[green bold]Expected: ", n_expected)
+                print("\n[yellow bold]Input event: ", test_event)
+
+                print(e)
+                print(f"\n[bold red]❌ Error running transform\n")
+
+                editor.edit(filename=str(table_file), other_filenames=[logsource_dir, generated_table_filename, test_event_f, f"{test_event_f}-expected.json"])
+                return ["errors"]
+            
+            try:
+                if n_expected.get("ts") and n_res.get("ts") and n_expected["ts"] != n_res["ts"] and n_expected["ts"][:22] == n_res["ts"][:22]:
+                    n_res["ts"] = n_expected["ts"]
+            except Exception as e:
+                traceback.print_exc()
+                print(f"\n[bold red]Failed: [reset][bold]Failed to compare events, missing fields for normalized output event or expected event: {e}",)
+                editor.edit(filename=str(table_file), other_filenames=[logsource_dir, generated_table_filename, test_event_f, f"{test_event_f}-expected.json"])
+                return ["errors"]
+
+            if n_res != n_expected:
+                console.print("\n❌ Test failed: ", testname, style="bold red")
+                print("\n[red bold]Actual: ", n_res)
+                print("\n[green bold]Expected: ", n_expected)
+                print("\n[yellow bold]Input event: ", test_event)
+
+                expected_tmp = tempfile.NamedTemporaryFile()
+                with open(expected_tmp.name, "w") as f:
+                    f.write(json.dumps(n_expected, indent=2))
+
+                actual_tmp = tempfile.NamedTemporaryFile()
+                with open(actual_tmp.name, "w") as f:
+                    f.write(json.dumps(n_res, indent=2))
+
+                diff = difft(actual_tmp.name, expected_tmp.name, language="JSON")
+                diff = "\n".join([x if "/tmp" not in x else x[x.rindex("--- Text"):] for x in str(diff).split("\n")])
+                console.print(f"\n🔧 [red]Value[reset] did not match [green]expected:", style="yellow")
+                __builtins__.print(diff)
+                editor.edit(filename=str(table_file), other_filenames=[logsource_dir, generated_table_filename, actual_tmp.name, expected_tmp.name, test_event_f, f"{test_event_f}-expected.json"])
+                return ["errors"]
+            
+            
+            if not validate_iceberg_schema(table_schema, [n_res]):
+                editor.edit(filename=str(table_file), other_filenames=[logsource_dir, generated_table_filename, test_event_f, f"{test_event_f}-expected.json"])
+                return ["errors"]
+
+            count_passed += 1
+            print(f"Test {i} passed: ✅", testname)
+
+if __name__ == "__main__":
+    parser = ArgumentParser()
+    # parser.add_argument("dir", help="the path to log sources", type=str)
+    # parser.add_argument(
+    #     "--sources",
+    #     help="the tables to generate",
+    #     type=lambda s: [table(item) for item in s.split(",")],
+    # )
+
+    parser.add_argument("--logsource-dir", help="the path to log source dir to read from (fields, test) and write to (generated log_source.yml etc.)", type=str)
+    parser.add_argument("--from-test", type=str, default=None)
+    parser.add_argument("--skip-tests", type=str2bool, nargs='?', const=True, default=False, help="Skip tests.")
+
+    opts = parser.parse_args()
+    # d = Path(opts.dir)
+
+    # "/Users/shaeqahmed/testt/matano/data/managed/"
+    logsource_dir = Path(opts.logsource_dir)
+
+    if not logsource_dir.is_dir():
+        print(f"\n[red bold]Log source dir does not exist: [reset]{logsource_dir.resolve()}")
+        exit(1)
+
+    if not (logsource_dir / "test").is_dir():
+        print(f"\n[red bold]Log source dir does not contain a test dir at: [reset]{(logsource_dir / 'test').resolve()}")
+        exit(1)
+
+    if not (logsource_dir / "fields").is_dir():
+        print(f"\n[red bold]Log source dir does not contain a fields dir at: [reset]{(logsource_dir / 'fields').resolve()}")
+        exit(1)
+
+    print(logsource_dir)
+
+    all_passed = False
+    while not all_passed:
+        from_test_seen = opts.from_test is None
+        if opts.from_test:
+            if ":" not in opts.from_test:
+                opts.from_test = f"{opts.from_test}:0"
+
+        table = {}
+
+
+        for h in logsource_dir.rglob("fields/*.yml"):
+            print(h)
+            with open(h) as f:
+                p = yaml.safe_load(f)
+            ecs_fields = [f["name"] for f in p if f.get("external") == "ecs"]
+            p = [l for l in p if l.get("external") != "ecs"]
+            for f in ecs_fields:
+                table.setdefault("schema", {}).setdefault(
+                    "ecs_field_names", []
+                ).append(f)
+            if p:
+                schema, ecs_fields = schema_to_iceberg(p)
+                for f in ecs_fields:
+                    table.setdefault("schema", {}).setdefault(
+                        "ecs_field_names", []
+                    ).append(f)
+                table.setdefault("schema", {})["schema"] = merge(
+                    table.setdefault("schema", {}).setdefault("schema", {}), schema
+                )
+
+        table_schema = table.setdefault("schema", {}).setdefault("schema", {})
+        table["schema"]["fields"] = expand_and_serialize_to_fields(
+            table.setdefault("schema", {}).setdefault("schema", {})
+        )
+        table["schema"]["fields"] = [f for f in table["schema"]["fields"] if f["name"] not in ["input", "log", "cloud", "host"]]
+
+        table["schema"]["ecs_field_names"] = [f for f in table.setdefault("schema", {}).setdefault("ecs_field_names", []) if f not in {
+            "data_stream.type",
+            "data_stream.dataset",
+            "data_stream.namespace",
+        }]
+
+        # print(yaml.dump(table["schema"]["schema"], sort_keys=False))
+        del table["schema"]["schema"]
+
+        tablename = logsource_dir.name
+        table["transform"] = "# Transform\n\n# Write your VRL transform script here :)"
+
+        table["name"] = tablename
+
+        managed_tables_dir = logsource_dir
+        table_file = next(chain(managed_tables_dir.glob(f"log_source.yml"), managed_tables_dir.glob(f"log_source.yml.go"), [managed_tables_dir / f"log_source.yml"] ))
+        table["$file"] = table_file
+
+        if not table_file.exists():
+            table_file.parent.mkdir(parents=True, exist_ok=True)
+        else:
+            with open(table_file, "r+") as f:
+                data = yaml.safe_load(f)
+                if "schema" not in data:
+                    data["schema"] = {}
+                data["schema"]["ecs_field_names"] = sorted(list(set(table["schema"]["ecs_field_names"])))
+                table_schema = fields_to_schema(data.get("schema", {}).get("fields", []))
+                f.seek(0)
+                f.write(yaml.dump(data, sort_keys=False))
+                f.truncate()
+        generated_table_filename = str(table_file).replace(".yml.go", "_generated.yml.go").replace(".yml", "_generated.yml.go")
+        with open(generated_table_filename if table_file.exists() else table_file, "w+") as f:
+            f.write(yaml.dump({k:v for k, v in table.items() if k!="$file"}, sort_keys=False))
+
+        print(f"\n[bold]Using schema for table [green]{tablename} ✨")
+        print(yaml.dump(table_schema))
+
+        # TODO(): open EDITOR and allow to resolve conflicts/issues here
+        # editor.edit(filename=str(table_file), other_filenames=[test_event_f, f"{test_event_f}-expected.json"])
+
+        print(f"\n[bold]Generated log source for table [green]{tablename} 🚀")
+
+        if not opts.skip_tests:
+            # print("Running tests...\n")
+            global count_passed
+            count_passed = 0
+
+            table_schema = merge(ecs_subschema_from_fields(table["schema"]["ecs_field_names"]), table_schema)
+
+            # all_passed = False
+            # while not all_passed:
+            with open(table_file) as f:
+                data = yaml.safe_load(f)
+                errors = run_tests_get_errors(logsource_dir, opts, table_schema, table_file, data)
+                all_passed = errors is None
+                if not all_passed:
+                    count_passed = 0
+                    print(f"\n\n[bold yellow]Press enter to re-run tests for table {tablename} and check if errors resolved 👀...")
+                    input()
+
+            console.print(f"\n[bold]✨ {count_passed} tests passed ✨\n\n",  f"{tablename}") 
+
+            console.print("\n[bold green]All tests passed! 🎉\n")
+
+    console.print(Panel.fit(f"\n🎉🎉🎉 [bold green] FINITO {tablename}! 🎉🎉🎉\n"))

@@ -1,0 +1,26 @@
+{
+    "expected": [
+        {
+            "@timestamp": "2019-08-26T19:48:53.000Z",
+            "minimal": {
+               "version": 2
+            },
+            "cloud": {
+                "account": {
+                    "id": "2929290000"
+                }
+            }
+        },
+        {
+            "@timestamp": "2019-08-26T19:48:53.000Z",
+            "minimal": {
+               "version": 1
+            },
+            "cloud": {
+                "account": {
+                    "id": "1229292929"
+                }
+            }
+        }
+    ]
+}

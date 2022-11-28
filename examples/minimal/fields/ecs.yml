@@ -1,0 +1,2 @@
+- name: cloud.account.id
+  external: ecs
