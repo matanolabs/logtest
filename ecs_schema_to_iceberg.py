@@ -266,7 +266,7 @@ def expand(node):
     valid_types = {"struct", "list", "primitive"}
     if isinstance(node, dict):
         if "type" not in node or type(node["type"]) != string or node["type"] not in valid_types:
-            node = {"type": "struct", "fields": node} 
+            node = {"type": "struct", "fields": node}
         for f in node["fields"]:
             node["fields"][f] = expand(node["fields"][f])
         return node
@@ -373,7 +373,7 @@ def schema_to_iceberg(p, extract_ecs_fields=True):
         v = schema.pop("@timestamp")
         if not extract_ecs_fields:
             schema["ts"] = v
-        
+
 
     ecs_fields = []
     if extract_ecs_fields:
@@ -405,7 +405,7 @@ def schema_to_iceberg(p, extract_ecs_fields=True):
     return schema, ecs_fields
 
 
-with open("/Users/shaeqahmed/es2matano/fields.ecs.yml") as f:
+with open("fields.ecs.yml") as f:
     d = yaml.load(f, Loader=yaml.FullLoader)
     ECS_SCHEMA = schema_to_iceberg(d[0]["fields"], extract_ecs_fields=False)[0]
     # print(yaml.dump(ecs_schema, sort_keys=False))
@@ -426,10 +426,10 @@ if __name__ == "__main__":
     ecs_fields = expand_and_serialize_to_fields(ECS_SCHEMA)
     ecs_fields = [ecs_fields[-1]] + ecs_fields[:-1] # keep ts at front
     iceberg_ecs_schema = {"type": "struct", "fields": ecs_fields}
-    with open("/Users/shaeqahmed/es2matano/ecs_iceberg_schema.json", "w") as f:
+    with open("ecs_iceberg_schema.json", "w") as f:
         json.dump(iceberg_ecs_schema, f, indent=2, sort_keys=False)
 
-    with open("/Users/shaeqahmed/es2matano/ecs_iceberg_schema_compact.yml", "w") as f:
+    with open("ecs_iceberg_schema_compact.yml", "w") as f:
         yaml.dump(ECS_SCHEMA, f, sort_keys=False)
 
     # print(res)

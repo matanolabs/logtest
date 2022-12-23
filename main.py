@@ -120,12 +120,12 @@ del(.observer.geo)
 #     .process.args_arr_str = encode_json(.process.args)
 # }
 
-if .zeek.smb_files.path != null && .zeek.smb_files.name != null { 
+if .zeek.smb_files.path != null && .zeek.smb_files.name != null {
     .file.path = replace!(.file.path, r'\\\\', "\")
 }
 
 del(.threat.indicator.geo)
-del(.threat.indicator.as) 
+del(.threat.indicator.as)
 
 if .zeek.session_id != null && is_array(.zeek.session_id) {
     .zeek.session_ids = del(.zeek.session_id)
@@ -136,9 +136,9 @@ del(.zeek.weird.name)
 del(.rule.name)
 
 del(.destination.geo)
-del(.destination.as)  
-del(.destination.asn)  
-del(.destination.organization_name) 
+del(.destination.as)
+del(.destination.asn)
+del(.destination.organization_name)
 
 del(.event.original)
 del(.event.created)
@@ -146,7 +146,7 @@ del(.event.created)
 del(.user_agent)
 
 # wow.. todo fix these.....
-del(.url) 
+del(.url)
 del(.threat.indicator.url)
 
 del(.ecs.version)
@@ -190,7 +190,7 @@ if is_array(.destination.user.email) {
 }
 
 # remove weird unicode issue encoded /u2229 encoded as slashes by VRL, but removed by es
-. = map_values(., recursive: true) -> |v| { 
+. = map_values(., recursive: true) -> |v| {
     if is_string(v) {
         v = string!(v)
         # v = replace(v, r'\\\\,', "")
@@ -203,12 +203,12 @@ if is_array(.destination.user.email) {
         }
 
         v
-    } else if is_float(v) { 
+    } else if is_float(v) {
         v = float!(v)
         v = round(v, precision: 20)
-    } else { 
-        v 
-    } 
+    } else {
+        v
+    }
 }
 
 # o365
@@ -253,7 +253,7 @@ if is_object(.o365.audit.ExceptionInfo) {
 if .o365.audit.PolicyDetails != null {
     .o365.audit.PolicyDetails = map_values(array!(.o365.audit.PolicyDetails)) -> |v| {
         if is_string(v) {
-            v 
+            v
         } else {
             encode_json(v)
         }
@@ -331,7 +331,7 @@ def run_tests_get_errors(logsource_dir, opts, table_schema, table_file, data):
         console.print(f"\nRunning test: [bold yellow]{testname}")
 
         if str(test_event_f).endswith(".json"):
-            rdr = json.load(open(test_event_f))["events"] 
+            rdr = json.load(open(test_event_f))["events"]
             for i in range(len(rdr)):
                 if "message" in rdr[i]:
                     d = rdr[i].pop("message")
@@ -384,7 +384,7 @@ def run_tests_get_errors(logsource_dir, opts, table_schema, table_file, data):
 
                 editor.edit(filename=str(table_file), other_filenames=[logsource_dir, generated_table_filename, test_event_f, f"{test_event_f}-expected.json"])
                 return ["errors"]
-            
+
             try:
                 if n_expected.get("ts") and n_res.get("ts") and n_expected["ts"] != n_res["ts"] and n_expected["ts"][:22] == n_res["ts"][:22]:
                     n_res["ts"] = n_expected["ts"]
@@ -400,22 +400,24 @@ def run_tests_get_errors(logsource_dir, opts, table_schema, table_file, data):
                 print("\n[green bold]Expected: ", n_expected)
                 print("\n[yellow bold]Input event: ", test_event)
 
-                expected_tmp = tempfile.NamedTemporaryFile()
-                with open(expected_tmp.name, "w") as f:
+                td = tempfile.mkdtemp("logtest")
+
+                expected_tmp = Path(os.path.join(td, "expected.json"))
+                with open(str(expected_tmp.absolute()), "w") as f:
                     f.write(json.dumps(n_expected, indent=2))
 
-                actual_tmp = tempfile.NamedTemporaryFile()
-                with open(actual_tmp.name, "w") as f:
+                actual_tmp = Path(os.path.join(td, "actual.json"))
+                with open(str(actual_tmp.absolute()), "w") as f:
                     f.write(json.dumps(n_res, indent=2))
 
-                diff = difft(actual_tmp.name, expected_tmp.name, language="JSON")
-                diff = "\n".join([x if "/tmp" not in x else x[x.rindex("--- Text"):] for x in str(diff).split("\n")])
+                diff = difft(str(actual_tmp.absolute()), str(expected_tmp.absolute()), language="json")
+                diff = "\n".join([x if "/tmp" not in x else x[x.rindex("--- JSON"):] for x in str(diff).split("\n")])
                 console.print(f"\n🔧 [red]Value[reset] did not match [green]expected:", style="yellow")
                 __builtins__.print(diff)
                 editor.edit(filename=str(table_file), other_filenames=[logsource_dir, generated_table_filename, actual_tmp.name, expected_tmp.name, test_event_f, f"{test_event_f}-expected.json"])
                 return ["errors"]
-            
-            
+
+
             if not validate_iceberg_schema(table_schema, [n_res]):
                 editor.edit(filename=str(table_file), other_filenames=[logsource_dir, generated_table_filename, test_event_f, f"{test_event_f}-expected.json"])
                 return ["errors"]
@@ -552,7 +554,7 @@ if __name__ == "__main__":
                     print(f"\n\n[bold yellow]Press enter to re-run tests for table {tablename} and check if errors resolved 👀...")
                     input()
 
-            console.print(f"\n[bold]✨ {count_passed} tests passed ✨\n\n",  f"{tablename}") 
+            console.print(f"\n[bold]✨ {count_passed} tests passed ✨\n\n",  f"{tablename}")
 
             console.print("\n[bold green]All tests passed! 🎉\n")
 
