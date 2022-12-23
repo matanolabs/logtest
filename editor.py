@@ -12,12 +12,12 @@ from distutils.spawn import find_executable
 
 
 __all__ = [
-    'edit',
-    'get_editor',
-    'EditorError',
+    "edit",
+    "get_editor",
+    "EditorError",
 ]
 
-__version__ = '1.0.4'
+__version__ = "1.0.4"
 
 
 class EditorError(RuntimeError):
@@ -27,28 +27,29 @@ class EditorError(RuntimeError):
 def get_default_editors():
     # TODO: Make platform-specific
     return [
-        'code',
-        'editor',
-        'vim',
-        'emacs',
-        'nano',
+        "code",
+        "editor",
+        "vim",
+        "emacs",
+        "nano",
     ]
 
+
 def get_editor_args(editor):
-    if editor in ['vim', 'gvim', 'vim.basic', 'vim.tiny']:
-        return ['-f', '-o']
+    if editor in ["vim", "gvim", "vim.basic", "vim.tiny"]:
+        return ["-f", "-o"]
 
-    elif editor == 'emacs':
-        return ['-nw']
+    elif editor == "emacs":
+        return ["-nw"]
 
-    elif editor == 'gedit':
-        return ['-w', '--new-window']
+    elif editor == "gedit":
+        return ["-w", "--new-window"]
 
-    elif editor == 'nano':
-        return ['-R']
+    elif editor == "nano":
+        return ["-R"]
 
-    elif editor == 'code':
-        return ['-nw']
+    elif editor == "code":
+        return ["-nw"]
 
     else:
         return []
@@ -56,7 +57,7 @@ def get_editor_args(editor):
 
 def get_editor():
     # Get the editor from the environment.  Prefer VISUAL to EDITOR
-    editor = os.environ.get('VISUAL') or os.environ.get('EDITOR')
+    editor = os.environ.get("VISUAL") or os.environ.get("EDITOR")
     if editor:
         return editor
 
@@ -66,17 +67,19 @@ def get_editor():
         if path is not None:
             return path
 
-    raise EditorError("Unable to find a viable editor on this system."
-        "Please consider setting your $EDITOR variable")
+    raise EditorError(
+        "Unable to find a viable editor on this system."
+        "Please consider setting your $EDITOR variable"
+    )
 
 
 def get_tty_filename():
-    if sys.platform == 'win32':
-        return 'CON:'
-    return '/dev/tty'
+    if sys.platform == "win32":
+        return "CON:"
+    return "/dev/tty"
 
 
-def edit(filename=None, other_filenames=[], contents=None, use_tty=None, suffix=''):
+def edit(filename=None, other_filenames=[], contents=None, use_tty=None, suffix=""):
     editor = get_editor()
     args = [editor] + get_editor_args(os.path.basename(os.path.realpath(editor)))
 
@@ -89,22 +92,22 @@ def edit(filename=None, other_filenames=[], contents=None, use_tty=None, suffix=
 
     if contents is not None:
         # For python3 only.  If str is passed instead of bytes, encode default
-        if hasattr(contents, 'encode'):
+        if hasattr(contents, "encode"):
             contents = contents.encode()
 
-        with open(filename, mode='wb') as f:
+        with open(filename, mode="wb") as f:
             f.write(contents)
 
     args += [filename, *other_filenames]
 
     stdout = None
     if use_tty:
-        stdout = open(get_tty_filename(), 'wb')
+        stdout = open(get_tty_filename(), "wb")
 
     proc = subprocess.Popen(args, close_fds=True, stdout=stdout)
     proc.communicate()
 
-    with open(filename, mode='rb') as f:
+    with open(filename, mode="rb") as f:
         d = f.read()
         f.close()
         return d
@@ -121,18 +124,19 @@ def _edit(ns):
     print(edit(filename=ns.path, contents=contents))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     import argparse
+
     ap = argparse.ArgumentParser()
     sp = ap.add_subparsers()
 
-    cmd = sp.add_parser('get-editor')
+    cmd = sp.add_parser("get-editor")
     cmd.set_defaults(cmd=_get_editor)
 
-    cmd = sp.add_parser('edit')
+    cmd = sp.add_parser("edit")
     cmd.set_defaults(cmd=_edit)
-    cmd.add_argument('path', type=str, nargs='?')
-    cmd.add_argument('--contents', type=str)
+    cmd.add_argument("path", type=str, nargs="?")
+    cmd.add_argument("--contents", type=str)
 
     ns = ap.parse_args()
     ns.cmd(ns)

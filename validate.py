@@ -33,21 +33,12 @@ PRIMITIVE_FIELD_TYPE_MAPPING_ICEBERG_TO_AVRO = {
 PRIMITIVE_FIELD_TYPE_MAPPING_ICEBERG_TO_PY_TYPES = {
     "boolean": (bool,),
     "binary": (bytes,),
-    "double": (
-        int,
-        float,
-    ),
-    "float": (
-        int,
-        float,
-    ),
+    "double": (int, float,),
+    "float": (int, float,),
     "int": (int,),
     "long": (int, float),
     "string": (str,),
-    "timestamp": (
-        float,
-        int,
-    ),
+    "timestamp": (float, int,),
 }
 
 # LOGICAL_FIELD_TYPE_MAPPING = {
@@ -71,11 +62,18 @@ def iceberg_pretty_validator(datum, schema, *, path=""):
             error_console.print(
                 f"[bold red]Validation Error[reset]: {print_path} should be a [green]dict[reset]: not [red]{type(datum).__name__}"
             )
-            rich.print(Panel.fit(f"{json.dumps(datum, indent=2)}", title=f"{print_path.replace('field ', '')}"))
+            rich.print(
+                Panel.fit(
+                    f"{json.dumps(datum, indent=2)}",
+                    title=f"{print_path.replace('field ', '')}",
+                )
+            )
             return False
         return all(
             [
-                iceberg_pretty_validator(datum.get(k) if datum else None, v, path=f"{path}.{k}")
+                iceberg_pretty_validator(
+                    datum.get(k) if datum else None, v, path=f"{path}.{k}"
+                )
                 for k, v in schema.items()
             ]
         )
@@ -84,7 +82,12 @@ def iceberg_pretty_validator(datum, schema, *, path=""):
             error_console.print(
                 f"[bold red]Validation Error[reset]: {print_path} should be a [green]list[reset]: not [red]{type(datum).__name__}"
             )
-            rich.print(Panel.fit(f"{json.dumps(datum, indent=2)}", title=f"{print_path.replace('field ', '')}"))
+            rich.print(
+                Panel.fit(
+                    f"{json.dumps(datum, indent=2)}",
+                    title=f"{print_path.replace('field ', '')}",
+                )
+            )
             return False
         return all(
             [
@@ -93,11 +96,22 @@ def iceberg_pretty_validator(datum, schema, *, path=""):
             ]
         )
     elif schema == "timestamp":
-        if datum and type(datum) and not (datum.endswith("Z") or datum.startswith("20") or datum.startswith("19")):
+        if (
+            datum
+            and type(datum)
+            and not (
+                datum.endswith("Z") or datum.startswith("20") or datum.startswith("19")
+            )
+        ):
             error_console.print(
                 f"[bold red]Validation Error[reset]: {print_path} should be a [green]timestamp (long)[reset]: not [red]{type(datum).__name__}"
             )
-            rich.print(Panel.fit(f"{json.dumps(datum, indent=2)}", title=f"{print_path.replace('field ', '')}"))
+            rich.print(
+                Panel.fit(
+                    f"{json.dumps(datum, indent=2)}",
+                    title=f"{print_path.replace('field ', '')}",
+                )
+            )
             return False
     else:
         if (
@@ -114,7 +128,12 @@ def iceberg_pretty_validator(datum, schema, *, path=""):
             error_console.print(
                 f"[bold red]Validation Error[reset]: {print_path} should be a [green]{pytypes}[reset]: not [red]{type(datum).__name__}"
             )
-            rich.print(Panel.fit(f"{json.dumps(datum, indent=2)}", title=f"{print_path.replace('field ', '')}"))
+            rich.print(
+                Panel.fit(
+                    f"{json.dumps(datum, indent=2)}",
+                    title=f"{print_path.replace('field ', '')}",
+                )
+            )
             return False
     return True
 
@@ -170,7 +189,6 @@ def validate_iceberg_schema(schema, test_records):
             rich.print(record, "\n")
         results.append(res)
     return all(results)
-    
 
 
 # validate_iceberg_schema(

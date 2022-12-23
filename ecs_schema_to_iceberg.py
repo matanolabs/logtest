@@ -43,7 +43,9 @@ def merge(a, b, path=None):
                 for i, c in enumerate(zip(a[key], b[key])):
                     a[key][i] = merge(*c, path + [str(key)])
             elif isinstance(a[key], list) and not isinstance(b[key], list):
-                print(f"[yellow]WARN: Attempting to auto resolve potential '.*' conflicting at: {'.'.join(path + [str(key)])}")
+                print(
+                    f"[yellow]WARN: Attempting to auto resolve potential '.*' conflicting at: {'.'.join(path + [str(key)])}"
+                )
                 merge(a[key], [b[key]], path + [str(key)])
             elif a[key] == b[key]:
                 pass  # same leaf value
@@ -68,6 +70,7 @@ def merge(a, b, path=None):
                 breakpoint()
     return a
 
+
 def traverse(dic, path=[]):
     if isinstance(dic, dict):
         for x in dic.keys():
@@ -84,9 +87,17 @@ def deepen(j):
     d = {}
     for key, value in j.items():
         s = d
-        tokens = re.findall(r'\w+', key)
-        for index, (token, next_token) in enumerate(zip(tokens, tokens[1:] + [value]), 1):
-            value = next_token if index == len(tokens) else [] if next_token.isdigit() else {}
+        tokens = re.findall(r"\w+", key)
+        for index, (token, next_token) in enumerate(
+            zip(tokens, tokens[1:] + [value]), 1
+        ):
+            value = (
+                next_token
+                if index == len(tokens)
+                else []
+                if next_token.isdigit()
+                else {}
+            )
             if isinstance(s, list):
                 token = int(token)
                 while token >= len(s):
@@ -96,13 +107,15 @@ def deepen(j):
             s = s[token]
     return d
 
-def deep_find(obj, keys, delimiter = "."):
+
+def deep_find(obj, keys, delimiter="."):
     if type(keys) == str:
         keys = keys.split(delimiter)
 
     def reducer(acc, key):
         value, path = acc
-        if (value == None): return (None, None)
+        if value == None:
+            return (None, None)
 
         if type(value) == list:
             path += "[0]"
@@ -112,21 +125,26 @@ def deep_find(obj, keys, delimiter = "."):
 
         return (
             value,
-            (f"{path}.{key}" if path else f"{key}") if value is not None else None
+            (f"{path}.{key}" if path else f"{key}") if value is not None else None,
         )
 
     return reduce(reducer, keys, (obj, ""))
+
 
 def ensurepath(dic, keys):
     for i, key in enumerate(keys[:-1]):
         if type(dic) != dict:
             if dic[0] == "string":
-                print(f"[yellow]WARN: Fixing intermediate array object field: {'.'.join(keys[:i])}")
+                print(
+                    f"[yellow]WARN: Fixing intermediate array object field: {'.'.join(keys[:i])}"
+                )
                 dic[0] = {}
             dic = dic[0]
         r = dic.setdefault(key, {})
         if r == "string":
-            print(f"[yellow]WARN: Fixing intermediate array object field: {'.'.join(keys[:i+1])}")
+            print(
+                f"[yellow]WARN: Fixing intermediate array object field: {'.'.join(keys[:i+1])}"
+            )
             r = dic[key] = {}
         dic = r
     return dic
@@ -150,7 +168,9 @@ def _to_schema(item, is_root=False):
             #     print(field, schema)
             # print("ss", schema, keys, field,subkeys, field_item, field_schema)
             if type(field_item) == list:
-                print(f"[yellow]WARN: Fixing intermediate array object field: {'.'.join([*keys, *subkeys[:-1]])}")
+                print(
+                    f"[yellow]WARN: Fixing intermediate array object field: {'.'.join([*keys, *subkeys[:-1]])}"
+                )
                 if field_item[0] == "string":
                     field_item[0] = field_schema
                 field_item = field_item[0]
@@ -219,14 +239,8 @@ def ecs_to_iceberg_type(item, normalization=None):
             "type": "struct",
             "fields": [
                 # TODO: FIX THIS
-                {
-                    "name": "lon",
-                    "type": "float",
-                },
-                {
-                    "name": "lat",
-                    "type": "float",
-                },
+                {"name": "lon", "type": "float",},
+                {"name": "lat", "type": "float",},
             ],
         }
     elif ecs_type == "array":
@@ -265,7 +279,11 @@ def ecs_to_iceberg_type(item, normalization=None):
 def expand(node):
     valid_types = {"struct", "list", "primitive"}
     if isinstance(node, dict):
-        if "type" not in node or type(node["type"]) != string or node["type"] not in valid_types:
+        if (
+            "type" not in node
+            or type(node["type"]) != string
+            or node["type"] not in valid_types
+        ):
             node = {"type": "struct", "fields": node}
         for f in node["fields"]:
             node["fields"][f] = expand(node["fields"][f])
@@ -275,11 +293,13 @@ def expand(node):
 
     return {"type": "primitive", "shape": node}
 
+
 def expand_and_serialize_to_fields(item):
     item = deepcopy(item)
-    item = {k: expand(n) for k,n in item.items()}
+    item = {k: expand(n) for k, n in item.items()}
     # print("SSS",item)
     return serialize_to_fields(item)
+
 
 def serialize_to_fields(item):
     fields = []
@@ -297,7 +317,9 @@ def serialize_to_fields(item):
         elif node["type"] == "list":
             field["type"] = {
                 "type": "list",
-                "element": serialize_to_fields({"$element": node["element"]})[0]["type"],
+                "element": serialize_to_fields({"$element": node["element"]})[0][
+                    "type"
+                ],
             }
         fields.append(field)
 
@@ -314,7 +336,11 @@ def fields_to_schema(fields):
                 fields_to_schema(item["type"]["fields"])
                 if item["type"]["type"] == "struct"
                 else (
-                    [fields_to_schema([{"name": "$element", "type": item["type"]["element"]}])["$element"]]
+                    [
+                        fields_to_schema(
+                            [{"name": "$element", "type": item["type"]["element"]}]
+                        )["$element"]
+                    ]
                     if item["type"]["type"] == "list"
                     else "UNKNOWN"
                 )
@@ -326,6 +352,7 @@ def fields_to_schema(fields):
 
     return reduce(reducer, fields, {})
 
+
 def fields_to_schema_expanded(fields):
     # if type(fields) != list:
     #     return fields
@@ -333,34 +360,58 @@ def fields_to_schema_expanded(fields):
     def reducer(acc, item):
         acc[item["name"]] = (
             (
-                { **{k: v for k, v in item.items() if k not in {"name"}}, "type": {"type": "struct", "fields": fields_to_schema_expanded(item["type"]["fields"]) } }
+                {
+                    **{k: v for k, v in item.items() if k not in {"name"}},
+                    "type": {
+                        "type": "struct",
+                        "fields": fields_to_schema_expanded(item["type"]["fields"]),
+                    },
+                }
                 if item["type"]["type"] == "struct"
                 else (
-                    { **{k: v for k, v in item.items() if k not in {"name"}}, "type": {"type": "list", "element": fields_to_schema_expanded([{"name": "$element", "type": item["type"]["element"]}])["$element"] } }
+                    {
+                        **{k: v for k, v in item.items() if k not in {"name"}},
+                        "type": {
+                            "type": "list",
+                            "element": fields_to_schema_expanded(
+                                [{"name": "$element", "type": item["type"]["element"]}]
+                            )["$element"],
+                        },
+                    }
                     if item["type"]["type"] == "list"
                     else "UNKNOWN"
                 )
             )
             if type(item["type"]) == dict
-            else {**{k: v for k, v in item.items() if k not in {"name"}}, "type": "primitive", "shape": item["type"]}
+            else {
+                **{k: v for k, v in item.items() if k not in {"name"}},
+                "type": "primitive",
+                "shape": item["type"],
+            }
         )
         return acc
 
     return reduce(reducer, fields, {})
 
+
 ECS_SCHEMA = {}
+
 
 def ecs_subschema_from_fields(fields):
     def reducer(acc, field):
         value, path = deep_find(ECS_SCHEMA, field)
+        if field == "@timestamp":
+            return acc
         if path is None:
             raise Exception(f"Field {field} not found in ECS schema")
-        return merge(acc, deepen({ path: value }))
+        return merge(acc, deepen({path: value}))
 
     return reduce(reducer, fields, {})
 
+
 def is_ecs_field(*keys):
     return deep_find(ECS_SCHEMA, keys)[0] is not None
+
 
 def schema_to_iceberg(p, extract_ecs_fields=True):
     schema = _to_schema(p[0], is_root=True)
@@ -368,12 +419,10 @@ def schema_to_iceberg(p, extract_ecs_fields=True):
         # print(schema)
         schema = merge(schema, _to_schema(e, is_root=True))
 
-
     if "@timestamp" in schema:
         v = schema.pop("@timestamp")
         if not extract_ecs_fields:
             schema["ts"] = v
-
 
     ecs_fields = []
     if extract_ecs_fields:
@@ -424,7 +473,7 @@ if __name__ == "__main__":
     # res = schema_to_iceberg(p[0]["fields"])
 
     ecs_fields = expand_and_serialize_to_fields(ECS_SCHEMA)
-    ecs_fields = [ecs_fields[-1]] + ecs_fields[:-1] # keep ts at front
+    ecs_fields = [ecs_fields[-1]] + ecs_fields[:-1]  # keep ts at front
     iceberg_ecs_schema = {"type": "struct", "fields": ecs_fields}
     with open("ecs_iceberg_schema.json", "w") as f:
         json.dump(iceberg_ecs_schema, f, indent=2, sort_keys=False)

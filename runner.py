@@ -6,6 +6,7 @@ import pyperclip
 import sys
 
 from rich import print
+
 url = "http://0.0.0.0:8080/resolve"
 
 from argparse import ArgumentParser
@@ -29,65 +30,66 @@ del(.json)
 .ecs.version = "8.0.0"
 """
 
+
 def run_transform_vrl(prog, event):
-      prog = template.format(prog)
-      if type(event) == dict:
+    prog = template.format(prog)
+    if type(event) == dict:
         event = {"json": event}
-      else:
+    else:
         assert type(event) == str
         event = {"message": event}
-      # pyperclip.copy(prog)
+    # pyperclip.copy(prog)
 
-      result, output = vrl(prog, event)
-      return {
+    result, output = vrl(prog, event)
+    return {
         "result": result,
         "output": output,
-      }
+    }
+
 
 def vrl(prog, event):
-      try:
-        payload = json.dumps({"program": prog, "event": event })
-        headers = {'Content-Type': 'application/json'}
+    try:
+        payload = json.dumps({"program": prog, "event": event})
+        headers = {"Content-Type": "application/json"}
         response = requests.request("POST", url, headers=headers, data=payload)
         res = json.loads(response.text)
         if res.get("error"):
-              raise Exception(res["error"])
+            raise Exception(res["error"])
         return res["success"]["result"], res["success"]["output"]
-      except requests.exceptions.ConnectionError:
-        print("\n[bold red]Error: [/bold red]Could not connect to Vector Remap Language (VRL) server. Please make sure it is running at http://0.0.0.0:8080 (cargo run)")
+    except requests.exceptions.ConnectionError:
+        print(
+            "\n[bold red]Error: [/bold red]Could not connect to Vector Remap Language (VRL) server. Please make sure it is running at http://0.0.0.0:8080 (cargo run)"
+        )
         sys.exit(1)
+
+
 if __name__ == "__main__":
 
-  parser = ArgumentParser()
-  parser.add_argument("file", type=str)
-  opts = parser.parse_args()
+    parser = ArgumentParser()
+    parser.add_argument("file", type=str)
+    opts = parser.parse_args()
 
-  with open(Path(opts.file)) as f:
-      pipeline = yaml.safe_load(f)
-      event = {
-          "ts": 1591367999.512593,
-          "uid": "C5bLoe2Mvxqhawzqqd",
-          "id.orig_h": "192.168.4.76",
-          "id.orig_p": 46378,
-          "id.resp_h": "31.3.245.133",
-          "id.resp_p": 80,
-          "trans_depth": 1,
-          "method": "GET",
-          "host": "testmyids.com",
-          "uri": "/",
-          "version": "1.1",
-          "user_agent": "curl/7.47.0",
-          "request_body_len": 0,
-          "response_body_len": 39,
-          "status_code": 200,
-          "status_msg": "OK",
-          "tags": [],
-          "resp_fuids": [
-            "FEEsZS1w0Z0VJIb5x4"
-          ],
-          "resp_mime_types": [
-            "text/plain"
-          ]
-      }
-      run_transform_vrl(pipeline["transform"], event)
-
+    with open(Path(opts.file)) as f:
+        pipeline = yaml.safe_load(f)
+        event = {
+            "ts": 1591367999.512593,
+            "uid": "C5bLoe2Mvxqhawzqqd",
+            "id.orig_h": "192.168.4.76",
+            "id.orig_p": 46378,
+            "id.resp_h": "31.3.245.133",
+            "id.resp_p": 80,
+            "trans_depth": 1,
+            "method": "GET",
+            "host": "testmyids.com",
+            "uri": "/",
+            "version": "1.1",
+            "user_agent": "curl/7.47.0",
+            "request_body_len": 0,
+            "response_body_len": 39,
+            "status_code": 200,
+            "status_msg": "OK",
+            "tags": [],
+            "resp_fuids": ["FEEsZS1w0Z0VJIb5x4"],
+            "resp_mime_types": ["text/plain"],
+        }
+        run_transform_vrl(pipeline["transform"], event)
