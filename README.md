@@ -1,36 +1,36 @@
 
-## logtest - Interactive workflow to build & test new Matano log sources locally using your IDE
+# `logtest` - Interactive workflow to build & test new Matano log sources locally using your IDE
 
-### Installation
+## Installation
 
 #### Prerequisites
 
--   **1) Install [difftastic](https://difftastic.wilfred.me.uk/) (`difft` cli)**
-##### macOS / Linux
-```
-brew install difftastic
-```
-    **Other:** See other installation options for difftastic [here](https://difftastic.wilfred.me.uk/installation.html).
+- **1) Install [difftastic](https://difftastic.wilfred.me.uk/) (`difft` cli)**
+  ##### macOS / Linux
+  ```
+  brew install difftastic
+  ```
+  **Other:** See other installation options for difftastic [here](https://difftastic.wilfred.me.uk/installation.html).
 
 
 - **2) Clone / start the local VRL webserver (for testing)**
-##### Clone
-```
-git clone https://github.com/shaeqahmed/vrl-web.git
-```
-##### Start the server and keep it running (in a new terminal tab)
-```
-cd vrl-web/vrl-web-server-warp
-cargo run --release
-```
+  ##### Clone
+  ```
+  git clone https://github.com/shaeqahmed/vrl-web.git
+  ```
+  ##### Start the server and keep it running (in a new terminal tab)
+  ```
+  cd vrl-web/vrl-web-server-warp
+  cargo run --release
+  ```
 
-#### Install
+#### Install dependencies
 
 ```
 python3 -m pip install -r requirements.txt
 ```
 
-### Usage
+## Usage
 
 ### Example
 
@@ -73,7 +73,7 @@ For inspiration on example test cases, fields to start with, and how to structur
 - ##### Tests https://github.com/elastic/integrations/tree/main/packages/aws/data_stream/vpcflow/_dev/test/pipeline
 - ##### Fields https://github.com/elastic/integrations/tree/main/packages/aws/data_stream/vpcflow/fields
 
-### Development Workflow
+## Development Workflow
 
 After running the script, if an error is encountered such as an invalid VRL script, mismatching schemas, etc. the error will be logged by the CLI and your EDITOR will be opened with the corresponding files (log source, failing test case, etc.) prompting you to make the necessary fixes.
 
