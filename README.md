@@ -77,6 +77,6 @@ For inspiration on example test cases, fields to start with, and how to structur
 
 After running the script, if an error is encountered such as an invalid VRL script, mismatching schemas, etc. the error will be logged by the CLI and your EDITOR will be opened with the corresponding files (log source, failing test case, etc.) prompting you to make the necessary fixes.
 
-Once you have made the fixes, just close your editor and the CLI will continue to re-run the steps until all the test cases pass.
+Once you have made the fixes, close the editor window, and **hit 'enter** in the CLI as it prompts you to re-run the steps until all the test cases are passing. To close out the interactive session, run **Ctrl + C** in the terminal to end the process.
 
 Happy log source writing 🎉. 
