@@ -12,7 +12,7 @@ transform: |-
   # Transform
   .ts = to_timestamp!("2019-08-26T19:48:53.000Z")
 
-  kv = parse_key_value!(del(.message))
+  kv = parse_key_value(del(.message)) ?? {}
 
   .minimal.version = to_int(kv.version) ?? null
   .cloud.account.id = kv.aws_account_id

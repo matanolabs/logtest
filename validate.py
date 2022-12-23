@@ -16,6 +16,8 @@ from rich.console import Console
 import rich
 from rich.panel import Panel
 
+from runner import vrl
+
 error_console = Console(stderr=True, style="bold red")
 
 
@@ -69,6 +71,26 @@ def iceberg_pretty_validator(datum, schema, *, path=""):
                 )
             )
             return False
+
+        for k in set(datum.keys() if datum else {}) - set(schema.keys()):
+            if path == "" and k == "ts":
+                iceberg_pretty_validator(datum[k], "timestamp", path=".ts")
+                continue
+
+            v = datum[k]
+            if type(v) == dict:
+                extra_keys = vrl("""
+                keys = []
+                for_each(flatten!(.)) -> |k, v| {{
+                    keys = push(keys, k)
+                }}
+                keys
+                """, datum[k])[1]
+                for ex_k in extra_keys:
+                    error_console.print(f"[bold yellow]Warning: Extra key in datum: [reset][bold]: {path}.{k}.{ex_k}")
+            else:
+                error_console.print(f"[bold yellow]Warning: Extra key in datum: [reset][bold]: {path}.{k}")
+
         return all(
             [
                 iceberg_pretty_validator(
@@ -98,9 +120,11 @@ def iceberg_pretty_validator(datum, schema, *, path=""):
     elif schema == "timestamp":
         if (
             datum
-            and type(datum)
             and not (
-                datum.endswith("Z") or datum.startswith("20") or datum.startswith("19")
+                type(datum) == str
+                and (
+                    datum.endswith("Z") or datum.startswith("20") or datum.startswith("19")
+                )
             )
         ):
             error_console.print(

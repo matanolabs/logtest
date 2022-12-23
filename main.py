@@ -379,15 +379,15 @@ def run_tests_get_errors(logsource_dir, opts, table_schema, table_file, data):
                 pass
 
             try:
-                if expected is not None:
+                if (expected is not None and len(expected) > i):
                     expected[i]["__expected"] = True
-                n_expected = normalize(expected[i]) if expected is not None else None
+                n_expected = normalize(expected[i]) if expected is not None and len(expected) > i else None
                 res = run_transform_vrl(data["transform"], test_event)["result"]
                 n_res = normalize(res)
 
                 if n_expected is None:
                     print(
-                        f"[yellow]No expected result for test {test_event_f} to assert against."
+                        f"[yellow]No expected result corresponding to testcase #{i} in {test_event_f} to assert against."
                     )
                     n_expected = n_res
             except Exception as e:
@@ -448,8 +448,6 @@ def run_tests_get_errors(logsource_dir, opts, table_schema, table_file, data):
                 actual_tmp = Path(os.path.join(td, "actual.json"))
                 with open(str(actual_tmp.absolute()), "w") as f:
                     f.write(json.dumps(n_res, indent=2))
-
-                breakpoint()
 
                 diff = difft(
                     str(actual_tmp.absolute()),
