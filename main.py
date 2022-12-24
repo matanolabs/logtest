@@ -191,6 +191,9 @@ if is_array(.rule.reference) {
 if is_array(.destination.user.email) {
     .destination.user.email = join!(.destination.user.email, ", ")
 }
+if is_array(.file.name) {
+    .file.name = join!(.file.name, ", ")
+}
 
 # remove weird unicode issue encoded /u2229 encoded as slashes by VRL, but removed by es
 . = map_values(., recursive: true) -> |v| {
@@ -200,9 +203,15 @@ if is_array(.destination.user.email) {
 
         # normalize UTC timestamp strings
         if match(v, r'^(-?(?:[1-9][0-9]*)?[0-9]{4})-(1[0-2]|0[1-9])-(3[01]|0[1-9]|[12][0-9])T(2[0-3]|[01][0-9]):([0-5][0-9]):([0-5][0-9])(\\.[0-9]+)?(\.?)([0-9]*)?(Z)?$') {
+            if !contains(v, "+") && !ends_with(v, "Z") {
+                v = v + "Z"
+            }
             # v = slice!(to_string(to_timestamp!(v)), 0, 22)
             v = slice!(to_string(to_timestamp!(v)), 0, 21) # check only first two decimal places (avoid diff on decimal round differences)
             v = split(v, "Z")[0]
+            if ends_with!(v, ".0") {
+                v = slice!(v, 0, length!(v) - 2)
+            }
         }
 
         v
@@ -594,7 +603,9 @@ if __name__ == "__main__":
         del table["schema"]["schema"]
 
         tablename = logsource_dir.name
-        table["transform"] = "# Transform\n\n# Write your VRL transform script here :)"
+
+        if "transform" not in table:
+            table["transform"] = "# Transform\n\n# Write your VRL transform script here :)"
 
         table["name"] = tablename
 
@@ -616,8 +627,9 @@ if __name__ == "__main__":
                 if "schema" not in data:
                     data["schema"] = {}
                 data["schema"]["ecs_field_names"] = sorted(
-                    list(set(table["schema"]["ecs_field_names"]))
+                    list({ *set(table["schema"]["ecs_field_names"]) - set(["@timestamp"]), *set(data["schema"].get("ecs_field_names", [])) } )
                 )
+                table["schema"]["ecs_field_names"] = data["schema"]["ecs_field_names"]
                 table_schema = fields_to_schema(
                     data.get("schema", {}).get("fields", [])
                 )
@@ -656,8 +668,6 @@ if __name__ == "__main__":
                 table_schema,
             )
 
-            # all_passed = False
-            # while not all_passed:
             with open(table_file) as f:
                 data = yaml.safe_load(f)
                 errors = run_tests_get_errors(
