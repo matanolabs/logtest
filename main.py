@@ -149,7 +149,7 @@ del(.event.created)
 del(.user_agent)
 
 # wow.. todo fix these.....
-del(.url)
+# del(.url)
 del(.threat.indicator.url)
 
 del(.ecs.version)

@@ -834,7 +834,7 @@
             "url": {
                 "domain": "ctldl.windowsupdate.com",
                 "original": "http://ctldl.windowsupdate.com/msdownload/update/v3/static/trustedr/en/pinrulesstl.cab?111111111111",
-                "path": "http://ctldl.windowsupdate.com/msdownload/update/v3/static/trustedr/en/pinrulesstl.cab",
+                "path": "/msdownload/update/v3/static/trustedr/en/pinrulesstl.cab",
                 "query": "111111111111"
             },
             "user_agent": {
