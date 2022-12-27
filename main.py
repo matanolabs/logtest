@@ -1,5 +1,6 @@
 from fileinput import filename
 from ecs_schema_to_iceberg import *
+from ecs_pipeline_to_vrl import *
 from validate import validate_iceberg_schema
 from runner import run_transform_vrl, vrl
 import os
@@ -61,6 +62,26 @@ if .event.type != null && !is_array(.event.type) {
     }
 }
 
+if .__expected == true && is_array(.event.action) {
+    .event.action = .event.action[0]
+}
+
+if .threat.tactic.name != null && !is_array(.threat.tactic.name) {
+    if .__expected == true {
+        .threat.tactic.name = [ .threat.tactic.name ]
+    } else {
+        abort
+    }
+}
+
+if .threat.technique.name != null && !is_array(.threat.technique.name) {
+    if .__expected == true {
+        .threat.technique.name = [ .threat.technique.name ]
+    } else {
+        abort
+    }
+}
+
 if .__expected == true {
     if .tls.client.x509.subject != null {
         .tls.client.x509.subject = map_values(compact(object!(.tls.client.x509.subject))) -> |v| { [v] }
@@ -101,7 +122,6 @@ if .__expected == true {
     .host.ip = [ .host.ip ]
     .network.application = if .network.application != null { downcase!(.network.application[0]) } else { null }
 }
-
 
 if .event.category != null && !is_array(.event.category) {
     .event.category = [.event.category]
@@ -161,6 +181,7 @@ del(.dns.question.name)
 del(.dns.question.registered_domain)
 del(.dns.question.subdomain)
 del(.dns.question.top_level_domain)
+
 # if .dns.answers != null {
 #     .dns.answers = map_values(array!(.dns.answers)) -> |d| {
 #         d.ttl = to_float!(d.ttl)
@@ -280,6 +301,31 @@ if .okta.debug_context.debug_data.flattened != null {
     del(.okta.debug_context.debug_data.flattened.risk)
     del(.okta.debug_context.debug_data.flattened.behaviors)
     .okta.debug_context.debug_data.flattened = encode_json(.okta.debug_context.debug_data.flattened)
+}
+
+# crowdstrike fdr fixes
+if exists(.crowdstrike) && .crowdstrike.DownloadPort == null && .url.scheme != null {
+    .url.scheme = null
+}
+
+# crowdstrike falcon fixes
+if .crowdstrike.event.AuditKeyValues != null {
+.crowdstrike.event.AuditKeyValues = map_values(array!(.crowdstrike.event.AuditKeyValues)) -> |v| {
+  if !is_string(v) {
+    encode_json(v)
+  } else {
+    v
+  }
+}
+}
+if .crowdstrike.event.ExecutablesWritten != null {
+.crowdstrike.event.ExecutablesWritten = map_values(array!(.crowdstrike.event.ExecutablesWritten)) -> |v| {
+  if !is_string(v) {
+    encode_json(v)
+  } else {
+    v
+  }
+}
 }
 
 del(.__expected)
