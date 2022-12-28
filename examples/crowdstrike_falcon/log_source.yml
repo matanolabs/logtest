@@ -1,5 +1,4 @@
 name: crowdstrike_falcon
-
 schema:
   ecs_field_names:
   - agent.id
@@ -313,8 +312,7 @@ schema:
             type: int
           - name: version
             type: string
-
-transform: |
+transform: |-
   .event.category = []
   .event.type = []
   .related.hosts = []
@@ -432,7 +430,7 @@ transform: |
   .event.outcome = .event.outcome || "unknown"
 
   if .crowdstrike.metadata.eventCreationTime != null {
-    .ts = to_string!(.crowdstrike.metadata.eventCreationTime)
+    .ts = .crowdstrike.metadata.eventCreationTime
   }
   if .crowdstrike.event.LateralMovement != null {
     .crowdstrike.event.LateralMovement = to_int!(.crowdstrike.event.LateralMovement)
