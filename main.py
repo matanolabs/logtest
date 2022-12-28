@@ -182,6 +182,17 @@ del(.dns.question.registered_domain)
 del(.dns.question.subdomain)
 del(.dns.question.top_level_domain)
 
+del(.url.extension)
+del(.url.name)
+del(.url.registered_domain)
+del(.url.subdomain)
+del(.url.top_level_domain)
+
+del(.server.name)
+del(.server.registered_domain)
+del(.server.subdomain)
+del(.server.top_level_domain)
+
 # if .dns.answers != null {
 #     .dns.answers = map_values(array!(.dns.answers)) -> |d| {
 #         d.ttl = to_float!(d.ttl)
@@ -422,9 +433,9 @@ def run_tests_get_errors(logsource_dir, opts, table_schema, table_file, data):
         for i, test_event in enumerate(rdr):
             if just_saw and i < from_test_idx:
                 continue
-            if i > 20:
-                print("Skipping remaining events...")
-                break
+            # if i > 20:
+            #     print("Skipping remaining events...")
+            #     break
             try:
                 if test_event.get("result", {}).get("splunk_server") or test_event.get(
                     "result", {}

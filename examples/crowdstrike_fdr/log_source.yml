@@ -2,727 +2,734 @@ name: crowdstrike_fdr
 
 schema:
   ecs_field_names:
-  - destination.address
-  - destination.as.number
-  - destination.as.organization.name
-  - destination.geo.city_name
-  - destination.geo.continent_name
-  - destination.geo.country_iso_code
-  - destination.geo.country_name
-  - destination.geo.location
-  - destination.geo.region_iso_code
-  - destination.geo.region_name
-  - destination.ip
-  - destination.port
-  - dns.question.name
-  - dns.question.registered_domain
-  - dns.question.subdomain
-  - dns.question.top_level_domain
-  - dns.question.type
-  - dns.type
-  - ecs.version
-  - event.action
-  - event.category
-  - event.created
-  - event.dataset
-  - event.id
-  - event.kind
-  - event.module
-  - event.original
-  - event.outcome
-  - event.timezone
-  - event.type
-  - file.device
-  - file.directory
-  - file.extension
-  - file.hash.sha256
-  - file.inode
-  - file.name
-  - file.path
-  - file.size
-  - file.type
-  - host.geo.city_name
-  - host.geo.continent_name
-  - host.geo.country_name
-  - host.geo.timezone
-  - host.hostname
-  - host.name
-  - log.file.path
-  - network.community_id
-  - network.direction
-  - network.iana_number
-  - network.transport
-  - observer.geo.city_name
-  - observer.geo.continent_name
-  - observer.geo.country_iso_code
-  - observer.geo.country_name
-  - observer.geo.location
-  - observer.geo.region_iso_code
-  - observer.geo.region_name
-  - observer.ip
-  - observer.serial_number
-  - observer.type
-  - observer.vendor
-  - observer.version
-  - os.type
-  - os.version
-  - process.args
-  - process.args_count
-  - process.command_line
-  - process.end
-  - process.entity_id
-  - process.executable
-  - process.exit_code
-  - process.hash.md5
-  - process.hash.sha256
-  - process.name
-  - process.parent.entity_id
-  - process.parent.name
-  - process.pgid
-  - process.pid
-  - process.start
-  - process.thread.id
-  - process.title
-  - process.uptime
-  - related.hash
-  - related.hosts
-  - related.ip
-  - related.user
-  - server.address
-  - server.domain
-  - server.registered_domain
-  - server.subdomain
-  - server.top_level_domain
-  - source.address
-  - source.as.number
-  - source.as.organization.name
-  - source.geo.city_name
-  - source.geo.continent_name
-  - source.geo.country_iso_code
-  - source.geo.country_name
-  - source.geo.location
-  - source.geo.region_iso_code
-  - source.geo.region_name
-  - source.ip
-  - source.mac
-  - source.port
-  - tags
-  - url.domain
-  - url.extension
-  - url.original
-  - url.path
-  - url.registered_domain
-  - url.scheme
-  - url.subdomain
-  - url.top_level_domain
-  - user.domain
-  - user.email
-  - user.full_name
-  - user.group.id
-  - user.id
-  - user.name
+    - destination.address
+    - destination.as.number
+    - destination.as.organization.name
+    - destination.geo.city_name
+    - destination.geo.continent_name
+    - destination.geo.country_iso_code
+    - destination.geo.country_name
+    - destination.geo.location
+    - destination.geo.region_iso_code
+    - destination.geo.region_name
+    - destination.ip
+    - destination.port
+    - dns.question.name
+    - dns.question.registered_domain
+    - dns.question.subdomain
+    - dns.question.top_level_domain
+    - dns.question.type
+    - dns.type
+    - ecs.version
+    - event.action
+    - event.category
+    - event.created
+    - event.dataset
+    - event.id
+    - event.kind
+    - event.module
+    - event.original
+    - event.outcome
+    - event.timezone
+    - event.type
+    - file.device
+    - file.directory
+    - file.extension
+    - file.hash.sha256
+    - file.inode
+    - file.name
+    - file.path
+    - file.size
+    - file.type
+    - host.geo.city_name
+    - host.geo.continent_name
+    - host.geo.country_name
+    - host.geo.timezone
+    - host.hostname
+    - host.name
+    - log.file.path
+    - network.community_id
+    - network.direction
+    - network.iana_number
+    - network.transport
+    - observer.geo.city_name
+    - observer.geo.continent_name
+    - observer.geo.country_iso_code
+    - observer.geo.country_name
+    - observer.geo.location
+    - observer.geo.region_iso_code
+    - observer.geo.region_name
+    - observer.ip
+    - observer.serial_number
+    - observer.type
+    - observer.vendor
+    - observer.version
+    - os.type
+    - os.version
+    - process.args
+    - process.args_count
+    - process.command_line
+    - process.end
+    - process.entity_id
+    - process.executable
+    - process.exit_code
+    - process.hash.md5
+    - process.hash.sha256
+    - process.name
+    - process.parent.entity_id
+    - process.parent.name
+    - process.pgid
+    - process.pid
+    - process.start
+    - process.thread.id
+    - process.title
+    - process.uptime
+    - related.hash
+    - related.hosts
+    - related.ip
+    - related.user
+    - server.address
+    - server.domain
+    - server.registered_domain
+    - server.subdomain
+    - server.top_level_domain
+    - source.address
+    - source.as.number
+    - source.as.organization.name
+    - source.geo.city_name
+    - source.geo.continent_name
+    - source.geo.country_iso_code
+    - source.geo.country_name
+    - source.geo.location
+    - source.geo.region_iso_code
+    - source.geo.region_name
+    - source.ip
+    - source.mac
+    - source.port
+    - tags
+    - url.domain
+    - url.extension
+    - url.original
+    - url.path
+    - url.registered_domain
+    - url.scheme
+    - url.subdomain
+    - url.top_level_domain
+    - user.domain
+    - user.email
+    - user.full_name
+    - user.group.id
+    - user.id
+    - user.name
   fields:
-  - name: crowdstrike
-    type:
-      type: struct
-      fields:
-      - name: AgentLoadFlags
-        type: string
-      - name: AgentLocalTime
-        type: timestamp
-      - name: AgentTimeOffset
-        type: float
-      - name: AgentVersion
-        type: string
-      - name: AllocateVirtualMemoryCount
-        type: long
-      - name: ApiReturnValue
-        type: string
-      - name: ArchiveFileWrittenCount
-        type: long
-      - name: AsepWrittenCount
-        type: long
-      - name: AttemptNumber
-        type: long
-      - name: AuthenticationId
-        type: string
-      - name: AuthenticationPackage
-        type: string
-      - name: AuthenticationUuid
-        type: string
-      - name: AuthenticationUuidAsString
-        type: string
-      - name: BinaryExecutableWrittenCount
-        type: long
-      - name: BiosManufacturer
-        type: string
-      - name: BiosReleaseDate
-        type: timestamp
-      - name: BiosVersion
-        type: string
-      - name: BootArgs
-        type: string
-      - name: BootTimeFunctionalityLevel
-        type: string
-      - name: BoundedCount
-        type: long
-      - name: BundleID
-        type: string
-      - name: CLICreationCount
-        type: long
-      - name: CallStackModuleNames
-        type: string
-      - name: CallStackModuleNamesVersion
-        type: string
-      - name: ChannelDiffStatus
-        type: string
-      - name: ChannelId
-        type: string
-      - name: ChannelVersion
-        type: string
-      - name: ChannelVersionRequired
-        type: string
-      - name: ChasisManufacturer
-        type: string
-      - name: ChassisType
-        type: string
-      - name: ClientComputerName
-        type: string
-      - name: CompletionEventId
-        type: string
-      - name: ConHostId
-        type: string
-      - name: ConHostProcessId
-        type: string
-      - name: ConfigBuild
-        type: string
-      - name: ConfigIDBase
-        type: string
-      - name: ConfigIDBuild
-        type: string
-      - name: ConfigIDPlatform
-        type: string
-      - name: ConfigStateData
-        type: string
-      - name: ConfigStateHash
-        type: string
-      - name: ConfigurationVersion
-        type: string
-      - name: ConnectTime
-        type: timestamp
-      - name: ConnectType
-        type: string
-      - name: ConnectionFlags
-        type: string
-      - name: ContextProcessId
-        type: string
-      - name: CpuClockSpeed
-        type: string
-      - name: CpuFeaturesMask
-        type: string
-      - name: CpuProcessorName
-        type: string
-      - name: CpuSignature
-        type: string
-      - name: CpuVendor
-        type: string
-      - name: CreateProcessCount
-        type: long
-      - name: CreateProcessType
-        type: string
-      - name: CurrentFunctionalityLevel
-        type: string
-      - name: CycleTime
-        type: long
-      - name: DesiredAccess
-        type: string
-      - name: DeviceId
-        type: string
-      - name: DirectoryCreatedCount
-        type: long
-      - name: DirectoryEnumeratedCount
-        type: long
-      - name: DnsRequestCount
-        type: long
-      - name: DocumentFileWrittenCount
-        type: long
-      - name: DownloadPath
-        type: string
-      - name: DownloadPort
-        type: long
-      - name: DownloadServer
-        type: string
-      - name: DualRequest
-        type: string
-      - name: ELFSubType
-        type: string
-      - name: EffectiveTransmissionClass
-        type: string
-      - name: EnabledPrivilegesBitmask
-        type: string
-      - name: Entitlements
-        type: string
-      - name: ErrorCode
-        type: string
-      - name: ErrorStatus
-        type: string
-      - name: EtwRawThreadId
-        type: long
-      - name: ExeAndServiceCount
-        type: long
-      - name: ExecutableDeletedCount
-        type: long
-      - name: FXFileSize
-        type: string
-      - name: Facility
-        type: string
-      - name: FailedConnectCount
-        type: long
-      - name: FalconGroupingTags
-        type: string
-      - name: FeatureExtractionVersion
-        type: string
-      - name: FeatureVector
-        type: string
-      - name: File
-        type: string
-      - name: FileAttributes
-        type: string
-      - name: FileDeletedCount
-        type: long
-      - name: FileEcpBitmask
-        type: string
-      - name: FileObject
-        type: string
-      - name: FirmwareAnalysisEclConsumerInterfaceVersion
-        type: string
-      - name: FirmwareAnalysisEclControlInterfaceVersion
-        type: string
-      - name: FirstSeen
-        type: timestamp
-      - name: Flags
-        type: string
-      - name: GenericFileWrittenCount
-        type: long
-      - name: GrandParentBaseFileName
-        type: string
-      - name: HostHiddenStatus
-        type: string
-      - name: IOServiceClass
-        type: string
-      - name: IOServiceName
-        type: string
-      - name: IOServicePath
-        type: string
-      - name: ImageSubsystem
-        type: string
-      - name: InContext
-        type: string
-      - name: InDiscards
-        type: string
-      - name: InErrors
-        type: string
-      - name: InMulticastPkts
-        type: string
-      - name: InOctets
-        type: string
-      - name: InUcastPkts
-        type: string
-      - name: InUnknownProtos
-        type: string
-      - name: Information
-        type: string
-      - name: InjectedDllCount
-        type: long
-      - name: InjectedThreadCount
-        type: long
-      - name: IntegrityLevel
-        type: string
-      - name: InterfaceAlias
-        type: string
-      - name: InterfaceGuid
-        type: string
-      - name: InterfaceIndex
-        type: long
-      - name: InterfaceType
-        type: string
-      - name: InterfaceVersion
-        type: string
-      - name: IrpFlags
-        type: string
-      - name: IsOnNetwork
-        type: string
-      - name: IsOnRemovableDisk
-        type: string
-      - name: IsTransactedFile
-        type: string
-      - name: KernelTime
-        type: long
-      - name: LfoUploadFlags
-        type: string
-      - name: LightningLatencyState
-        type: string
-      - name: Line
-        type: string
-      - name: LogicalCoreCount
-        type: long
-      - name: LoginSessionId
-        type: string
-      - name: LogoffTime
-        type: timestamp
-      - name: LogonDomain
-        type: string
-      - name: LogonId
-        type: string
-      - name: LogonServer
-        type: string
-      - name: LogonTime
-        type: timestamp
-      - name: LogonType
-        type: string
-      - name: MLModelVersion
-        type: string
-      - name: MachOSubType
-        type: string
-      - name: MajorFunction
-        type: string
-      - name: MajorVersion
-        type: string
-      - name: Malicious
-        type: string
-      - name: MaxThreadCount
-        type: long
-      - name: MemoryTotal
-        type: string
-      - name: MicrocodeSignature
-        type: string
-      - name: MinorFunction
-        type: string
-      - name: MinorVersion
-        type: string
-      - name: MoboManufacturer
-        type: string
-      - name: MoboProductName
-        type: string
-      - name: ModelPrediction
-        type: string
-      - name: ModuleLoadCount
-        type: long
-      - name: NDRoot
-        type: string
-      - name: NeighborList
-        type: string
-      - name: NetLuidIndex
-        type: long
-      - name: NetworkBindCount
-        type: long
-      - name: NetworkCapableAsepWriteCount
-        type: long
-      - name: NetworkCloseCount
-        type: long
-      - name: NetworkConnectCount
-        type: long
-      - name: NetworkConnectCountUdp
-        type: long
-      - name: NetworkContainmentState
-        type: string
-      - name: NetworkListenCount
-        type: long
-      - name: NetworkModuleLoadCount
-        type: long
-      - name: NetworkRecvAcceptCount
-        type: long
-      - name: NewExecutableWrittenCount
-        type: long
-      - name: NewFileIdentifier
-        type: string
-      - name: OSVersionFileData
-        type: string
-      - name: OSVersionFileName
-        type: string
-      - name: OU
-        type: string
-      - name: OperationFlags
-        type: string
-      - name: Options
-        type: string
-      - name: OutErrors
-        type: string
-      - name: OutMulticastPkts
-        type: string
-      - name: OutOctets
-        type: string
-      - name: OutUcastPkts
-        type: string
-      - name: Parameter1
-        type: string
-      - name: Parameter2
-        type: string
-      - name: Parameter3
-        type: string
-      - name: ParentAuthenticationId
-        type: string
-      - name: PasswordLastSet
-        type: string
-      - name: PciAttachmentState
-        type: string
-      - name: PhysicalAddressLength
-        type: long
-      - name: PhysicalCoreCount
-        type: long
-      - name: PointerSize
-        type: string
-      - name: PreviousConnectTime
-        type: timestamp
-      - name: PrivilegedProcessHandleCount
-        type: long
-      - name: PrivilegesBitmask
-        type: string
-      - name: ProcessCount
-        type: long
-      - name: ProcessCreateFlags
-        type: string
-      - name: ProcessParameterFlags
-        type: string
-      - name: ProcessSxsFlags
-        type: string
-      - name: ProcessorPackageCount
-        type: long
-      - name: ProductType
-        type: string
-      - name: ProtectVirtualMemoryCount
-        type: long
-      - name: ProvisionState
-        type: string
-      - name: PupAdwareConfidence
-        type: string
-      - name: PupAdwareDecisionValue
-        type: string
-      - name: QueueApcCount
-        type: long
-      - name: RFMState
-        type: string
-      - name: RGID
-        type: string
-      - name: RUID
-        type: string
-      - name: ReasonOfFunctionalityLevel
-        type: string
-      - name: RegKeySecurityDecreasedCount
-        type: long
-      - name: RemoteAccount
-        type: string
-      - name: RemovableDiskFileWrittenCount
-        type: long
-      - name: RequestType
-        type: string
-      - name: RpcClientProcessId
-        type: string
-      - name: RpcClientThreadId
-        type: string
-      - name: RpcNestingLevel
-        type: string
-      - name: RpcOpNum
-        type: string
-      - name: RunDllInvocationCount
-        type: long
-      - name: SVGID
-        type: string
-      - name: SVUID
-        type: string
-      - name: ScreenshotsTakenCount
-        type: long
-      - name: ScriptEngineInvocationCount
-        type: long
-      - name: SensorGroupingTags
-        type: string
-      - name: SensorStateBitMap
-        type: string
-      - name: ServiceDisplayName
-        type: string
-      - name: ServiceEventCount
-        type: long
-      - name: ServicePackMajor
-        type: string
-      - name: SessionId
-        type: string
-      - name: SessionProcessId
-        type: string
-      - name: SetThreadContextCount
-        type: long
-      - name: ShareAccess
-        type: string
-      - name: SiteName
-        type: string
-      - name: Size
-        type: long
-      - name: SnapshotFileOpenCount
-        type: long
-      - name: SourceFileName
-        type: string
-      - name: SourceProcessId
-        type: string
-      - name: SourceThreadId
-        type: string
-      - name: Status
-        type: string
-      - name: SubStatus
-        type: string
-      - name: SuppressType
-        type: string
-      - name: SuspectStackCount
-        type: long
-      - name: SuspiciousCredentialModuleLoadCount
-        type: long
-      - name: SuspiciousDnsRequestCount
-        type: long
-      - name: SuspiciousFontLoadCount
-        type: long
-      - name: SuspiciousRawDiskReadCount
-        type: long
-      - name: SyntheticPR2Flags
-        type: string
-      - name: SystemManufacturer
-        type: string
-      - name: SystemProductName
-        type: string
-      - name: SystemSerialNumber
-        type: string
-      - name: SystemSku
-        type: string
-      - name: SystemTableIndex
-        type: long
-      - name: Tags
-        type: string
-      - name: TargetFileName
-        type: string
-      - name: TargetThreadId
-        type: string
-      - name: Time
-        type: timestamp
-      - name: Timeout
-        type: long
-      - name: TokenType
-        type: string
-      - name: USN
-        type: string
-      - name: UnixMode
-        type: string
-      - name: UnsignedModuleLoadCount
-        type: long
-      - name: UploadId
-        type: string
-      - name: UserFlags
-        type: string
-      - name: UserGroupsBitmask
-        type: string
-      - name: UserLogoffType
-        type: string
-      - name: UserLogonFlags
-        type: string
-      - name: UserMemoryAllocateExecutableCount
-        type: long
-      - name: UserMemoryAllocateExecutableRemoteCount
-        type: long
-      - name: UserMemoryProtectExecutableCount
-        type: long
-      - name: UserMemoryProtectExecutableRemoteCount
-        type: long
-      - name: UserSid
-        type: string
-      - name: UserTime
-        type: long
-      - name: VerifiedCertificate
-        type: string
-      - name: VnodeModificationType
-        type: string
-      - name: VnodeType
-        type: string
-      - name: VolumeAppearanceTime
-        type: string
-      - name: VolumeBusName
-        type: string
-      - name: VolumeBusPath
-        type: string
-      - name: VolumeDeviceCharacteristics
-        type: string
-      - name: VolumeDeviceInternal
-        type: string
-      - name: VolumeDeviceModel
-        type: string
-      - name: VolumeDeviceObjectFlags
-        type: string
-      - name: VolumeDevicePath
-        type: string
-      - name: VolumeDeviceProtocol
-        type: string
-      - name: VolumeDeviceRevision
-        type: string
-      - name: VolumeDeviceType
-        type: string
-      - name: VolumeDriveLetter
-        type: string
-      - name: VolumeFileSystemDevice
-        type: string
-      - name: VolumeFileSystemDriver
-        type: string
-      - name: VolumeFileSystemType
-        type: string
-      - name: VolumeIsEncrypted
-        type: string
-      - name: VolumeIsNetwork
-        type: string
-      - name: VolumeMediaBSDMajor
-        type: string
-      - name: VolumeMediaBSDMinor
-        type: string
-      - name: VolumeMediaBSDName
-        type: string
-      - name: VolumeMediaBSDUnit
-        type: string
-      - name: VolumeMediaContent
-        type: string
-      - name: VolumeMediaEjectable
-        type: string
-      - name: VolumeMediaName
-        type: string
-      - name: VolumeMediaPath
-        type: string
-      - name: VolumeMediaRemovable
-        type: string
-      - name: VolumeMediaSize
-        type: string
-      - name: VolumeMediaUUID
-        type: string
-      - name: VolumeMediaWhole
-        type: string
-      - name: VolumeMediaWritable
-        type: string
-      - name: VolumeMountPoint
-        type: string
-      - name: VolumeName
-        type: string
-      - name: VolumeRealDeviceName
-        type: string
-      - name: VolumeSectorSize
-        type: string
-      - name: VolumeType
-        type: string
-      - name: VolumeUUID
-        type: string
-      - name: WindowFlags
-        type: string
-      - name: cid
-        type: string
-      - name: name
-        type: string
-  - name: observer
-    type:
-      type: struct
-      fields:
-      - name: address
-        type: string
-
+    - name: crowdstrike
+      type:
+        type: struct
+        fields:
+          - name: AgentLoadFlags
+            type: string
+          - name: AgentLocalTime
+            type: timestamp
+          - name: AgentTimeOffset
+            type: float
+          - name: AgentVersion
+            type: string
+          - name: AllocateVirtualMemoryCount
+            type: long
+          - name: ApiReturnValue
+            type: string
+          - name: ArchiveFileWrittenCount
+            type: long
+          - name: AsepWrittenCount
+            type: long
+          - name: AttemptNumber
+            type: long
+          - name: AuthenticationId
+            type: string
+          - name: AuthenticationPackage
+            type: string
+          - name: AuthenticationUuid
+            type: string
+          - name: AuthenticationUuidAsString
+            type: string
+          - name: BinaryExecutableWrittenCount
+            type: long
+          - name: BiosManufacturer
+            type: string
+          - name: BiosReleaseDate
+            type: timestamp
+          - name: BiosVersion
+            type: string
+          - name: BootArgs
+            type:
+              type: list
+              element: string
+          - name: BootTimeFunctionalityLevel
+            type: string
+          - name: BoundedCount
+            type: long
+          - name: BundleID
+            type: string
+          - name: CLICreationCount
+            type: long
+          - name: CallStackModuleNames
+            type: string
+          - name: CallStackModuleNamesVersion
+            type: string
+          - name: ChannelDiffStatus
+            type: string
+          - name: ChannelId
+            type: string
+          - name: ChannelVersion
+            type: string
+          - name: ChannelVersionRequired
+            type: string
+          - name: ChasisManufacturer
+            type: string
+          - name: ChassisType
+            type: string
+          - name: ClientComputerName
+            type: string
+          - name: CompletionEventId
+            type: string
+          - name: ConHostId
+            type: string
+          - name: ConHostProcessId
+            type: string
+          - name: ConfigBuild
+            type: string
+          - name: ConfigIDBase
+            type: string
+          - name: ConfigIDBuild
+            type: string
+          - name: ConfigIDPlatform
+            type: string
+          - name: ConfigStateData
+            type:
+              type: list
+              element: string
+          - name: ConfigStateHash
+            type: string
+          - name: ConfigurationVersion
+            type: string
+          - name: ConnectTime
+            type: timestamp
+          - name: ConnectType
+            type: string
+          - name: ConnectionFlags
+            type: string
+          - name: ContextProcessId
+            type: string
+          - name: CpuClockSpeed
+            type: string
+          - name: CpuFeaturesMask
+            type: string
+          - name: CpuProcessorName
+            type: string
+          - name: CpuSignature
+            type: string
+          - name: CpuVendor
+            type: string
+          - name: CreateProcessCount
+            type: long
+          - name: CreateProcessType
+            type: string
+          - name: CurrentFunctionalityLevel
+            type: string
+          - name: CycleTime
+            type: long
+          - name: DesiredAccess
+            type: string
+          - name: DeviceId
+            type: string
+          - name: DirectoryCreatedCount
+            type: long
+          - name: DirectoryEnumeratedCount
+            type: long
+          - name: DnsRequestCount
+            type: long
+          - name: DocumentFileWrittenCount
+            type: long
+          - name: DownloadPath
+            type: string
+          - name: DownloadPort
+            type: long
+          - name: DownloadServer
+            type: string
+          - name: DualRequest
+            type: string
+          - name: ELFSubType
+            type: string
+          - name: EffectiveTransmissionClass
+            type: string
+          - name: EnabledPrivilegesBitmask
+            type: string
+          - name: Entitlements
+            type: string
+          - name: ErrorCode
+            type: string
+          - name: ErrorStatus
+            type: string
+          - name: EtwRawThreadId
+            type: long
+          - name: ExeAndServiceCount
+            type: long
+          - name: ExecutableDeletedCount
+            type: long
+          - name: FXFileSize
+            type: string
+          - name: Facility
+            type: string
+          - name: FailedConnectCount
+            type: long
+          - name: FalconGroupingTags
+            type: string
+          - name: FeatureExtractionVersion
+            type: string
+          - name: FeatureVector
+            type: string
+          - name: File
+            type: string
+          - name: FileAttributes
+            type: string
+          - name: FileDeletedCount
+            type: long
+          - name: FileEcpBitmask
+            type: string
+          - name: FileObject
+            type: string
+          - name: FirmwareAnalysisEclConsumerInterfaceVersion
+            type: string
+          - name: FirmwareAnalysisEclControlInterfaceVersion
+            type: string
+          - name: FirstSeen
+            type: timestamp
+          - name: Flags
+            type: string
+          - name: GenericFileWrittenCount
+            type: long
+          - name: GrandParentBaseFileName
+            type: string
+          - name: HostHiddenStatus
+            type: string
+          - name: IOServiceClass
+            type: string
+          - name: IOServiceName
+            type: string
+          - name: IOServicePath
+            type: string
+          - name: ImageSubsystem
+            type: string
+          - name: InContext
+            type: string
+          - name: InDiscards
+            type: string
+          - name: InErrors
+            type: string
+          - name: InMulticastPkts
+            type: string
+          - name: InOctets
+            type: string
+          - name: InUcastPkts
+            type: string
+          - name: InUnknownProtos
+            type: string
+          - name: Information
+            type: string
+          - name: InjectedDllCount
+            type: long
+          - name: InjectedThreadCount
+            type: long
+          - name: IntegrityLevel
+            type: string
+          - name: InterfaceAlias
+            type: string
+          - name: InterfaceGuid
+            type: string
+          - name: InterfaceIndex
+            type: long
+          - name: InterfaceType
+            type: string
+          - name: InterfaceVersion
+            type: string
+          - name: IrpFlags
+            type: string
+          - name: IsOnNetwork
+            type: string
+          - name: IsOnRemovableDisk
+            type: string
+          - name: IsTransactedFile
+            type: string
+          - name: KernelTime
+            type: long
+          - name: LfoUploadFlags
+            type: string
+          - name: LightningLatencyState
+            type: string
+          - name: Line
+            type: string
+          - name: LogicalCoreCount
+            type: long
+          - name: LoginSessionId
+            type: string
+          - name: LogoffTime
+            type: timestamp
+          - name: LogonDomain
+            type: string
+          - name: LogonId
+            type: string
+          - name: LogonServer
+            type: string
+          - name: LogonTime
+            type: timestamp
+          - name: LogonType
+            type: string
+          - name: MLModelVersion
+            type: string
+          - name: MachOSubType
+            type: string
+          - name: MajorFunction
+            type: string
+          - name: MajorVersion
+            type: string
+          - name: Malicious
+            type: string
+          - name: MaxThreadCount
+            type: long
+          - name: MemoryTotal
+            type: string
+          - name: MicrocodeSignature
+            type: string
+          - name: MinorFunction
+            type: string
+          - name: MinorVersion
+            type: string
+          - name: MoboManufacturer
+            type: string
+          - name: MoboProductName
+            type: string
+          - name: ModelPrediction
+            type: string
+          - name: ModuleLoadCount
+            type: long
+          - name: NDRoot
+            type: string
+          - name: NeighborList
+            type:
+              type: list
+              element: string
+          - name: NetLuidIndex
+            type: long
+          - name: NetworkBindCount
+            type: long
+          - name: NetworkCapableAsepWriteCount
+            type: long
+          - name: NetworkCloseCount
+            type: long
+          - name: NetworkConnectCount
+            type: long
+          - name: NetworkConnectCountUdp
+            type: long
+          - name: NetworkContainmentState
+            type: string
+          - name: NetworkListenCount
+            type: long
+          - name: NetworkModuleLoadCount
+            type: long
+          - name: NetworkRecvAcceptCount
+            type: long
+          - name: NewExecutableWrittenCount
+            type: long
+          - name: NewFileIdentifier
+            type: string
+          - name: OSVersionFileData
+            type: string
+          - name: OSVersionFileName
+            type: string
+          - name: OU
+            type: string
+          - name: OperationFlags
+            type: string
+          - name: Options
+            type: string
+          - name: OutErrors
+            type: string
+          - name: OutMulticastPkts
+            type: string
+          - name: OutOctets
+            type: string
+          - name: OutUcastPkts
+            type: string
+          - name: Parameter1
+            type: string
+          - name: Parameter2
+            type: string
+          - name: Parameter3
+            type: string
+          - name: ParentAuthenticationId
+            type: string
+          - name: PasswordLastSet
+            type: string
+          - name: PciAttachmentState
+            type: string
+          - name: PhysicalAddressLength
+            type: long
+          - name: PhysicalCoreCount
+            type: long
+          - name: PointerSize
+            type: string
+          - name: PreviousConnectTime
+            type: timestamp
+          - name: PrivilegedProcessHandleCount
+            type: long
+          - name: PrivilegesBitmask
+            type: string
+          - name: ProcessCount
+            type: long
+          - name: ProcessCreateFlags
+            type: string
+          - name: ProcessParameterFlags
+            type: string
+          - name: ProcessSxsFlags
+            type: string
+          - name: ProcessorPackageCount
+            type: long
+          - name: ProductType
+            type: string
+          - name: ProtectVirtualMemoryCount
+            type: long
+          - name: ProvisionState
+            type: string
+          - name: PupAdwareConfidence
+            type: string
+          - name: PupAdwareDecisionValue
+            type: string
+          - name: QueueApcCount
+            type: long
+          - name: RFMState
+            type: string
+          - name: RGID
+            type: string
+          - name: RUID
+            type: string
+          - name: ReasonOfFunctionalityLevel
+            type: string
+          - name: RegKeySecurityDecreasedCount
+            type: long
+          - name: RemoteAccount
+            type: string
+          - name: RemovableDiskFileWrittenCount
+            type: long
+          - name: RequestType
+            type: string
+          - name: RpcClientProcessId
+            type: string
+          - name: RpcClientThreadId
+            type: string
+          - name: RpcNestingLevel
+            type: string
+          - name: RpcOpNum
+            type: string
+          - name: RunDllInvocationCount
+            type: long
+          - name: SVGID
+            type: string
+          - name: SVUID
+            type: string
+          - name: ScreenshotsTakenCount
+            type: long
+          - name: ScriptEngineInvocationCount
+            type: long
+          - name: SensorGroupingTags
+            type: string
+          - name: SensorStateBitMap
+            type: string
+          - name: ServiceDisplayName
+            type: string
+          - name: ServiceEventCount
+            type: long
+          - name: ServicePackMajor
+            type: string
+          - name: SessionId
+            type: string
+          - name: SessionProcessId
+            type: string
+          - name: SetThreadContextCount
+            type: long
+          - name: ShareAccess
+            type: string
+          - name: SiteName
+            type: string
+          - name: Size
+            type: long
+          - name: SnapshotFileOpenCount
+            type: long
+          - name: SourceFileName
+            type: string
+          - name: SourceProcessId
+            type: string
+          - name: SourceThreadId
+            type: string
+          - name: Status
+            type: string
+          - name: SubStatus
+            type: string
+          - name: SuppressType
+            type: string
+          - name: SuspectStackCount
+            type: long
+          - name: SuspiciousCredentialModuleLoadCount
+            type: long
+          - name: SuspiciousDnsRequestCount
+            type: long
+          - name: SuspiciousFontLoadCount
+            type: long
+          - name: SuspiciousRawDiskReadCount
+            type: long
+          - name: SyntheticPR2Flags
+            type: string
+          - name: SystemManufacturer
+            type: string
+          - name: SystemProductName
+            type: string
+          - name: SystemSerialNumber
+            type: string
+          - name: SystemSku
+            type: string
+          - name: SystemTableIndex
+            type: long
+          - name: Tags
+            type:
+              type: list
+              element: string
+          - name: TargetFileName
+            type: string
+          - name: TargetThreadId
+            type: string
+          - name: Time
+            type: timestamp
+          - name: Timeout
+            type: long
+          - name: TokenType
+            type: string
+          - name: USN
+            type: string
+          - name: UnixMode
+            type: string
+          - name: UnsignedModuleLoadCount
+            type: long
+          - name: UploadId
+            type: string
+          - name: UserFlags
+            type: string
+          - name: UserGroupsBitmask
+            type: string
+          - name: UserLogoffType
+            type: string
+          - name: UserLogonFlags
+            type: string
+          - name: UserMemoryAllocateExecutableCount
+            type: long
+          - name: UserMemoryAllocateExecutableRemoteCount
+            type: long
+          - name: UserMemoryProtectExecutableCount
+            type: long
+          - name: UserMemoryProtectExecutableRemoteCount
+            type: long
+          - name: UserSid
+            type: string
+          - name: UserTime
+            type: long
+          - name: VerifiedCertificate
+            type: string
+          - name: VnodeModificationType
+            type: string
+          - name: VnodeType
+            type: string
+          - name: VolumeAppearanceTime
+            type: string
+          - name: VolumeBusName
+            type: string
+          - name: VolumeBusPath
+            type: string
+          - name: VolumeDeviceCharacteristics
+            type: string
+          - name: VolumeDeviceInternal
+            type: string
+          - name: VolumeDeviceModel
+            type: string
+          - name: VolumeDeviceObjectFlags
+            type: string
+          - name: VolumeDevicePath
+            type: string
+          - name: VolumeDeviceProtocol
+            type: string
+          - name: VolumeDeviceRevision
+            type: string
+          - name: VolumeDeviceType
+            type: string
+          - name: VolumeDriveLetter
+            type: string
+          - name: VolumeFileSystemDevice
+            type: string
+          - name: VolumeFileSystemDriver
+            type: string
+          - name: VolumeFileSystemType
+            type: string
+          - name: VolumeIsEncrypted
+            type: string
+          - name: VolumeIsNetwork
+            type: string
+          - name: VolumeMediaBSDMajor
+            type: string
+          - name: VolumeMediaBSDMinor
+            type: string
+          - name: VolumeMediaBSDName
+            type: string
+          - name: VolumeMediaBSDUnit
+            type: string
+          - name: VolumeMediaContent
+            type: string
+          - name: VolumeMediaEjectable
+            type: string
+          - name: VolumeMediaName
+            type: string
+          - name: VolumeMediaPath
+            type: string
+          - name: VolumeMediaRemovable
+            type: string
+          - name: VolumeMediaSize
+            type: string
+          - name: VolumeMediaUUID
+            type: string
+          - name: VolumeMediaWhole
+            type: string
+          - name: VolumeMediaWritable
+            type: string
+          - name: VolumeMountPoint
+            type: string
+          - name: VolumeName
+            type: string
+          - name: VolumeRealDeviceName
+            type: string
+          - name: VolumeSectorSize
+            type: string
+          - name: VolumeType
+            type: string
+          - name: VolumeUUID
+            type: string
+          - name: WindowFlags
+            type: string
+          - name: cid
+            type: string
+          - name: name
+            type: string
+    - name: observer
+      type:
+        type: struct
+        fields:
+          - name: address
+            type: string
 transform: |-
   .observer.vendor = "crowdstrike"
   .observer.type = "agent"
@@ -3126,16 +3133,27 @@ transform: |-
   }
 
   .event.id = del(.crowdstrike.id)
-  .event.action = string!(del(.crowdstrike.event_simpleName))
+  .event.action = string(del(.crowdstrike.event_simpleName)) ?? null
 
               
   for_each(object!(.crowdstrike)) -> |k, v| {
-    if match(k, r'Count$|Port$') {
+    if match(k, r'Count$|Port$|CountUdp$') {
       if is_string(v) {
         .crowdstrike = set!(.crowdstrike, [k], to_int!(v))
       }
     }
-  }                  
+  }
+
+  nullish = ["", "-", "N/A", "NA", "none"]
+  if .crowdstrike != null {
+    .crowdstrike = map_values(object!(.crowdstrike)) -> |v| {
+      if includes(nullish, v) {
+        null
+      } else {
+        v
+      }
+    }
+  }
               
   md5_hash = del(.crowdstrike.MD5HashData)
   sha1_hash = del(.crowdstrike.SHA1HashData)
@@ -3164,7 +3182,7 @@ transform: |-
 
   .observer.version = del(.crowdstrike.AgentVersion)
 
-  .observer.version = del(.crowdstrike.ConfigBuild) || .observer.version
+  .observer.version = .observer.version || del(.crowdstrike.ConfigBuild)
 
   if .observer.ip != null && .observer.ip != "" { 
     .related.ip = push(.related.ip, .observer.ip) 
@@ -3217,19 +3235,28 @@ transform: |-
 
   if .process.command_line != null && .process.command_line != "" && .os.type != null { 
     # TODO() do this better
-    .process.args = filter(split!(.process.command_line, " ")) -> |_i, v| { !is_empty(v) }
-  	.process.args_count = length(.process.args)              
+    command_line = strip_whitespace!(.process.command_line)
+    .process.args = filter(split(command_line, " ")) -> |_i, v| { !is_empty(v) }
+    .process.args_count = length(.process.args)
+    .process.args = filter(split(command_line, " ")) -> |_i, v| { v != "-" }
+    .process.args = map_values(.process.args) -> |v| {
+      if starts_with(string!(v), "\"") && ends_with(string!(v), "\"") {
+        slice!(v, 1, -1)
+      } else {
+        v
+      }
+     }
   }
 
   .process.executable = del(.crowdstrike.ImageFileName)
 
   if .process.executable != null && .process.executable != "" { 
-  	executable = string!(.process.executable)
-  	name = executable
-  	if starts_with(executable, "\\") || starts_with(executable, "/") {
-  	  name = split(executable, slice!(executable, 0, 1))[-1]
-  	}
-  	.process.name = name                        
+    executable = string!(.process.executable)
+    name = executable
+    if starts_with(executable, "\\") || starts_with(executable, "/") {
+      name = split(executable, slice!(executable, 0, 1))[-1]
+    }
+    .process.name = name                        
   }
 
   if .crowdstrike.ExitCode != null {
@@ -3239,13 +3266,13 @@ transform: |-
 
   s = null
   if !is_nullish(.crowdstrike.ProcessStartTime) {                          
-  	s = to_float!(del(.crowdstrike.ProcessStartTime))
+    s = to_float!(del(.crowdstrike.ProcessStartTime))
     .process.start = to_timestamp!(s, "seconds")                       
   }
 
   e = null
   if !is_nullish(.crowdstrike.ProcessEndTime) {                          
-  	e = to_float!(del(.crowdstrike.ProcessEndTime))
+    e = to_float!(del(.crowdstrike.ProcessEndTime))
     .process.end = to_timestamp!(e, "seconds")
   }
   dur = (e-s)/1000 ?? null
@@ -3293,7 +3320,7 @@ transform: |-
 
   .process.title = del(.crowdstrike.ServiceDisplayName)
 
-  is_process_event = match(.event.action, r'Process|Service')
+  is_process_event = match(.event.action, r'Process|Service') ?? false
   if is_process_event { 
     .process.hash = hashes
   }
@@ -3321,14 +3348,14 @@ transform: |-
     
   .user.email = del(.crowdstrike.UserPrincipal)
 
+  if .user.name != null {
+    .related.user = push(.related.user, .user.name)
+  }
+
   if user_parts != null && length(array!(user_parts)) == 2 {
     .user.full_name = user_parts[0]
     .user.domain = user_parts[1]
     .related.user = push(.related.user, .user.full_name) 
-  }
-    
-  if .user.name != null { 
-    .related.user = push(.related.user, .user.name) 
   }
 
   .source.ip = del(.crowdstrike.LocalAddressIP4)
@@ -3354,30 +3381,30 @@ transform: |-
   .network.iana_number = del(.crowdstrike.Protocol)
 
   if .network.iana_number != null {           
-  	iana_number = .network.iana_number
-  	if iana_number == "0" {
-  	  .network.transport = "hopopt"
-  	} else if iana_number == "1" {
-  	  .network.transport = "icmp"
-  	} else if iana_number == "2" {
-  	  .network.transport = "igmp"
-  	} else if iana_number == "6" {
-  	  .network.transport = "tcp"
-  	} else if iana_number == "8" {
-  	  .network.transport = "egp"
-  	} else if iana_number == "17" {
-  	  .network.transport = "udp"
-  	} else if iana_number == "47" {
-  	  .network.transport = "gre"
-  	} else if iana_number == "50" {
-  	  .network.transport = "esp"
-  	} else if iana_number == "58" {
-  	  .network.transport = "ipv6-icmp"
-  	} else if iana_number == "112" {
-  	  .network.transport = "vrrp"
-  	} else if iana_number == "132" {
-  	  .network.transport = "sctp"
-  	}                       
+    iana_number = .network.iana_number
+    if iana_number == "0" {
+      .network.transport = "hopopt"
+    } else if iana_number == "1" {
+      .network.transport = "icmp"
+    } else if iana_number == "2" {
+      .network.transport = "igmp"
+    } else if iana_number == "6" {
+      .network.transport = "tcp"
+    } else if iana_number == "8" {
+      .network.transport = "egp"
+    } else if iana_number == "17" {
+      .network.transport = "udp"
+    } else if iana_number == "47" {
+      .network.transport = "gre"
+    } else if iana_number == "50" {
+      .network.transport = "esp"
+    } else if iana_number == "58" {
+      .network.transport = "ipv6-icmp"
+    } else if iana_number == "112" {
+      .network.transport = "vrrp"
+    } else if iana_number == "132" {
+      .network.transport = "sctp"
+    }                       
   }
 
   if .crowdstrike.ConnectionDirection == "0" { 
@@ -3406,6 +3433,7 @@ transform: |-
 
   .related.ip = unique(.related.ip)
   .related.hosts = unique(.related.hosts)
+  .related.user = unique(.related.user)
 
   .source.mac = del(.crowdstrike.PhysicalAddress)
   .source.mac = upcase(.source.mac) ?? null                   
@@ -3417,7 +3445,8 @@ transform: |-
     .url.path = "/" + string!(.url.path)
   }
        
-  # TODO(): parse domain from server.address                    
+  # TODO(): parse domain from server.address
+  .server.domain = .server.address                  
 
   if .crowdstrike.DownloadPort != null { 
     .url.scheme = if .crowdstrike.DownloadPort == 443 { 
@@ -3433,7 +3462,7 @@ transform: |-
 
   if .url.full != null { 
     url_full = .url.full        
-  	.url = parse_url!(url_full)
+    .url = parse_url!(url_full)
     if .url.query != null {
       query = []
       for_each(.url.query) -> |k, v| {
@@ -3442,11 +3471,11 @@ transform: |-
       query = join(query, "&") ?? null
       .url.query = query
     }    
-    .url.full = url_full
-    .url.original = url_full        
-  }   
-          
-   # TODO(): parse domain from url.domain                    
+    .url.original = url_full
+    del(.url.full)
+    .url.domain = del(.url.host)
+    # TODO(): parse domain from url.domain
+  }
 
   .source.as.number = del(.source.as.asn) || .source.as.number
 
@@ -3459,7 +3488,7 @@ transform: |-
   if .event.action == "DnsRequest" { 
     .dns.type = "query"
                  
-  	 # TODO(): parse domain from crowdstrike.DomainName to .dns.question     
+     # TODO(): parse domain from crowdstrike.DomainName to .dns.question     
 
     .dns.question.name = del(.dns.question.domain)        
 
@@ -3530,14 +3559,14 @@ transform: |-
 
   .file.path = del(.crowdstrike.SourceFileName)
 
-  .file.path = del(.crowdstrike.TargetFileName) || .file.path
+  .file.path = .file.path || del(.crowdstrike.TargetFileName)
 
   .file.device = del(.crowdstrike.DiskParentDeviceInstanceId)
 
 
   if .file.path != null {
     .file.path = string!(.file.path)
-    .file.type = if contains(.event.action, "Directory")  || ends_with(.file.path, "\\") || ends_with(.file.path, "/") {
+    .file.type = if (.event.action != null && contains!(.event.action, "Directory")) || ends_with(.file.path, "\\") || ends_with(.file.path, "/") {
         "dir"
     } else {
         "file"
@@ -3556,10 +3585,15 @@ transform: |-
         split_char = "\\"
       }
       if idx > -1 {
+          prefix = ""
+          if split_char != null && starts_with!(path, split_char) {
+              prefix = split_char
+          }
           path_parts = split!(path, split_char)
+          path_parts = filter(path_parts) -> |_i, v| { !is_empty(v) }
           .file.name = path_parts[-1]
-          .file.directory = join!(slice!(path_parts, 0, -1), split_char)
-      
+          .file.directory = prefix + join!(slice!(path_parts, 0, -1), split_char)
+
           file_parts = split!(.file.name, ".")
           if length(file_parts) > 1 && .file.type == "file" {
               .file.extension = file_parts[-1]
@@ -3571,7 +3605,7 @@ transform: |-
     }
   }
 
-  is_file_event = match(.event.action, r'File|Directory|Executable')
+  is_file_event = match(.event.action, r'File|Directory|Executable') ?? false
   if is_file_event {
     .file.hash = hashes
   }
@@ -3615,35 +3649,37 @@ transform: |-
   }                                             
 
   if .crowdstrike.LogonTime != null {                                               
-  	.crowdstrike.LogonTime = to_timestamp(.crowdstrike.LogonTime, "seconds") ?? null
+    .crowdstrike.LogonTime = to_timestamp(to_float!(.crowdstrike.LogonTime), "seconds") ?? null
   }
    
   if .crowdstrike.LogoffTime != null {                                               
-  	.crowdstrike.LogoffTime = to_timestamp(.crowdstrike.LogoffTime, "seconds") ?? null
+    .crowdstrike.LogoffTime = to_timestamp(to_float!(.crowdstrike.LogoffTime), "seconds") ?? null
   }
    
   if .crowdstrike.ConnectTime != null {                                               
-  	.crowdstrike.ConnectTime = to_timestamp(.crowdstrike.ConnectTime, "seconds") ?? null
+    .crowdstrike.ConnectTime = to_timestamp(to_float!(.crowdstrike.ConnectTime), "seconds") ?? null
   }
 
   if .crowdstrike.PreviousConnectTime != null {                                               
-  	.crowdstrike.PreviousConnectTime = to_timestamp(.crowdstrike.PreviousConnectTime, "seconds") ?? null
+    .crowdstrike.PreviousConnectTime = to_timestamp(to_float!(.crowdstrike.PreviousConnectTime), "seconds") ?? null
   }
 
   if .crowdstrike.AgentLocalTime != null {                                               
-  	.crowdstrike.AgentLocalTime = to_timestamp(.crowdstrike.AgentLocalTime, "seconds") ?? null
+    .crowdstrike.AgentLocalTime = to_timestamp(to_float!(.crowdstrike.AgentLocalTime), "seconds") ?? null
   }
 
   if .crowdstrike.FirstSeen != null {                                               
-    .crowdstrike.FirstSeen = to_timestamp(.crowdstrike.FirstSeen, "seconds") ?? null
+    .crowdstrike.FirstSeen = to_timestamp(to_float!(.crowdstrike.FirstSeen), "seconds") ?? null
   }
 
   if .crowdstrike.Time != null {                                               
-    .crowdstrike.Time = to_timestamp(.crowdstrike.Time, "seconds") ?? null
+    .crowdstrike.Time = to_timestamp(to_float!(.crowdstrike.Time), "seconds") ?? null
   }
 
-  if .crowdstrike.BiosReleaseDate != null {                                               
-    .crowdstrike.BiosReleaseDate = to_timestamp(.crowdstrike.BiosReleaseDate, "seconds") ?? null
+  if .crowdstrike.BiosReleaseDate != null {
+    parts = split(string!(.crowdstrike.BiosReleaseDate), "/")
+    date_str, err = parts[2] + "-" + parts[0] + "-" + parts[1] + "T00:00:00Z"
+    .crowdstrike.BiosReleaseDate = to_timestamp(date_str , "seconds") ?? null
   }
 
   if .crowdstrike.AgentTimeOffset != null {

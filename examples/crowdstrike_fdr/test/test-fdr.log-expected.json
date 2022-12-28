@@ -11055,11 +11055,16 @@
             },
             "process": {
                 "args": [
-                    "C:\\Program Files\\nirsoft\\SoundVolumeView.exe",
+                    "\"C:\\Program",
+                    "Files\\nirsoft\\SoundVolumeView.exe\"",
                     "/SetDefault",
-                    "Teradici Virtual Audio Driver\\device\\speakers\" all"
+                    "\"Teradici",
+                    "Virtual",
+                    "Audio",
+                    "Driver\\device\\speakers\\\"",
+                    "all"
                 ],
-                "args_count": 3,
+                "args_count": 8,
                 "command_line": "\"C:\\Program Files\\nirsoft\\SoundVolumeView.exe\" /SetDefault \"Teradici Virtual Audio Driver\\device\\speakers\\\" all",
                 "entity_id": "434985669758362104",
                 "executable": "\\Device\\HarddiskVolume3\\Program Files\\NirSoft\\SoundVolumeView.exe",
