@@ -1,6 +1,5 @@
 from fileinput import filename
 from ecs_schema_to_iceberg import *
-from ecs_pipeline_to_vrl import *
 from validate import validate_iceberg_schema
 from runner import run_transform_vrl, vrl
 import os
