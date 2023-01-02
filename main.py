@@ -308,8 +308,9 @@ if is_object(.okta.debug_context.debug_data.flattened) {
 }
 if .okta.debug_context.debug_data.flattened != null {
     .okta.debug_context.debug_data.flattened = parse_json!(.okta.debug_context.debug_data.flattened)
-    del(.okta.debug_context.debug_data.flattened.risk)
-    del(.okta.debug_context.debug_data.flattened.behaviors)
+    .okta.debug_context.debug_data.flattened.risk = .okta.debug_context.debug_data.flattened.risk || .okta.debug_context.debug_data.flattened.logOnlySecurityData.risk
+    .okta.debug_context.debug_data.flattened.behaviors = .okta.debug_context.debug_data.flattened.behaviors || .okta.debug_context.debug_data.flattened.logOnlySecurityData.behaviors
+    del(.okta.debug_context.debug_data.flattened.risk_object)
     .okta.debug_context.debug_data.flattened = encode_json(.okta.debug_context.debug_data.flattened)
 }
 
