@@ -81,11 +81,11 @@ def iceberg_pretty_validator(datum, schema, *, path=""):
             if type(v) == dict:
                 extra_keys = vrl("""
                 keys = []
-                for_each(flatten!(.)) -> |k, v| {{
+                for_each(flatten!(.value)) -> |k, v| {{
                     keys = push(keys, k)
                 }}
                 keys
-                """, datum[k])[1]
+                """, {"value": datum[k]})[1]
                 for ex_k in extra_keys:
                     error_console.print(f"[bold yellow]Warning: Extra key in datum: [reset][bold]: {path}.{k}.{ex_k}")
             else:

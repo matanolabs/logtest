@@ -339,6 +339,20 @@ if .crowdstrike.event.ExecutablesWritten != null {
 }
 }
 
+# cisco duo
+.duo = del(.cisco_duo) || .duo
+if is_array(.source.user.group.name) {
+    .source.user.group.name = join!(.source.user.group.name, ", ")
+}
+del(.duo.auth.auth_device.geo)
+del(.duo.auth.auth_device.as)
+if is_object(.duo.admin.flattened) {
+    .duo.admin.flattened = encode_json(.duo.admin.flattened)
+}
+if is_object(.duo.summary) {
+    del(.ts)
+}
+
 del(.__expected)
 . = compact(.)
 """
@@ -446,6 +460,8 @@ def run_tests_get_errors(logsource_dir, opts, table_schema, table_file, data):
 
             try:
                 if (expected is not None and len(expected) > i):
+                    if expected[i] is None:
+                        expected[i] = {}
                     expected[i]["__expected"] = True
                 n_expected = normalize(expected[i]) if expected is not None and len(expected) > i else None
                 res = run_transform_vrl(data["transform"], test_event)["result"]
