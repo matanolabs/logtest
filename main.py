@@ -234,7 +234,7 @@ if is_array(.file.name) {
         # v = replace(v, r'\\\\,', "")
 
         # normalize UTC timestamp strings
-        if match(v, r'^(-?(?:[1-9][0-9]*)?[0-9]{4})-(1[0-2]|0[1-9])-(3[01]|0[1-9]|[12][0-9])T(2[0-3]|[01][0-9]):([0-5][0-9]):([0-5][0-9])(\\.[0-9]+)?(\.?)([0-9]*)?(Z)?$') {
+        if length(v) < 50 && match(v, r'^(-?(?:[1-9][0-9]*)?[0-9]{4})-(1[0-2]|0[1-9])-(3[01]|0[1-9]|[12][0-9])T(2[0-3]|[01][0-9]):([0-5][0-9]):([0-5][0-9])(\\.[0-9]+)?(\.?)([0-9]*)?(Z)?$') {
             if !contains(v, "+") && !ends_with(v, "Z") {
                 v = v + "Z"
             }
@@ -354,7 +354,23 @@ if is_object(.duo.summary) {
     del(.ts)
 }
 
-# aws config history uses now()
+# aws cloudtrail
+if .aws.cloudtrail.flattened != null {
+  .aws.cloudtrail.flattened = map_values(compact!(.aws.cloudtrail.flattened)) -> |v| {
+    if !is_string(v) {
+      encode_json(v)
+    } else {
+      v
+    } 
+  }
+}
+del(.aws.cloudtrail.request_parameters)
+del(.aws.cloudtrail.response_elements)
+del(.aws.cloudtrail.additional_eventdata)
+del(.aws.cloudtrail.service_event_details)
+del(.aws.cloudtrail.insight_details)
+
+# aws config, history uses now()
 if is_object(.aws.config_history) {
     del(.ts)
 }

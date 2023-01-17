@@ -1,0 +1,747 @@
+name: aws_cloudtrail_digest
+transform: |
+  if .json.eventTime != null {
+      .ts = to_timestamp!(.json.eventTime, "milliseconds")
+  }
+  if .ts != null {
+      .event.created = .ts
+  }
+
+  .aws.cloudtrail.event_version = del(.json.eventVersion)
+  .aws.cloudtrail.user_identity.type = del(.json.userIdentity.type)
+  if .json.userIdentity.userName != null {
+      .related.user = push(.related.user, .json.userIdentity.userName)
+  }
+  .user.name = del(.json.userIdentity.userName)
+  .user.id = del(.json.userIdentity.principalId)
+  .aws.cloudtrail.user_identity.arn = del(.json.userIdentity.arn)
+  .cloud.account.id = del(.json.userIdentity.accountId)
+  .aws.cloudtrail.user_identity.access_key_id = del(.json.userIdentity.accessKeyId)
+  .aws.cloudtrail.user_identity.session_context.mfa_authenticated = del(.json.userIdentity.sessionContext.attributes.mfaAuthenticated)
+
+  if .json.userIdentity.sessionContext.attributes.creationDate != null {
+      .aws.cloudtrail.user_identity.session_context.creation_date = to_timestamp!(.json.userIdentity.sessionContext.attributes.creationDate, "milliseconds")
+  }
+
+  .aws.cloudtrail.user_identity.session_context.session_issuer.type = del(.json.userIdentity.sessionContext.sessionIssuer.type)
+  .user.name = del(.json.userIdentity.sessionContext.sessionIssuer.userName) || .user.name
+  .aws.cloudtrail.user_identity.session_context.session_issuer.principal_id = del(.json.userIdentity.sessionContext.sessionIssuer.principalId)
+  .aws.cloudtrail.user_identity.session_context.session_issuer.arn = del(.json.userIdentity.sessionContext.sessionIssuer.arn)
+  .aws.cloudtrail.user_identity.session_context.session_issuer.account_id = del(.json.userIdentity.sessionContext.sessionIssuer.accountId)
+  .aws.cloudtrail.user_identity.invoked_by = del(.json.userIdentity.invokedBy)
+  .event.provider = del(.json.eventSource)
+  .event.action = .json.eventName
+  .aws.cloudtrail.event_category = del(.json.eventCategory)
+  .cloud.region = del(.json.awsRegion)
+  .source.address = del(.json.sourceIPAddress)
+
+  _grokked, err = parse_groks(.source.address, ["^%{IP:source.ip}$"])
+  if err == null {
+      . = merge(., _grokked, deep: true)
+  }
+  .source.as.number = del(.source.as.asn)
+  .source.as.organization.name = del(.source.as.organization_name)
+
+  ua, err = parse_user_agent(.json.userAgent)
+  ua = compact(ua)
+  if !is_empty(ua) && err == null {
+      # TODO (parse fields)
+      # .user_agent = ua
+      .user_agent.original = del(.json.userAgent)
+  } else {
+      .user_agent.original = del(.json.userAgent)
+  }
+
+  .aws.cloudtrail.error_code = del(.json.errorCode)
+  .aws.cloudtrail.error_message = del(.json.errorMessage)
+
+  if .json.requestParameters != null {
+      .aws.cloudtrail.flattened.request_parameters = del(.json.requestParameters)
+  }
+  if .json.responseElements != null {
+      .aws.cloudtrail.flattened.response_elements = del(.json.responseElements)
+  }
+  if .json.additionalEventData != null {
+      .aws.cloudtrail.flattened.additional_eventdata = del(.json.additionalEventData)
+  }
+  if .json.serviceEventDetails != null {
+      .aws.cloudtrail.flattened.service_event_details = del(.json.serviceEventDetails)
+  }
+
+  .aws.cloudtrail.request_id = del(.json.requestID)
+  .event.id = del(.json.eventID)
+  .aws.cloudtrail.event_type = del(.json.eventType)
+  .aws.cloudtrail.api_version = del(.json.apiVersion)
+  .aws.cloudtrail.management_event = del(.json.managementEvent)
+  .aws.cloudtrail.read_only = del(.json.readOnly)
+  .aws.cloudtrail.resources.arn = del(.json.resources.ARN)
+  .aws.cloudtrail.resources.account_id = del(.json.resources.accountId)
+  .aws.cloudtrail.resources.type = del(.json.resources.type)
+  .aws.cloudtrail.recipient_account_id = del(.json.recipientAccountId)
+  .aws.cloudtrail.shared_event_id = del(.json.sharedEventId)
+  .aws.cloudtrail.vpc_endpoint_id = del(.json.vpcEndpointId)
+  if .aws.cloudtrail.flattened.request_parameters.userName != null {
+      .related.user = push!(.related.user, .aws.cloudtrail.flattened.request_parameters.userName)
+  }
+  if .aws.cloudtrail.flattened.request_parameters.newUserName != null {
+      .related.user = push!(.related.user, .aws.cloudtrail.flattened.request_parameters.newUserName)
+  }
+
+  if (.event.action == "ConsoleLogin") {
+    if .aws.cloudtrail.flattened.additional_eventdata.MobileVersion != null {
+      .aws.cloudtrail.console_login.additional_eventdata.mobile_version = .aws.cloudtrail.flattened.additional_eventdata.MobileVersion != "No"
+    }
+    if .aws.cloudtrail.flattened.additional_eventdata.MFAUsed != null {
+      .aws.cloudtrail.console_login.additional_eventdata.mfa_used = .aws.cloudtrail.flattened.additional_eventdata.MFAUsed != "No"
+    }
+    if .aws.cloudtrail.flattened.additional_eventdata.LoginTo != null {
+      .aws.cloudtrail.console_login.additional_eventdata.login_to = .aws.cloudtrail.flattened.additional_eventdata.LoginTo
+    }
+  }
+
+  mappings = {
+    "AddUserToGroup": {
+      "category": [
+        "iam"
+      ],
+      "type": [
+        "group",
+        "change"
+      ]
+    },
+    "AssumeRole": {
+      "category": [
+        "authentication"
+      ],
+      "type": [
+        "info"
+      ]
+    },
+    "AttachGroupPolicy": {
+      "category": [
+        "iam"
+      ],
+      "type": [
+        "group",
+        "change"
+      ]
+    },
+    "AttachUserPolicy": {
+      "category": [
+        "iam"
+      ],
+      "type": [
+        "user",
+        "change"
+      ]
+    },
+    "ChangePassword": {
+      "category": [
+        "iam"
+      ],
+      "type": [
+        "user",
+        "change"
+      ]
+    },
+    "ConsoleLogin": {
+      "category": [
+        "authentication"
+      ],
+      "type": [
+        "info"
+      ]
+    },
+    "CreateAccessKey": {
+      "category": [
+        "iam"
+      ],
+      "type": [
+        "user",
+        "change"
+      ]
+    },
+    "CreateBucket": {
+      "category": [
+        "file"
+      ],
+      "type": [
+        "creation"
+      ]
+    },
+    "CreateGroup": {
+      "category": [
+        "iam"
+      ],
+      "type": [
+        "group",
+        "creation"
+      ]
+    },
+    "CreateKeyPair": {
+      "category": [
+        "iam"
+      ],
+      "type": [
+        "admin",
+        "creation"
+      ]
+    },
+    "CreateUser": {
+      "category": [
+        "iam"
+      ],
+      "type": [
+        "user",
+        "creation"
+      ]
+    },
+    "CreateVirtualMFADevice": {
+      "category": [
+        "iam"
+      ],
+      "type": [
+        "user",
+        "change"
+      ]
+    },
+    "DeactivateMFADevice": {
+      "category": [
+        "iam"
+      ],
+      "type": [
+        "user",
+        "change"
+      ]
+    },
+    "DeleteAccessKey": {
+      "category": [
+        "iam"
+      ],
+      "type": [
+        "user",
+        "change"
+      ]
+    },
+    "DeleteBucket": {
+      "category": [
+        "file"
+      ],
+      "type": [
+        "deletion"
+      ]
+    },
+    "DeleteGroup": {
+      "category": [
+        "iam"
+      ],
+      "type": [
+        "group",
+        "deletion"
+      ]
+    },
+    "DeleteGroupPolicy": {
+      "category": [
+        "iam"
+      ],
+      "type": [
+        "group",
+        "change"
+      ]
+    },
+    "DeleteSSHPublicKey": {
+      "category": [
+        "iam"
+      ],
+      "type": [
+        "user",
+        "change"
+      ]
+    },
+    "DeleteUser": {
+      "category": [
+        "iam"
+      ],
+      "type": [
+        "user",
+        "deletion"
+      ]
+    },
+    "DeleteUserPermissionsBoundary": {
+      "category": [
+        "iam"
+      ],
+      "type": [
+        "user",
+        "change"
+      ]
+    },
+    "DeleteUserPolicy": {
+      "category": [
+        "iam"
+      ],
+      "type": [
+        "user",
+        "change"
+      ]
+    },
+    "DeleteVirtualMFADevice": {
+      "category": [
+        "iam"
+      ],
+      "type": [
+        "user",
+        "change"
+      ]
+    },
+    "DetachGroupPolicy": {
+      "category": [
+        "iam"
+      ],
+      "type": [
+        "group",
+        "change"
+      ]
+    },
+    "DetachUserPolicy": {
+      "category": [
+        "iam"
+      ],
+      "type": [
+        "user",
+        "change"
+      ]
+    },
+    "EnableMFADevice": {
+      "category": [
+        "iam"
+      ],
+      "type": [
+        "user",
+        "change"
+      ]
+    },
+    "GetGroup": {
+      "category": [
+        "iam"
+      ],
+      "type": [
+        "group",
+        "info"
+      ]
+    },
+    "GetGroupPolicy": {
+      "category": [
+        "iam"
+      ],
+      "type": [
+        "group",
+        "info"
+      ]
+    },
+    "GetUser": {
+      "category": [
+        "iam"
+      ],
+      "type": [
+        "user",
+        "info"
+      ]
+    },
+    "GetUserPolicy": {
+      "category": [
+        "iam"
+      ],
+      "type": [
+        "user",
+        "info"
+      ]
+    },
+    "ListAttachedGroupPolicies": {
+      "category": [
+        "iam"
+      ],
+      "type": [
+        "group",
+        "info"
+      ]
+    },
+    "ListAttachedUserPolicies": {
+      "category": [
+        "iam"
+      ],
+      "type": [
+        "user",
+        "info"
+      ]
+    },
+    "ListGroupPolicies": {
+      "category": [
+        "iam"
+      ],
+      "type": [
+        "group",
+        "info"
+      ]
+    },
+    "ListGroups": {
+      "category": [
+        "iam"
+      ],
+      "type": [
+        "group",
+        "info"
+      ]
+    },
+    "ListGroupsForUser": {
+      "category": [
+        "iam"
+      ],
+      "type": [
+        "user",
+        "info"
+      ]
+    },
+    "ListUserPolicies": {
+      "category": [
+        "iam"
+      ],
+      "type": [
+        "user",
+        "info"
+      ]
+    },
+    "ListUsers": {
+      "category": [
+        "iam"
+      ],
+      "type": [
+        "user",
+        "info"
+      ]
+    },
+    "ListUserTags": {
+      "category": [
+        "iam"
+      ],
+      "type": [
+        "user",
+        "info"
+      ]
+    },
+    "PutGroupPolicy": {
+      "category": [
+        "iam"
+      ],
+      "type": [
+        "group",
+        "change"
+      ]
+    },
+    "PutUserPermissionsBoundary": {
+      "category": [
+        "iam"
+      ],
+      "type": [
+        "user",
+        "change"
+      ]
+    },
+    "PutUserPolicy": {
+      "category": [
+        "iam"
+      ],
+      "type": [
+        "user",
+        "change"
+      ]
+    },
+    "RemoveUserFromGroup": {
+      "category": [
+        "iam"
+      ],
+      "type": [
+        "group",
+        "change"
+      ]
+    },
+    "SetDefaultPolicyVersion": {
+      "category": [
+        "iam"
+      ],
+      "type": [
+        "admin",
+        "change"
+      ]
+    },
+    "SetSecurityTokenServicePreferences": {
+      "category": [
+        "iam"
+      ],
+      "type": [
+        "admin",
+        "change"
+      ]
+    },
+    "TagUser": {
+      "category": [
+        "iam"
+      ],
+      "type": [
+        "user",
+        "change"
+      ]
+    },
+    "UntagUser": {
+      "category": [
+        "iam"
+      ],
+      "type": [
+        "user",
+        "change"
+      ]
+    },
+    "UpdateAccessKey": {
+      "category": [
+        "iam"
+      ],
+      "type": [
+        "user",
+        "change"
+      ]
+    },
+    "UpdateAccountPasswordPolicy": {
+      "category": [
+        "iam"
+      ],
+      "type": [
+        "admin",
+        "change"
+      ]
+    },
+    "UpdateGroup": {
+      "category": [
+        "iam"
+      ],
+      "type": [
+        "group",
+        "change"
+      ]
+    },
+    "UpdateLoginProfile": {
+      "category": [
+        "iam"
+      ],
+      "type": [
+        "user",
+        "change"
+      ]
+    },
+    "UpdateRole": {
+      "category": [
+        "iam"
+      ],
+      "type": [
+        "admin",
+        "change"
+      ]
+    },
+    "UpdateSSHPublicKey": {
+      "category": [
+        "iam"
+      ],
+      "type": [
+        "user",
+        "change"
+      ]
+    },
+    "UpdateUser": {
+      "category": [
+        "iam"
+      ],
+      "type": [
+        "user",
+        "change"
+      ]
+    }
+  }
+  .event.kind = "event"
+  .event.type = ["info"]
+  .event.outcome = if .aws.cloudtrail.error_code != null || .aws.cloudtrail.error_message != null {
+      "failure"
+  } else if .event.action == "ConsoleLogin" && .aws.cloudtrail.flattened.response_elements.ConsoleLogin != null {
+      downcase!(.aws.cloudtrail.flattened.response_elements.ConsoleLogin)
+  } else {
+      "success"
+  }
+
+  fields, err = get(mappings, [.event.action])
+  if err == null && fields != null {
+      .event = merge(.event, object!(fields), deep: true)
+  }
+
+  .cloud.account.id = del(.json.awsAccountId) || .cloud.account.id
+
+  .aws.cloudtrail.insight_details = del(.json.insightDetails)
+  .group.id = .aws.cloudtrail.flattened.response_elements.group.groupId
+  .user.target.id = .aws.cloudtrail.flattened.response_elements.user.userId
+  .user.changes.name = .aws.cloudtrail.flattened.request_parameters.newUserName
+  .group.name = .aws.cloudtrail.flattened.request_parameters.groupName
+  .user.target.name = .aws.cloudtrail.flattened.request_parameters.userName
+  .aws.cloudtrail.flattened.insight_details = del(.aws.cloudtrail.insight_details)
+
+  .related.user = unique!(.related.user)
+
+  # .aws.cloudtrail = merge(.aws.cloudtrail, map_values(.aws.cloudtrail.flattened) -> |value| { encode_json(value) }, deep: true)
+  .aws.cloudtrail.flattened = map_values(compact(.aws.cloudtrail.flattened)) -> |value| { encode_json(value) } # TODO(): should inject based on schema
+
+  ########### custom table transform STARTS HERE ##########
+  .file.path = del(.json.digestS3Object)
+  .file.hash.sha256 = del(.json.previousDigestSignature)
+  if .file.hash.sha256 != null {
+      .related.hash = push!(.related.hash, .file.hash.sha256)
+  }
+  .aws.cloudtrail.digest.log_files = del(.json.logFiles)
+
+  if .json.digestStartTime != null {
+    .aws.cloudtrail.digest.start_time = to_timestamp!(.json.digestStartTime, "milliseconds")
+  }
+
+  if .json.digestEndTime != null {
+    .ts = to_timestamp!(.json.digestEndTime, "milliseconds")
+    .aws.cloudtrail.digest.end_time = .ts
+  }
+
+  .aws.cloudtrail.digest.s3_bucket = del(.json.digestS3Bucket)
+
+  if .json.newestEventTime != null {
+    .aws.cloudtrail.digest.newest_event_time = to_timestamp!(.json.newestEventTime, "milliseconds")
+  }
+
+  if .json.oldestEventTime != null {
+    .aws.cloudtrail.digest.oldest_event_time = to_timestamp!(.json.oldestEventTime, "milliseconds")
+  }
+  .aws.cloudtrail.digest.previous_s3_bucket = del(.json.previousDigestS3Bucket)
+  .aws.cloudtrail.digest.previous_hash_algorithm = del(.json.previousDigestHashAlgorithm)
+  .aws.cloudtrail.digest.public_key_fingerprint = del(.json.publicKeyFingerprint)
+  .aws.cloudtrail.digest.signature_algorithm = del(.json.digestSignatureAlgorithm)
+
+  .aws.cloudtrail.flattened.digest = encode_json(compact(del(.aws.cloudtrail.digest)))
+schema:
+  ecs_field_names:
+  - cloud.account.id
+  - cloud.availability_zone
+  - cloud.instance.id
+  - cloud.instance.name
+  - cloud.machine.type
+  - cloud.project.id
+  - cloud.provider
+  - cloud.region
+  - container.id
+  - container.image.name
+  - container.labels
+  - container.name
+  - ecs.version
+  - error.message
+  - event.action
+  - event.category
+  - event.created
+  - event.dataset
+  - event.id
+  - event.ingested
+  - event.kind
+  - event.module
+  - event.original
+  - event.outcome
+  - event.provider
+  - event.type
+  - file.hash.md5
+  - file.hash.sha1
+  - file.hash.sha256
+  - file.hash.sha512
+  - file.path
+  - group.id
+  - group.name
+  - host.architecture
+  - host.domain
+  - host.hostname
+  - host.id
+  - host.ip
+  - host.mac
+  - host.name
+  - host.os.family
+  - host.os.kernel
+  - host.os.name
+  - host.os.platform
+  - host.os.version
+  - host.type
+  - related.hash
+  - related.user
+  - source.address
+  - source.as.number
+  - source.as.organization.name
+  - source.geo.city_name
+  - source.geo.continent_name
+  - source.geo.country_iso_code
+  - source.geo.country_name
+  - source.geo.location.lat
+  - source.geo.location.lon
+  - source.geo.region_iso_code
+  - source.geo.region_name
+  - source.ip
+  - tags
+  - user.changes.name
+  - user.id
+  - user.name
+  - user.target.id
+  - user.target.name
+  - user_agent.device.name
+  - user_agent.name
+  - user_agent.original
+  - user_agent.os.full
+  - user_agent.os.name
+  - user_agent.os.version
+  - user_agent.version
+  fields:
+  - name: aws
+    type:
+      type: struct
+      fields:
+      - name: cloudtrail
+        type:
+          type: struct
+          fields:
+          - name: flattened
+            type:
+              type: struct
+              fields:
+              - name: digest
+                type: string
+          - name: digest
+            type:
+              type: struct
+              fields:
+              - name: log_files
+                type:
+                  type: list
+                  element: string
+              - name: start_time
+                type: timestamp
+              - name: end_time
+                type: timestamp
+              - name: s3_bucket
+                type: string
+              - name: s3_object
+                type: string
+              - name: newest_event_time
+                type: timestamp
+              - name: oldest_event_time
+                type: timestamp
+              - name: previous_s3_bucket
+                type: string
+              - name: previous_hash_algorithm
+                type: string
+              - name: public_key_fingerprint
+                type: string
+              - name: signature_algorithm
+                type: string
