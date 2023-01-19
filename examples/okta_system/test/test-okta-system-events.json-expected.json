@@ -1093,6 +1093,192 @@
                 "name": "Other",
                 "original": "unknown"
             }
+        },
+        {
+            "client": {
+                "as": {
+                    "organization": {
+                        "name": "organization group"
+                    }
+                },
+                "domain": ".",
+                "geo": {
+                    "city_name": "City",
+                    "country_name": "United States",
+                    "location": {
+                        "lat": 0,
+                        "lon": 0
+                    },
+                    "region_name": "State"
+                },
+                "ip": "0.0.0.0",
+                "user": {
+                    "full_name": "User",
+                    "id": "12345"
+                }
+            },
+            "destination": {
+                "as": {
+                    "number": null,
+                    "organization": {
+                        "name": null
+                    }
+                }
+            },
+            "event": {
+                "action": "app.oauth2.as.evaluate.claim",
+                "category": [],
+                "id": "45645646-4564-2342-3424-ab58948774fc",
+                "kind": "event",
+                "outcome": "failure",
+                "type": []
+            },
+            "okta": {
+                "actor": {
+                    "alternate_id": "12345",
+                    "display_name": "User",
+                    "id": "12345",
+                    "type": "PublicClientApp"
+                },
+                "authentication_context": {
+                    "authentication_provider": null,
+                    "authentication_step": 0,
+                    "credential_provider": null,
+                    "credential_type": null,
+                    "external_session_id": "ab4345dcd",
+                    "issuer": null
+                },
+                "client": {
+                    "device": "Computer",
+                    "id": "12345",
+                    "ip": "0.0.0.0",
+                    "user_agent": {
+                        "browser": "CHROME",
+                        "os": "Windows 10",
+                        "raw_user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36"
+                    },
+                    "zone": "null"
+                },
+                "debug_context": {
+                    "debug_data": {
+                        "device_fingerprint": null,
+                        "flattened": "{\"authnRequestId\":\"OISDF897SDLASJDA\",\"authorizationServer\":\"12345\",\"authorizationServerName\":\"Authorization Server\",\"dtHash\":\"ggfdsdfgdfsgdsfgdfsgsdfg8c61791d7b0a10280c364489fd74e735\",\"redirectUri\":\"https://sub.organization.com/authorization-code/callback\",\"requestId\":\"09873942iuhsdDasjdka\",\"requestUri\":\"/oauth2/12345/v1/authorize\",\"url\":\"/oauth2/12345/v1/authorize?client_id=23456&redirect_uri=wwww\",\"userId\":\"23456\"}",
+                        "request_id": "09873942iuhsdDasjdka",
+                        "request_uri": "/oauth2/12345/v1/authorize",
+                        "threat_suspected": null,
+                        "url": "/oauth2/12345/v1/authorize?client_id=23456&redirect_uri=wwww"
+                    }
+                },
+                "display_message": "Claim evaluation for OAuth2 token",
+                "event_type": "app.oauth2.as.evaluate.claim",
+                "outcome": {
+                    "reason": "user_claim_evaluation_failure",
+                    "result": "FAILURE"
+                },
+                "request": {
+                    "ip_chain": [
+                        {
+                            "geographical_context": {
+                                "city": "City",
+                                "state": "State",
+                                "country": "United States",
+                                "geolocation": {
+                                    "lat": 0.0000,
+                                    "lon": 0.0000
+                                },
+                                "postal_code": "99999"
+                            },
+                            "ip": "0.0.0.0",
+                            "source": null,
+                            "version": "V4"
+                        }
+                    ]
+                },
+                "security_context": {
+                    "as": {
+                        "number": 7,
+                        "organization": {
+                            "name": "organization group"
+                        }
+                    },
+                    "domain": ".",
+                    "is_proxy": false,
+                    "isp": "organization inc"
+                },
+                "target": [
+                    {
+                        "alternate_id": "unknown",
+                        "display_name": "user_id",
+                        "id": "67890",
+                        "type": "OAuth2ClaimEntity"
+                    },
+                    {
+                        "alternate_id": "unknown",
+                        "display_name": "employee_type",
+                        "id": "65432",
+                        "type": "OAuth2ClaimEntity"
+                    },
+                    {
+                        "alternate_id": "unknown",
+                        "display_name": "api_key",
+                        "id": "34567",
+                        "type": "OAuth2ClaimEntity"
+                    }
+                ],
+                "transaction": {
+                    "id": "gsdfgfdsgsdgsd",
+                    "type": "WEB"
+                },
+                "uuid": "45645646-4564-2342-3424-ab58948774fc"
+            },
+            "related": {
+                "ip": [
+                    "0.0.0.0"
+                ],
+                "user": [
+                    "User"
+                ]
+            },
+            "source": {
+                "as": {
+                    "number": null,
+                    "organization": {
+                        "name": null
+                    }
+                },
+                "domain": ".",
+                "ip": "0.0.0.0",
+                "user": {
+                    "full_name": "User",
+                    "id": "12345"
+                }
+            },
+            "ts": "2023-01-16T22:50:10.724Z",
+            "user": {
+                "full_name": "User",
+                "target": {
+                    "email": null,
+                    "full_name": null,
+                    "group": {
+                        "id": null,
+                        "name": null
+                    },
+                    "id": null
+                }
+            },
+            "user_agent": {
+                "browser": {
+                    "family": "Chrome",
+                    "version": "108.0.0.0"
+                },
+                "device": {
+                    "category": "pc"
+                },
+                "os": {
+                    "family": "Windows 10",
+                    "version": "NT 10.0"
+                }
+            }
         }
     ]
 }
