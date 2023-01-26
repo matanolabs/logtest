@@ -353,6 +353,11 @@ if is_object(.duo.summary) {
     del(.ts)
 }
 
+# aws config history uses now()
+if is_object(.aws.config_history) {
+    del(.ts)
+}
+
 del(.__expected)
 . = compact(.)
 """

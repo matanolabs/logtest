@@ -1,0 +1,279 @@
+{
+    "expected": [
+        {
+            "aws": {
+                "config_history": {
+                    "arn": "arn:aws:s3:::samtestfastly123",
+                    "configuration": "{\"name\":\"samtestfastly123\",\"owner\":{\"displayName\":null,\"id\":\"e5ec5057efc41797d6b872dd7dde4cd9054db2594a879db2fc56bf6c14cbad6b\"},\"creationDate\":\"2023-01-26T04:23:40.000Z\"}",
+                    "item": {
+                        "capture_time": "2023-01-26T05:59:15.6Z",
+                        "state_id": "1674712755695",
+                        "status": "OK"
+                    },
+                    "resource": {
+                        "created": "2023-01-26T04:23:40Z",
+                        "id": "samtestfastly123",
+                        "name": "samtestfastly123",
+                        "type": "AWS::S3::Bucket"
+                    },
+                    "supplementary_configuration": "{\"AccessControlList\":\"\\\"{\\\\\\\"grantSet\\\\\\\":null,\\\\\\\"grantList\\\\\\\":[{\\\\\\\"grantee\\\\\\\":{\\\\\\\"id\\\\\\\":\\\\\\\"e5ec5057efc41797d6b872dd7dde4cd9054db2594a879db2fc56bf6c14cbad6b\\\\\\\",\\\\\\\"displayName\\\\\\\":null},\\\\\\\"permission\\\\\\\":\\\\\\\"FullControl\\\\\\\"}],\\\\\\\"owner\\\\\\\":{\\\\\\\"displayName\\\\\\\":null,\\\\\\\"id\\\\\\\":\\\\\\\"e5ec5057efc41797d6b872dd7dde4cd9054db2594a879db2fc56bf6c14cbad6b\\\\\\\"},\\\\\\\"isRequesterCharged\\\\\\\":false}\\\"\",\"BucketAccelerateConfiguration\":\"{\\\"status\\\":null}\",\"BucketLoggingConfiguration\":\"{\\\"destinationBucketName\\\":null,\\\"logFilePrefix\\\":null}\",\"BucketNotificationConfiguration\":\"{\\\"configurations\\\":{}}\",\"BucketPolicy\":\"{\\\"policyText\\\":\\\"{\\\\\\\"Version\\\\\\\":\\\\\\\"2012-10-17\\\\\\\",\\\\\\\"Statement\\\\\\\":[{\\\\\\\"Sid\\\\\\\":\\\\\\\"Statement1\\\\\\\",\\\\\\\"Effect\\\\\\\":\\\\\\\"Allow\\\\\\\",\\\\\\\"Principal\\\\\\\":{\\\\\\\"AWS\\\\\\\":\\\\\\\"arn:aws:iam::123456789012:root\\\\\\\"},\\\\\\\"Action\\\\\\\":\\\\\\\"s3:*\\\\\\\",\\\\\\\"Resource\\\\\\\":\\\\\\\"arn:aws:s3:::samtestfastly123\\\\\\\"}]}\\\"}\",\"BucketVersioningConfiguration\":\"{\\\"status\\\":\\\"Off\\\",\\\"isMfaDeleteEnabled\\\":null}\",\"IsRequesterPaysEnabled\":\"false\",\"PublicAccessBlockConfiguration\":\"{\\\"blockPublicAcls\\\":true,\\\"ignorePublicAcls\\\":true,\\\"blockPublicPolicy\\\":true,\\\"restrictPublicBuckets\\\":true}\",\"ServerSideEncryptionConfiguration\":\"{\\\"rules\\\":[{\\\"applyServerSideEncryptionByDefault\\\":{\\\"sseAlgorithm\\\":\\\"AES256\\\",\\\"kmsMasterKeyID\\\":null},\\\"bucketKeyEnabled\\\":true}]}\"}",
+                    "version": "1.3"
+                }
+            },
+            "cloud": {
+                "account": {
+                    "id": "123456789012"
+                },
+                "provider": "aws",
+                "region": "eu-west-1",
+                "service": {
+                    "name": "s3"
+                }
+            },
+            "event": {
+                "kind": "event",
+                "category": [
+                    "configuration"
+                ],
+                "type": [
+                    "change"
+                ]
+            }
+        },
+        {
+            "aws": {
+                "config_history": {
+                    "configuration": "{\"architectures\":[\"x86_64\"],\"codeSha256\":\"1lqgl/FrVsadBubB3YrlQkPDjZW/gWDY0fMibmYxrno=\",\"codeSize\":1337,\"description\":\"AWS CloudFormation handler for \\\"Custom::S3BucketNotifications\\\" resources (@aws-cdk/aws-s3)\",\"ephemeralStorage\":{\"size\":512},\"fileSystemConfigs\":[],\"functionArn\":\"arn:aws:lambda:eu-west-1:123456789012:function:MatanoDPCommonStack-BucketNotificationsHandler050a-6umRqGftD0Yg\",\"functionName\":\"MatanoDPCommonStack-BucketNotificationsHandler050a-6umRqGftD0Yg\",\"handler\":\"index.handler\",\"lastModified\":\"2023-01-26T02:43:59.000+0000\",\"lastUpdateStatus\":\"Successful\",\"layers\":[],\"memorySize\":128,\"packageType\":\"Zip\",\"revisionId\":\"e172cb9c-ac7c-4c3f-b187-513ede0478ab\",\"role\":\"arn:aws:iam::123456789012:role/MatanoDPCommonStack-BucketNotificationsHandler050a-CQ6GSDZR7648\",\"runtime\":\"python3.7\",\"snapStart\":{\"applyOn\":\"None\",\"optimizationStatus\":\"Off\"},\"state\":\"Active\",\"timeout\":300,\"tracingConfig\":{\"mode\":\"PassThrough\"},\"version\":\"$LATEST\",\"vpcConfig\":{\"securityGroupIds\":[],\"subnetIds\":[]}}",
+                    "item": {
+                        "capture_time": "2023-01-26T07:27:16.8Z",
+                        "state_id": "1674718036811",
+                        "status": "OK"
+                    },
+                    "relationship": [
+                        {
+                            "resource": {
+                                "name": "MatanoDPCommonStack-BucketNotificationsHandler050a-CQ6GSDZR7648",
+                                "type": "AWS::IAM::Role"
+                            }
+                        }
+                    ],
+                    "resource": {
+                        "id": "MatanoDPCommonStack-BucketNotificationsHandler050a-6umRqGftD0Yg",
+                        "name": "MatanoDPCommonStack-BucketNotificationsHandler050a-6umRqGftD0Yg",
+                        "type": "AWS::Lambda::Function"
+                    },
+                    "supplementary_configuration": "{\"Tags\":{\"aws:cloudformation:logical-id\":\"BucketNotificationsHandler050a0587b7544547bf325f094a3db8347ECC3691\",\"aws:cloudformation:stack-id\":\"arn:aws:cloudformation:eu-west-1:123456789012:stack/MatanoDPCommonStack/f5473110-5051-11ed-9a71-0289fe37c89f\",\"aws:cloudformation:stack-name\":\"MatanoDPCommonStack\",\"matano:managed\":\"true\"}}",
+                    "tags": "{\"aws:cloudformation:logical-id\":\"BucketNotificationsHandler050a0587b7544547bf325f094a3db8347ECC3691\",\"aws:cloudformation:stack-id\":\"arn:aws:cloudformation:eu-west-1:123456789012:stack/MatanoDPCommonStack/f5473110-5051-11ed-9a71-0289fe37c89f\",\"aws:cloudformation:stack-name\":\"MatanoDPCommonStack\",\"matano:managed\":\"true\"}"
+                }
+            },
+            "cloud": {
+                "account": {
+                    "id": "123456789012"
+                },
+                "provider": "aws",
+                "region": "eu-west-1",
+                "service": {
+                    "name": "lambda"
+                }
+            },
+            "event": {
+                "category": [
+                    "configuration"
+                ],
+                "kind": "event",
+                "type": [
+                    "change"
+                ]
+            },
+            "tags": [
+                "aws:cloudformation:logical-id=BucketNotificationsHandler050a0587b7544547bf325f094a3db8347ECC3691",
+                "aws:cloudformation:stack-id=arn:aws:cloudformation:eu-west-1:123456789012:stack/MatanoDPCommonStack/f5473110-5051-11ed-9a71-0289fe37c89f",
+                "aws:cloudformation:stack-name=MatanoDPCommonStack",
+                "matano:managed=true"
+            ]
+        },
+        {
+            "aws": {
+                "config_history": {
+                    "item": {
+                        "capture_time": "2023-01-26T06:06:59.5Z",
+                        "state_id": "1674713219523",
+                        "status": "ResourceNotRecorded"
+                    },
+                    "resource": {
+                        "created": "2022-10-22T08:56:10",
+                        "id": "https://sqs.eu-west-1.amazonaws.com/123456789012/MatanoDPMainStack-AlertsDefaultTableLakeWriterQueue563E8827-KdlilH9aNhrC",
+                        "name": "MatanoDPMainStack-AlertsDefaultTableLakeWriterQueue563E8827-KdlilH9aNhrC",
+                        "type": "AWS::SQS::Queue"
+                    },
+                    "tags": "{\"matano:managed\":\"true\"}"
+                }
+            },
+            "cloud": {
+                "account": {
+                    "id": "123456789012"
+                },
+                "provider": "aws",
+                "region": "eu-west-1",
+                "service": {
+                    "name": "sqs"
+                }
+            },
+            "event": {
+                "category": [
+                    "configuration"
+                ],
+                "kind": "event",
+                "type": [
+                    "creation"
+                ]
+            },
+            "tags": [
+                "matano:managed=true"
+            ]
+        },
+        {
+            "aws": {
+                "config_history": {
+                    "arn": "arn:aws:ec2:us-east-2:012345678912:security-group/default",
+                    "configuration": "{\"ownerId\":\"605053316265\",\"groupName\":\"default\",\"groupId\":\"sg-6fbb3807\",\"description\":\"default group\",\"ipPermissions\":[{\"ipProtocol\":\"tcp\",\"fromPort\":80,\"toPort\":80,\"userIdGroupPairs\":[{\"userId\":\"amazon-elb\",\"groupName\":\"amazon-elb-sg\",\"groupId\":\"sg-843f59ed\"}],\"ipRanges\":[\"0.0.0.0/0\"]},{\"ipProtocol\":\"tcp\",\"fromPort\":0,\"toPort\":65535,\"userIdGroupPairs\":[{\"userId\":\"605053316265\",\"groupName\":\"default\",\"groupId\":\"sg-6fbb3807\"}],\"ipRanges\":[]},{\"ipProtocol\":\"udp\",\"fromPort\":0,\"toPort\":65535,\"userIdGroupPairs\":[{\"userId\":\"605053316265\",\"groupName\":\"default\",\"groupId\":\"sg-6fbb3807\"}],\"ipRanges\":[]},{\"ipProtocol\":\"icmp\",\"fromPort\":-1,\"toPort\":-1,\"userIdGroupPairs\":[{\"userId\":\"605053316265\",\"groupName\":\"default\",\"groupId\":\"sg-6fbb3807\"}],\"ipRanges\":[]},{\"ipProtocol\":\"tcp\",\"fromPort\":1433,\"toPort\":1433,\"userIdGroupPairs\":[],\"ipRanges\":[\"0.0.0.0/0\"]},{\"ipProtocol\":\"tcp\",\"fromPort\":3389,\"toPort\":3389,\"userIdGroupPairs\":[],\"ipRanges\":[\"207.171.160.0/19\"]}],\"ipPermissionsEgress\":[],\"vpcId\":null,\"tags\":[]}",
+                    "item": {
+                        "capture_time": "2014-10-30T22:35:29.9Z",
+                        "md5_hash": "860aa81fc3869e186b2ee00bc638a01a",
+                        "state_id": "1",
+                        "status": "ResourceDiscovered"
+                    },
+                    "relationship": [
+                        {
+                            "name": "Is associated with Instance",
+                            "resource": {
+                                "id": "i-7a3b232a",
+                                "type": "AWS::EC2::Instance"
+                            }
+                        },
+                        {
+                            "name": "Is associated with Instance",
+                            "resource": {
+                                "id": "i-8b6eb2ab",
+                                "type": "AWS::EC2::Instance"
+                            }
+                        },
+                        {
+                            "name": "Is associated with Instance",
+                            "resource": {
+                                "id": "i-c478efe5",
+                                "type": "AWS::EC2::Instance"
+                            }
+                        },
+                        {
+                            "name": "Is associated with Instance",
+                            "resource": {
+                                "id": "i-e4cbe38d",
+                                "type": "AWS::EC2::Instance"
+                            }
+                        }
+                    ],
+                    "resource": {
+                        "id": "sg-6fbb3807",
+                        "type": "AWS::EC2::SecurityGroup"
+                    },
+                    "version": "1.0"
+                }
+            },
+            "cloud": {
+                "account": {
+                    "id": "605053316265"
+                },
+                "provider": "aws",
+                "service": {
+                    "name": "ec2"
+                }
+            },
+            "event": {
+                "category": [
+                    "configuration"
+                ],
+                "hash": "860aa81fc3869e186b2ee00bc638a01a",
+                "kind": "event",
+                "type": [
+                    "creation"
+                ]
+            }
+        },
+        {
+            "aws": {
+                "config_history": {
+                    "arn": "arn:aws:s3:::samtestfastly123",
+                    "configuration": "{\"name\":\"samtestfastly123\",\"owner\":{\"displayName\":null,\"id\":\"e5ec5057efc41797d6b872dd7dde4cd9054db2594a879db2fc56bf6c14cbad6b\"},\"creationDate\":\"2023-01-26T04:23:40.000Z\"}",
+                    "item": {
+                        "capture_time": "2023-01-26T05:47:26.1Z",
+                        "state_id": "1674712046179",
+                        "status": "ResourceDiscovered"
+                    },
+                    "resource": {
+                        "created": "2023-01-26T04:23:40Z",
+                        "id": "samtestfastly123",
+                        "name": "samtestfastly123",
+                        "type": "AWS::S3::Bucket"
+                    },
+                    "supplementary_configuration": "{\"AccessControlList\":\"\\\"{\\\\\\\"grantSet\\\\\\\":null,\\\\\\\"grantList\\\\\\\":[{\\\\\\\"grantee\\\\\\\":{\\\\\\\"id\\\\\\\":\\\\\\\"e5ec5057efc41797d6b872dd7dde4cd9054db2594a879db2fc56bf6c14cbad6b\\\\\\\",\\\\\\\"displayName\\\\\\\":null},\\\\\\\"permission\\\\\\\":\\\\\\\"FullControl\\\\\\\"}],\\\\\\\"owner\\\\\\\":{\\\\\\\"displayName\\\\\\\":null,\\\\\\\"id\\\\\\\":\\\\\\\"e5ec5057efc41797d6b872dd7dde4cd9054db2594a879db2fc56bf6c14cbad6b\\\\\\\"},\\\\\\\"isRequesterCharged\\\\\\\":false}\\\"\",\"BucketAccelerateConfiguration\":\"{\\\"status\\\":null}\",\"BucketLoggingConfiguration\":\"{\\\"destinationBucketName\\\":null,\\\"logFilePrefix\\\":null}\",\"BucketNotificationConfiguration\":\"{\\\"configurations\\\":{}}\",\"BucketPolicy\":\"{\\\"policyText\\\":null}\",\"BucketVersioningConfiguration\":\"{\\\"status\\\":\\\"Off\\\",\\\"isMfaDeleteEnabled\\\":null}\",\"IsRequesterPaysEnabled\":\"false\",\"PublicAccessBlockConfiguration\":\"{\\\"blockPublicAcls\\\":true,\\\"ignorePublicAcls\\\":true,\\\"blockPublicPolicy\\\":true,\\\"restrictPublicBuckets\\\":true}\",\"ServerSideEncryptionConfiguration\":\"{\\\"rules\\\":[{\\\"applyServerSideEncryptionByDefault\\\":{\\\"sseAlgorithm\\\":\\\"AES256\\\",\\\"kmsMasterKeyID\\\":null},\\\"bucketKeyEnabled\\\":true}]}\"}",
+                    "version": "1.3"
+                }
+            },
+            "cloud": {
+                "account": {
+                    "id": "123456789012"
+                },
+                "provider": "aws",
+                "region": "eu-west-1",
+                "service": {
+                    "name": "s3"
+                }
+            },
+            "event": {
+                "category": [
+                    "configuration"
+                ],
+                "kind": "event",
+                "type": [
+                    "creation"
+                ]
+            }
+        },
+        {
+            "aws": {
+                "config_history": {
+                    "item": {
+                        "capture_time": "2023-01-26T05:46:53.5Z",
+                        "state_id": "1674712013514",
+                        "status": "ResourceNotRecorded"
+                    },
+                    "resource": {
+                        "id": "sg-058d8a0f054147f6d",
+                        "name": "default",
+                        "type": "AWS::EC2::SecurityGroup"
+                    }
+                }
+            },
+            "cloud": {
+                "account": {
+                    "id": "123456789012"
+                },
+                "provider": "aws",
+                "region": "eu-west-1",
+                "service": {
+                    "name": "ec2"
+                }
+            },
+            "event": {
+                "category": [
+                    "configuration"
+                ],
+                "kind": "event",
+                "type": [
+                    "creation"
+                ]
+            }
+        }
+    ]
+}
