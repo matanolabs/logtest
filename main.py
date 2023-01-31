@@ -3,6 +3,7 @@ from ecs_schema_to_iceberg import *
 from validate import validate_iceberg_schema
 from runner import run_transform_vrl, vrl
 import os
+import csv
 from pathlib import Path
 import jsonlines
 import tempfile
@@ -402,7 +403,7 @@ def run_tests_get_errors(logsource_dir, opts, table_schema, table_file, data):
 
     from_test_seen = opts.from_test is None
     for test_event_f in chain(
-        logsource_dir.rglob("test/**/*.log"), logsource_dir.rglob("test/**/*.json")
+        logsource_dir.rglob("test/**/*.log"), logsource_dir.rglob("test/**/*.json"), logsource_dir.rglob("test/**/*.csv")
     ):
         if "-expected.json" in str(test_event_f):
             continue
@@ -432,6 +433,12 @@ def run_tests_get_errors(logsource_dir, opts, table_schema, table_file, data):
                     d = rdr[i].pop("message")
                     d = d.split("\n")[0]
                     rdr[i] = json.loads(d)
+        elif str(test_event_f).endswith(".csv"):
+            rdr = []
+            with open(test_event_f) as f:
+                reader = csv.DictReader(f)
+                for row in reader:
+                    rdr.append(row)
         else:
             rdr = jsonlines_or_multiline_read(test_event_f)
 

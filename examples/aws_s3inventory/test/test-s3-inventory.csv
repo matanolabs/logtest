@@ -1,0 +1,3 @@
+Bucket,Key,Size,LastModifiedDate,ETag,StorageClass,IsMultipartUploaded,ReplicationStatus,EncryptionStatus,ObjectLockRetainUntilDate,ObjectLockMode,ObjectLockLegalHoldStatus,IntelligentTieringAccessTier,BucketKeyStatus,ChecksumAlgorithm
+"samrosetestbucket12345","abc","21445","2023-01-17T06:28:00.000Z","315ad6f605bc3312a1677298c948c9fc","STANDARD","false","","SSE-S3","","","","","DISABLED",""
+"samrosetestbucket12345","abc13","21445","2023-01-18T02:55:43.000Z","315ad6f605bc3312a1677298c948c9fc","STANDARD","false","","SSE-S3","","","","","DISABLED",""

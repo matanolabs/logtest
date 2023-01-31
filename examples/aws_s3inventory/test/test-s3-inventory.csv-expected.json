@@ -1,0 +1,90 @@
+{
+    "expected": [
+        {
+            "aws": {
+              "s3inventory": {
+                "bucket": "samrosetestbucket12345",
+                "bucket_key_status": "DISABLED",
+                "e_tag": "315ad6f605bc3312a1677298c948c9fc",
+                "encryption_status": "SSE-S3",
+                "is_multipart_uploaded": false,
+                "key": "abc",
+                "last_modified": "2023-01-17T06:28:00",
+                "size": 21445,
+                "storage_class": "STANDARD"
+              }
+            },
+            "cloud": {
+              "provider": "aws",
+              "service": {
+                "name": "s3"
+              }
+            },
+            "event": {
+              "category": [
+                "file"
+              ],
+              "kind": "event",
+              "type": [
+                "info"
+              ]
+            },
+            "file": {
+              "hash": {
+                "md5": "315ad6f605bc3312a1677298c948c9fc"
+              },
+              "mtime": "2023-01-17T06:28:00",
+              "path": "s3://samrosetestbucket12345/abc",
+              "size": 21445
+            },
+            "related": {
+              "hash": [
+                "315ad6f605bc3312a1677298c948c9fc"
+              ]
+            }
+          },
+          {
+            "aws": {
+              "s3inventory": {
+                "bucket": "samrosetestbucket12345",
+                "bucket_key_status": "DISABLED",
+                "e_tag": "315ad6f605bc3312a1677298c948c9fc",
+                "encryption_status": "SSE-S3",
+                "is_multipart_uploaded": false,
+                "key": "abc13",
+                "last_modified": "2023-01-18T02:55:43",
+                "size": 21445,
+                "storage_class": "STANDARD"
+              }
+            },
+            "cloud": {
+              "provider": "aws",
+              "service": {
+                "name": "s3"
+              }
+            },
+            "event": {
+              "category": [
+                "file"
+              ],
+              "kind": "event",
+              "type": [
+                "info"
+              ]
+            },
+            "file": {
+              "hash": {
+                "md5": "315ad6f605bc3312a1677298c948c9fc"
+              },
+              "mtime": "2023-01-18T02:55:43",
+              "path": "s3://samrosetestbucket12345/abc13",
+              "size": 21445
+            },
+            "related": {
+              "hash": [
+                "315ad6f605bc3312a1677298c948c9fc"
+              ]
+            }
+          }
+    ]
+}

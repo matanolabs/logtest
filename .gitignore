@@ -4,3 +4,4 @@ zed-sample-data
 __pycache__
 vrl-web
 .DS_Store
+log_source_generated.yml.go
