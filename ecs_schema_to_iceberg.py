@@ -424,6 +424,17 @@ def schema_to_iceberg(p, extract_ecs_fields=True):
         if not extract_ecs_fields:
             schema["ts"] = v
 
+    schema = vrl(
+        """
+    . = compact(.)
+    del(.host.containerized)
+    del(.host.os.build)
+    del(.host.os.codename)
+    del(.cloud.image.id)
+    """,
+        schema,
+    )[0]
+
     ecs_fields = []
     if extract_ecs_fields:
         paths = [path for path in traverse(schema)]
@@ -437,17 +448,6 @@ def schema_to_iceberg(p, extract_ecs_fields=True):
                 except:
                     breakpoint()
                 ecs_fields.append(".".join(path))
-
-        schema = vrl(
-            """
-        . = compact(.)
-        del(.host.containerized)
-        del(.host.os.build)
-        del(.host.os.codename)
-        del(.cloud.image.id)
-        """,
-            schema,
-        )[0]
 
     # print(yaml.dump({"schema": schema, "ecs_field_names": ecs_fields}, sort_keys=False))
 

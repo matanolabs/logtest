@@ -66,6 +66,10 @@ if .__expected == true && is_array(.event.action) {
     .event.action = .event.action[0]
 }
 
+if .__expected == true && !is_array(.vulnerability.category) {
+    .vulnerability.category = [ .vulnerability.category ]
+}
+
 if .threat.tactic.name != null && !is_array(.threat.tactic.name) {
     if .__expected == true {
         .threat.tactic.name = [ .threat.tactic.name ]
@@ -373,6 +377,14 @@ del(.aws.cloudtrail.insight_details)
 # aws config, history uses now()
 if is_object(.aws.config_history) {
     del(.ts)
+}
+
+# snyk
+if is_object(.snyk.audit.content) {
+    .snyk.audit.content = encode_json(.snyk.audit.content)
+}
+if is_object(.snyk.vulnerabilities.semver) {
+    .snyk.vulnerabilities.semver = encode_json(.snyk.vulnerabilities.semver)
 }
 
 del(.__expected)
@@ -764,8 +776,9 @@ if __name__ == "__main__":
             global count_passed
             count_passed = 0
 
+            ecs_subschema = ecs_subschema_from_fields(table["schema"]["ecs_field_names"])
             table_schema = merge(
-                ecs_subschema_from_fields(table["schema"]["ecs_field_names"]),
+                ecs_subschema,
                 table_schema,
             )
 

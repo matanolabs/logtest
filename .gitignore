@@ -5,3 +5,4 @@ __pycache__
 vrl-web
 .DS_Store
 log_source_generated.yml.go
+**/*log_source_generated.yml.go
