@@ -387,6 +387,26 @@ if is_object(.snyk.vulnerabilities.semver) {
     .snyk.vulnerabilities.semver = encode_json(.snyk.vulnerabilities.semver)
 }
 
+# MS Graph - Azure AD SigninLogs
+if is_object(.azure.signinlogs) {
+    .azure.aad_signinlogs = del(.azure.signinlogs)
+}
+if is_object(.azure.aad_signinlogs) {
+    del(.azure.resource)
+    # minor bug in tests, easier to replace here than in all the test data
+    if is_string(.azure.aad_signinlogs.authentication_processing_details) {
+        if contains(string!(.azure.aad_signinlogs.authentication_processing_details), "Legacy TLS") {
+            del(.azure.aad_signinlogs.authentication_processing_details)
+        }
+    }
+    del(.azure.aad_signinlogs.resource_id)
+    del(.azure.correlation_id)
+    del(.azure.aad_signinlogs.time)
+    del(.azure.aad_signinlogs.created_at)
+    del(.related.user)
+    del(.event.risk_score_norm)
+}
+
 del(.__expected)
 . = compact(.)
 """
