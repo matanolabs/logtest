@@ -407,6 +407,12 @@ if is_object(.azure.aad_signinlogs) {
     del(.event.risk_score_norm)
 }
 
+if is_object(.google_workspace) {
+    if is_string(.google_workspace.login.challenge_method) {
+        .google_workspace.login.challenge_method = [.google_workspace.login.challenge_method]
+    }
+}
+
 del(.__expected)
 . = compact(.)
 """
