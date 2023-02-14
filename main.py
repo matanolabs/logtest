@@ -127,7 +127,7 @@ if .__expected == true {
     .network.application = if .network.application != null { downcase!(.network.application[0]) } else { null }
 }
 
-if .event.category != null && !is_array(.event.category) {
+if .event.category != null && !is_array(.event.category) && .__expected == true {
     .event.category = [.event.category]
 }
 if .observer.ip != null && !is_array(.observer.ip) {
