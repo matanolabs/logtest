@@ -379,6 +379,12 @@ if is_object(.aws.config_history) {
     del(.ts)
 }
 
+# aws waf
+if is_object(.aws.waf) {
+    del(.aws.waf.labels)
+    del(.aws.waf.request.headers)
+}
+
 # snyk
 if is_object(.snyk.audit.content) {
     .snyk.audit.content = encode_json(.snyk.audit.content)
