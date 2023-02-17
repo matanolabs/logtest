@@ -1,8 +1,6 @@
 name: google_workspace_login
 schema:
   ecs_field_names:
-  - container.name
-  - container.runtime
   - ecs.version
   - event.action
   - event.category
@@ -10,7 +8,6 @@ schema:
   - event.duration
   - event.end
   - event.id
-  - event.ingested
   - event.kind
   - event.outcome
   - event.provider
@@ -19,8 +16,6 @@ schema:
   - group.domain
   - group.id
   - group.name
-  - log.file.path
-  - message
   - organization.id
   - related.hash
   - related.hosts

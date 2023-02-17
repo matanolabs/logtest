@@ -413,6 +413,49 @@ if is_object(.google_workspace) {
     }
 }
 
+if is_object(.azure.auditlogs) {
+    .azure.aad_auditlogs = del(.azure.auditlogs)
+}
+
+if is_object(.azure.aad_auditlogs.properties) {
+    props = del(.azure.aad_auditlogs.properties)
+    .azure.aad_auditlogs = object!(.azure.aad_auditlogs)
+    .azure.aad_auditlogs |= object!(props)
+}
+
+if is_object(.azure.aad_auditlogs.target_resources) {
+    ret = values(object!(.azure.aad_auditlogs.target_resources))
+    .azure.aad_auditlogs.target_resources = map_values(ret) -> |v| {
+        if is_object(v.modified_properties) {
+            v.modified_properties = values(object!(v.modified_properties))
+        }
+        v
+    }
+}
+
+if is_object(.azure.aad_auditlogs) {
+    del(.azure.correlation_id)
+    del(.azure.resourceId)
+    del(.azure.resource)
+
+    del(.client.ip)
+    if .source.address != null && .source.ip == null {
+        .source.ip = .source.address
+    } else if .source.ip != null && .source.address == null {
+        .source.address = .source.ip
+    }
+
+    # precision issue?
+    del(.azure.aad_auditlogs.activity_datetime)
+    del(.related)
+
+    if is_array(.azure.aad_auditlogs.additional_details) {
+        .azure.aad_auditlogs.additional_details = encode_json(.azure.aad_auditlogs.additional_details)
+    }
+    del(.event.category)
+    del(.event.type)
+}
+
 del(.__expected)
 . = compact(.)
 """
@@ -604,7 +647,7 @@ def run_tests_get_errors(logsource_dir, opts, table_schema, table_file, data):
                 )
                 diff = "\n".join(
                     [
-                        x if "/tmp" not in x else x[x.rindex("--- JSON") :]
+                        x
                         for x in str(diff).split("\n")
                     ]
                 )

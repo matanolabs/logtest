@@ -1,0 +1,124 @@
+{
+    "expected": [
+        {
+            "azure": {
+              "aad_auditlogs": {
+                "activity_display_name": "Update user",
+                "additional_details": "[{\"key\":\"UserType\",\"value\":\"Member\"}]",
+                "category": "UserManagement",
+                "correlation_id": "caabca90-9157-4cd9-a4d3-06cd3b90aef2",
+                "initiated_by": {
+                  "app": {
+                    "display_name": "Azure MFA StrongAuthenticationService",
+                    "service_principal_id": "5d7cccf1-73a6-4273-8ffa-99c423d02ddb"
+                  }
+                },
+                "logged_by_service": "Core Directory",
+                "operation_type": "Update",
+                "target_resources": [
+                  {
+                    "id": "d229ea1e-4dd0-4217-8104-924fc5a3b46d",
+                    "modified_properties": [
+                      {
+                        "display_name": "StrongAuthenticationPhoneAppDetail",
+                        "new_value": "[{\"DeviceName\":\"NO_DEVICE\",\"DeviceToken\":\"NO_DEVICE_TOKEN\",\"DeviceTag\":\"SoftwareTokenActivated\",\"PhoneAppVersion\":\"NO_PHONE_APP_VERSION\",\"OathTokenTimeDrift\":0,\"DeviceId\":\"00000000-0000-0000-0000-000000000000\",\"Id\":\"5196470d-e7fe-41b3-93f6-33ac1294428e\",\"TimeInterval\":0,\"AuthenticationType\":2,\"NotificationType\":1,\"LastAuthenticatedTimestamp\":\"2023-02-02T04:24:53.6605349Z\",\"AuthenticatorFlavor\":null,\"HashFunction\":\"hmacsha1\",\"TenantDeviceId\":null,\"SecuredPartitionId\":0,\"SecuredKeyId\":0}]",
+                        "old_value": "[{\"DeviceName\":\"NO_DEVICE\",\"DeviceToken\":\"NO_DEVICE_TOKEN\",\"DeviceTag\":\"SoftwareTokenActivated\",\"PhoneAppVersion\":\"NO_PHONE_APP_VERSION\",\"OathTokenTimeDrift\":0,\"DeviceId\":\"00000000-0000-0000-0000-000000000000\",\"Id\":\"5196470d-e7fe-41b3-93f6-33ac1294428e\",\"TimeInterval\":0,\"AuthenticationType\":2,\"NotificationType\":1,\"LastAuthenticatedTimestamp\":\"2023-01-31T21:35:42.6897607Z\",\"AuthenticatorFlavor\":null,\"HashFunction\":\"hmacsha1\",\"TenantDeviceId\":null,\"SecuredPartitionId\":0,\"SecuredKeyId\":0}]"
+                      },
+                      {
+                        "display_name": "Included Updated Properties",
+                        "new_value": "\"StrongAuthenticationPhoneAppDetail\""
+                      },
+                      {
+                        "display_name": "TargetId.UserType",
+                        "new_value": "\"Member\""
+                      },
+                      {
+                        "display_name": "ActorId.ServicePrincipalNames",
+                        "new_value": "\"b5a60e17-278b-4c92-a4e2-b9262e66bb28\""
+                      },
+                      {
+                        "display_name": "SPN",
+                        "new_value": "\"b5a60e17-278b-4c92-a4e2-b9262e66bb28\""
+                      }
+                    ],
+                    "type": "User",
+                    "user_principal_name": "bobadmin@4wny1t.onmicrosoft.com"
+                  }
+                ]
+              }
+            },
+            "cloud": {
+              "provider": "azure"
+            },
+            "event": {
+              "action": "Update user",
+              "id": "Directory_caabca90-9157-4cd9-a4d3-06cd3b90aef2_OD03O_288662492",
+              "kind": "event",
+              "outcome": "success"
+            },
+            "ts": "2023-02-02T04:24:53.7Z"
+          },
+          {
+            "azure": {
+              "aad_auditlogs": {
+                "activity_display_name": "Consent to application",
+                "additional_details": "[{\"key\":\"User-Agent\",\"value\":\"EvoSTS\"},{\"key\":\"AppId\",\"value\":\"a6a77fa7-5859-4049-830c-56064b625572\"}]",
+                "category": "ApplicationManagement",
+                "correlation_id": "25eaad8f-940a-4c23-9ace-5c005bdffff7",
+                "initiated_by": {
+                  "user": {
+                    "id": "d229ea1e-4dd0-4217-8104-924fc5a3b46d",
+                    "ip_address": "52.149.68.159",
+                    "user_principal_name": "bobadmin@4wny1t.onmicrosoft.com"
+                  }
+                },
+                "logged_by_service": "Core Directory",
+                "operation_type": "Assign",
+                "target_resources": [
+                  {
+                    "display_name": "cheese",
+                    "id": "9a10d523-2d78-4b2b-82d3-3a6f10100a08",
+                    "modified_properties": [
+                      {
+                        "display_name": "ConsentContext.IsAdminConsent",
+                        "new_value": "\"True\""
+                      },
+                      {
+                        "display_name": "ConsentContext.IsAppOnly",
+                        "new_value": "\"False\""
+                      },
+                      {
+                        "display_name": "ConsentContext.OnBehalfOfAll",
+                        "new_value": "\"True\""
+                      },
+                      {
+                        "display_name": "ConsentContext.Tags",
+                        "new_value": "\"WindowsAzureActiveDirectoryIntegratedApp\""
+                      },
+                      {
+                        "display_name": "ConsentAction.Permissions",
+                        "new_value": "\"[[Id: I9UQmngtK0uC0zpvEBAKCHK5CASCq_JNkdtXeTLBY_Y, ClientId: 9a10d523-2d78-4b2b-82d3-3a6f10100a08, PrincipalId: , ResourceId: 0408b972-ab82-4df2-91db-577932c163f6, ConsentType: AllPrincipals, Scope: User.Read, CreatedDateTime: , LastModifiedDateTime ]] => [[Id: I9UQmngtK0uC0zpvEBAKCHK5CASCq_JNkdtXeTLBY_Y, ClientId: 9a10d523-2d78-4b2b-82d3-3a6f10100a08, PrincipalId: , ResourceId: 0408b972-ab82-4df2-91db-577932c163f6, ConsentType: AllPrincipals, Scope: User.Read, CreatedDateTime: , LastModifiedDateTime ]]; \""
+                      },
+                      {
+                        "display_name": "TargetId.ServicePrincipalNames",
+                        "new_value": "\"a6a77fa7-5859-4049-830c-56064b625572\""
+                      }
+                    ],
+                    "type": "ServicePrincipal"
+                  }
+                ]
+              }
+            },
+            "cloud": {
+              "provider": "azure"
+            },
+            "event": {
+              "action": "Consent to application",
+              "id": "Directory_25eaad8f-940a-4c23-9ace-5c005bdffff7_IXB0U_144967228",
+              "kind": "event",
+              "outcome": "success"
+            },
+            "ts": "2023-01-31T23:44:50.2Z"
+          }
+    ]
+}
