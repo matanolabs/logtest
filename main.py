@@ -13,6 +13,7 @@ import editor
 import argparse
 import time
 from rich.panel import Panel
+from rich import print
 from random import shuffle
 from itertools import chain
 
@@ -462,6 +463,34 @@ if is_object(.azure.aad_auditlogs) {
     del(.event.type)
 }
 
+# Cloudflare fixes
+if .__expected == true && exists(.cloudflare_logpush) {
+    .cloudflare = del(.cloudflare_logpush)
+
+    if is_object(.cloudflare.audit.new_value) {
+        .cloudflare.audit.new_value = encode_json(.cloudflare.audit.new_value)
+    }
+    if is_object(.cloudflare.audit.old_value) {
+        .cloudflare.audit.old_value = encode_json(.cloudflare.audit.old_value)
+    }
+    if is_object(.cloudflare.audit.metadata) {
+        .cloudflare.audit.metadata = encode_json(.cloudflare.audit.metadata)
+    }
+    if exists(.cloudflare.firewall_event.meta_data) {
+        .cloudflare.firewall_event.metadata = del(.cloudflare.firewall_event.meta_data)
+    }
+    if is_object(.cloudflare.firewall_event.metadata) {
+        .cloudflare.firewall_event.metadata = encode_json(.cloudflare.firewall_event.metadata)
+    }
+    if is_object(.cloudflare.http_request.cookies) {
+        .cloudflare.http_request.cookies = encode_json(.cloudflare.http_request.cookies)
+    }
+
+    del(.cloudflare.network_analytics.destination.geo_location)
+    del(.cloudflare.network_analytics.source.geo_location)
+    del(.cloudflare.network_analytics.colo.geo_location)
+}
+
 del(.__expected)
 . = compact(.)
 """
@@ -560,6 +589,10 @@ def run_tests_get_errors(logsource_dir, opts, table_schema, table_file, data):
         if expected is None:
             shuffle(rdr)
         for i, test_event in enumerate(rdr):
+            # remove key _table if exists
+            if type(test_event) == dict and "_table" in test_event:
+                del test_event["_table"]
+
             if just_saw and i < from_test_idx:
                 continue
             # if i > 20:
@@ -589,10 +622,14 @@ def run_tests_get_errors(logsource_dir, opts, table_schema, table_file, data):
                     n_expected = n_res
             except Exception as e:
                 console.print("\n❌ Test failed: ", testname, style="bold red")
-                print("\n[green bold]Expected: ", n_expected)
-                print("\n[yellow bold]Input event: ", test_event)
+                try:
+                    print("\n[green bold]Expected: ", n_expected)
+                    print("\n[yellow bold]Input event: ", test_event)
+                except:
+                    console.print(str(e))
+                    sys.exit(1)
 
-                print(e)
+                console.print(str(e))
                 print(f"\n[bold red]❌ Error running transform\n")
 
                 editor.edit(

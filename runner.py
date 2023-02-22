@@ -54,7 +54,10 @@ def vrl(prog, event):
         response = requests.request("POST", url, headers=headers, data=payload)
         res = json.loads(response.text)
         if res.get("error"):
-            raise Exception(res["error"])
+            error_suffix = ""
+            if "call to undefined function" in res["error"]:
+                error_suffix = f"\n[bold yellow]WARNING: Missing function in VRL program.[/bold yellow]\n\n[bold white]Please make sure you have the latest version of the vrl-web server running from [/bold white]\n[bold cyan]https://github.com/shaeqahmed/vrl-web[/bold cyan]\n\n[bold yellow]If you are using the latest version, please open an issue.[/bold yellow]"
+            raise Exception(res["error"] + error_suffix)
         return res["success"]["result"], res["success"]["output"]
     except requests.exceptions.ConnectionError:
         print(
