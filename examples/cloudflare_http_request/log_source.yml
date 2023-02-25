@@ -206,18 +206,6 @@ schema:
                     type: string
                   - name: status
                     type: string
-              - name: rate
-                type:
-                  type: struct
-                  fields:
-                  - name: limit
-                    type:
-                      type: struct
-                      fields:
-                      - name: action
-                        type: string
-                      - name: id
-                        type: long
               - name: request
                 type:
                   type: struct
@@ -252,26 +240,6 @@ schema:
                   fields:
                   - name: ms
                     type: long
-          - name: firewall
-            type:
-              type: struct
-              fields:
-              - name: matches
-                type:
-                  type: struct
-                  fields:
-                  - name: action
-                    type:
-                      type: list
-                      element: string
-                  - name: rule_id
-                    type:
-                      type: list
-                      element: string
-                  - name: sources
-                    type:
-                      type: list
-                      element: string
           - name: ja3_hash
             type: string
           - name: origin
@@ -360,8 +328,6 @@ schema:
               fields:
               - name: headers
                 type: string
-          - name: security_level
-            type: string
           - name: smart_route
             type:
               type: struct
@@ -382,25 +348,31 @@ schema:
                   fields:
                   - name: id
                     type: long
-          - name: waf
+          - name: security
             type:
               type: struct
               fields:
               - name: action
                 type: string
-              - name: flag
-                type: string
-              - name: matched_var
-                type: string
-              - name: profile
-                type: string
+              - name: actions
+                type:
+                  type: list
+                  element: string
               - name: rule
                 type:
                   type: struct
                   fields:
                   - name: id
                     type: string
-                  - name: message
+                  - name: ids
+                    type:
+                      type: list
+                      element: string
+                  - name: sources
+                    type:
+                      type: list
+                      element: string
+                  - name: description
                     type: string
           - name: worker
             type:
@@ -609,12 +581,6 @@ transform: |
 
   .cloudflare.http_request.edge.pathing.status = del(.json.EdgePathingStatus)
 
-  .cloudflare.http_request.edge.rate.limit.action = del(.json.EdgeRateLimitAction)
-
-  if !is_nullish(.json.EdgeRateLimitID) { 
-  	.cloudflare.http_request.edge.rate.limit.id = to_int!(.json.EdgeRateLimitID)                                                  
-  }
-
   .cloudflare.http_request.edge.request.host = del(.json.EdgeRequestHost)
 
   if !is_nullish(.json.EdgeResponseBodyBytes) { 
@@ -637,11 +603,15 @@ transform: |
   	.cloudflare.http_request.edge.time_to_first_byte.ms = to_int!(.json.EdgeTimeToFirstByteMs)                                                  
   }
 
-  .cloudflare.http_request.firewall.match.action = del(.json.FirewallMatchesActions)
+  .cloudflare.http_request.security.action = del(.json.SecurityAction)
+  .cloudflare.http_request.security.actions = del(.json.SecurityActions)
 
-  .cloudflare.http_request.firewall.match.rule.id = del(.json.FirewallMatchesRuleIDs)
+  .cloudflare.http_request.security.rule.id = del(.json.SecurityRuleID)
+  .cloudflare.http_request.security.rule.ids = del(.json.SecurityRuleIDs)
 
-  .cloudflare.http_request.firewall.match.source = del(.json.FirewallMatchesSources)
+  .cloudflare.http_request.security.rule.description = del(.json.SecurityRuleDescription)
+
+  .cloudflare.http_request.security.sources = del(.json.SecuritySources)
 
   .cloudflare.http_request.ja3_hash = del(.json.JA3Hash)
 
@@ -691,8 +661,6 @@ transform: |
 
   .cloudflare.http_request.response.header = del(.json.ResponseHeaders)
 
-  .cloudflare.http_request.security_level = del(.json.SecurityLevel)
-
   if !is_nullish(.json.SmartRouteColoID) { 
   	.cloudflare.http_request.smart_route.colo.id = to_int!(.json.SmartRouteColoID)                                                  
   }
@@ -700,18 +668,6 @@ transform: |
   if !is_nullish(.json.UpperTierColoID) { 
   	.cloudflare.http_request.upper_tier.colo.id = to_int!(.json.UpperTierColoID)                                                  
   }
-
-  .cloudflare.http_request.waf.action = del(.json.WAFAction)
-
-  .cloudflare.http_request.waf.flag = del(.json.WAFFlags)
-
-  .cloudflare.http_request.waf.matched_var = del(.json.WAFMatchedVar)
-
-  .cloudflare.http_request.waf.profile = del(.json.WAFProfile)
-
-  .cloudflare.http_request.waf.rule.id = del(.json.WAFRuleID)
-
-  .cloudflare.http_request.waf.rule.message = del(.json.WAFRuleMessage)
 
   if !is_nullish(.json.WorkerCPUTime) { 
   	.cloudflare.http_request.worker.cpu_time = to_int!(.json.WorkerCPUTime)                                                  

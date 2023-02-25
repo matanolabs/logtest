@@ -41,7 +41,9 @@ schema:
   - network.protocol
   - related.hosts
   - related.ip
+  - rule.description
   - rule.id
+  - rule.reference
   - source.as.number
   - source.geo.country_iso_code
   - source.ip
@@ -167,6 +169,10 @@ schema:
               fields:
               - name: id
                 type: string
+              - name: reference
+                type: string
+              - name: description
+                type: string
           - name: source
             type: string
           - name: timestamp
@@ -203,6 +209,14 @@ transform: |
   .cloudflare.firewall_event.rule.id = del(.json.RuleID)
 
   .rule.id = .cloudflare.firewall_event.rule.id
+
+  .cloudflare.firewall_event.rule.reference = del(.json.Ref)
+
+  .rule.reference = .cloudflare.firewall_event.rule.reference
+
+  .cloudflare.firewall_event.client.rule.description = del(.json.Description)
+
+  .rule.description = .cloudflare.firewall_event.client.rule.description
 
   if !is_nullish(.json.ClientASN) { 
   	.cloudflare.firewall_event.client.asn.value = to_int!(.json.ClientASN)                                                  
