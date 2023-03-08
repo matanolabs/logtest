@@ -491,6 +491,21 @@ if .__expected == true && exists(.cloudflare_logpush) {
     del(.cloudflare.network_analytics.colo.geo_location)
 }
 
+if .__expected == true && exists(.google_workspace.alert) {
+    if is_array(.email.subject) {
+        .email.subject = join!(.email.subject, ",")
+    }
+    if is_array(.email.message_id) {
+        .email.message_id = join!(.email.message_id, ",")
+    }
+    .email.delivery_timestamp = .email.delivery_timestamp[-1]
+    .user.email = .user.email[-1]
+    .google_workspace.alert.data.rule.violation_info.triggered.action.info, err = map_values(array!(.google_workspace.alert.data.rule.violation_info.triggered.action.info)) -> |v| {
+      ret = if is_string(v) { v } else { encode_json(v) }
+      to_string(ret)
+    }
+}
+
 del(.__expected)
 . = compact(.)
 """
