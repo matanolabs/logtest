@@ -2,14 +2,6 @@
 # https://github.com/elastic/integrations/blob/main/packages/zscaler_zia/data_stream/firewall/elasticsearch/ingest_pipeline/default.yml
 schema:
   ecs_field_names:
-  - cloud.account.id
-  - cloud.availability_zone
-  - cloud.instance.id
-  - cloud.instance.name
-  - cloud.machine.type
-  - cloud.project.id
-  - cloud.provider
-  - cloud.region
   - container.id
   - container.image.name
   - container.labels
