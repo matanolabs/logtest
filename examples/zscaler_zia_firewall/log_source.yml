@@ -1,0 +1,309 @@
+# https://docs.elastic.co/en/integrations/zscaler_zia#firewall
+# https://github.com/elastic/integrations/blob/main/packages/zscaler_zia/data_stream/firewall/elasticsearch/ingest_pipeline/default.yml
+schema:
+  ecs_field_names:
+  - cloud.account.id
+  - cloud.availability_zone
+  - cloud.instance.id
+  - cloud.instance.name
+  - cloud.machine.type
+  - cloud.project.id
+  - cloud.provider
+  - cloud.region
+  - container.id
+  - container.image.name
+  - container.labels
+  - container.name
+  - destination.bytes
+  - destination.geo.country_name
+  - destination.ip
+  - destination.port
+  - ecs.version
+  - event.action
+  - event.dataset
+  - event.duration
+  - event.module
+  - host.architecture
+  - host.domain
+  - host.hostname
+  - host.id
+  - host.ip
+  - host.mac
+  - host.name
+  - host.os.family
+  - host.os.kernel
+  - host.os.name
+  - host.os.platform
+  - host.os.version
+  - host.type
+  - network.application
+  - network.community_id
+  - network.protocol
+  - network.transport
+  - related.hosts
+  - related.ip
+  - related.user
+  - rule.name
+  - source.bytes
+  - source.ip
+  - source.port
+  - tags
+  - user.email
+  - user.name
+  fields:
+  - name: zscaler_zia
+    type:
+      type: struct
+      fields:
+      - name: firewall
+        type:
+          type: struct
+          fields:
+          - name: aggregate
+            type: string
+          - name: client
+            type:
+              type: struct
+              fields:
+              - name: destination
+                type:
+                  type: struct
+                  fields:
+                  - name: ip
+                    type: string
+                  - name: port
+                    type: long
+          - name: department
+            type: string
+          - name: duration
+            type:
+              type: struct
+              fields:
+              - name: avg
+                type: long
+              - name: milliseconds
+                type: long
+              - name: seconds
+                type: long
+          - name: ip_category
+            type: string
+          - name: location
+            type:
+              type: struct
+              fields:
+              - name: name
+                type: string
+          - name: nat
+            type: string
+          - name: server
+            type:
+              type: struct
+              fields:
+              - name: source
+                type:
+                  type: struct
+                  fields:
+                  - name: ip
+                    type: string
+                  - name: port
+                    type: long
+          - name: session
+            type:
+              type: struct
+              fields:
+              - name: count
+                type: double
+          - name: stateful
+            type: string
+          - name: threat
+            type:
+              type: struct
+              fields:
+              - name: category
+                type: string
+              - name: name
+                type: string
+          - name: tunnel
+            type:
+              type: struct
+              fields:
+              - name: ip
+                type: string
+              - name: port
+                type: long
+              - name: type
+                type: string
+transform: |-
+  .ecs.version = "8.6.0"
+
+  .zia = object!(del(.json))
+
+  .event.kind = "event"
+  .event.category = ["network"]
+  .event.type = ["info"]
+  .event.original = encode_json(.zia)
+  .event.action = del(.zia.action)
+  .event.created = to_timestamp!(.zia.datetime, "seconds") 
+  .event.dataset = del(.zia.sourcetype)
+
+  if .zia.datetime != null {                                               
+    .ts = to_timestamp!(del(.zia.datetime), "seconds") 
+  }
+
+  if .zia.inbytes != null {
+    .destination.bytes = to_int!(del(.zia.inbytes))
+  }
+  if .zia.sdip != null {
+    .destination.ip = del(.zia.sdip)
+  }
+  if .zia.sdport != null {
+    .destination.port = to_int!(del(.zia.sdport))
+  }
+  if .zia.destcountry != null {
+    .destination.geo.country_name = del(.zia.destcountry)
+  }
+
+
+  if .zia.devicehostname != null {
+    .host.hostname = del(.zia.devicehostname)
+  }
+
+
+  if .zia.outbytes != null {
+    .source.bytes = to_int!(del(.zia.outbytes))
+  }
+  if .zia.csip != null {
+    .source.ip = del(.zia.csip)
+  }
+  if .zia.csport != null {
+    .source.port = to_int!(del(.zia.csport))
+  }
+
+
+  if .zia.nwapp != null {
+    .network.application = downcase!(del(.zia.nwapp))
+  }
+  if .zia.nwsvc != null {
+    .network.protocol = downcase!(del(.zia.nwsvc))
+  }
+  if .zia.proto != null {
+    .network.transport = downcase!(del(.zia.proto))
+  }
+
+
+  if .zia.locationname != null {
+    .zscaler_zia.firewall.location.name = del(.zia.locationname)
+  }
+
+
+  if .zia.aggregate != null {
+    .zscaler_zia.firewall.aggregate = del(.zia.aggregate)
+  }
+  if .zia.cdip != null {
+    .zscaler_zia.firewall.client.destination.ip = del(.zia.cdip)
+  }
+  if .zia.cdport != null {
+    .zscaler_zia.firewall.client.destination.port = to_int!(del(.zia.cdport))
+  }
+  if .zia.department != null {
+    .zscaler_zia.firewall.department = del(.zia.department)
+  }
+  if .zia.avgduration != null {
+    .zscaler_zia.firewall.duration.avg = to_int!(del(.zia.avgduration))
+  }
+  if .zia.durationms != null {
+    .zscaler_zia.firewall.duration.milliseconds = to_int!(del(.zia.durationms))
+  }
+  if .zia.duration != null {
+    .zscaler_zia.firewall.duration.seconds = to_int!(del(.zia.duration))
+  }
+  if .zia.ipcat != null {
+    .zscaler_zia.firewall.ip_category = del(.zia.ipcat)
+  }
+
+
+  if .zia.dnat != null {
+    .zscaler_zia.firewall.nat = del(.zia.dnat)
+  }
+  if .zia.ssip != null {
+    .zscaler_zia.firewall.server.source.ip = del(.zia.ssip)
+  }
+  if .zia.ssport != null {
+    .zscaler_zia.firewall.server.source.port = to_int!(del(.zia.ssport))
+  }
+  if .zia.numsessions != null {
+    .zscaler_zia.firewall.session.count = to_int!(del(.zia.numsessions))
+  }
+  if .zia.stateful != null {
+    .zscaler_zia.firewall.stateful = del(.zia.stateful)
+  }
+
+
+  if .zia.threatcat != null {
+    .zscaler_zia.firewall.threat.category = del(.zia.threatcat)
+  }
+  if .zia.threatname != null {
+    .zscaler_zia.firewall.threat.name = del(.zia.threatname)
+  }
+
+
+  if .zia.tsip != null {
+    .zscaler_zia.firewall.tunnel.ip = del(.zia.tsip)
+  }
+  if .zia.tunsport != null {
+    .zscaler_zia.firewall.tunnel.port = to_int!(del(.zia.tunsport))
+  }
+  if .zia.tuntype != null {
+    .zscaler_zia.firewall.tunnel.type = del(.zia.tuntype)
+  }
+
+
+  if .zia.user != null {
+    .user.email = del(.zia.user)
+  }
+  if .zia.deviceowner != null {
+    .user.name = del(.zia.deviceowner)
+  }
+
+  .rule.name = []
+  if .zia.ipsrulelabel != null {
+    .rule.name = push(.rule.name, del(.zia.ipsrulelabel))
+  }
+  if .zia.rulelabel != null {
+    .rule.name = push(.rule.name, del(.zia.rulelabel))
+  }
+
+
+  .related.ip = []
+  if .source.ip != null {
+    .related.ip = append(.related.ip, [.source.ip])
+  }
+  if .destination.ip != null {
+    .related.ip = append(.related.ip, [.destination.ip])
+  }
+  if .zscaler_zia.firewall.server.source.ip != null {
+    .related.ip = append(.related.ip, [.zscaler_zia.firewall.server.source.ip])
+  }
+  if .zscaler_zia.firewall.client.destination.ip != null {
+    .related.ip = append(.related.ip, [.zscaler_zia.firewall.client.destination.ip])
+  }
+  if .zscaler_zia.firewall.tunnel.ip != null {
+    .related.ip = append(.related.ip, [.zscaler_zia.firewall.tunnel.ip])
+  }
+  .related.ip = unique(.related.ip)
+
+
+  .related.hosts = []
+  if .host.hostname != null {
+    .related.hosts = append(.related.hosts, [.host.hostname])
+  }
+  .related.hosts = unique(.related.hosts)
+
+
+  .related.user = []
+  if .user.name != null {
+    .related.user = append(.related.user, [.user.name])
+  }
+  .related.user = unique(.related.user)
+
+name: zscaler_zia_firewall
