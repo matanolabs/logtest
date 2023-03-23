@@ -125,7 +125,7 @@ if .__expected == true {
         }
     }
     .host.ip = [ .host.ip ]
-    .network.application = if .network.application != null { downcase!(.network.application[0]) } else { null }
+    .network.application = if .network.application != null { downcase!(.network.application) } else { null }
 }
 
 if .event.category != null && !is_array(.event.category) && .__expected == true {
