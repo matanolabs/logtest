@@ -545,7 +545,7 @@ def table(s):
         return {"log_source": log_source, "table": table}
 
 
-def run_tests_get_errors(logsource_dir, opts, table_schema, table_file, data):
+def run_tests_get_errors(logsource_dir, opts, table_schema, table_file, data, update_snapshot=False):
     global count_passed
 
     from_test_seen = opts.from_test is None
@@ -555,6 +555,8 @@ def run_tests_get_errors(logsource_dir, opts, table_schema, table_file, data):
         if "-expected.json" in str(test_event_f):
             continue
 
+        events = []
+        found_diff = False
         testname = test_event_f.name.split(".")[0]
 
         from_test = opts.from_test.split(":")[0] if opts.from_test is not None else None
@@ -682,7 +684,7 @@ def run_tests_get_errors(logsource_dir, opts, table_schema, table_file, data):
                 )
                 return ["errors"]
 
-            if n_res != n_expected:
+            if n_res != n_expected and not update_snapshot:
                 console.print("\n❌ Test failed: ", testname, style="bold red")
                 print("\n[red bold]Actual: ", n_res)
                 print("\n[green bold]Expected: ", n_expected)
@@ -726,6 +728,9 @@ def run_tests_get_errors(logsource_dir, opts, table_schema, table_file, data):
                     ],
                 )
                 return ["errors"]
+            events.append(n_res)
+            if not found_diff:
+                found_diff = n_res != n_expected
 
             if not validate_iceberg_schema(table_schema, [n_res]):
                 editor.edit(
@@ -742,6 +747,10 @@ def run_tests_get_errors(logsource_dir, opts, table_schema, table_file, data):
             count_passed += 1
             print(f"Test {i} passed: ✅", testname)
 
+        if update_snapshot and found_diff:
+            new_updated_fp = f"{test_event_f}-snapshot-expected.json"
+            with open(new_updated_fp, "w") as f:
+                f.write(json.dumps({ "expected": events }, indent=4))
 
 if __name__ == "__main__":
     parser = ArgumentParser()
@@ -756,6 +765,14 @@ if __name__ == "__main__":
         "--logsource-dir",
         help="the path to log source dir to read from (fields, test) and write to (generated log_source.yml etc.)",
         type=str,
+    )
+    parser.add_argument(
+        "--update-snapshot",
+        type=str2bool,
+        nargs="?",
+        const=True,
+        default=False,
+        help="Update snapshot.",
     )
     parser.add_argument("--from-test", type=str, default=None)
     parser.add_argument(
@@ -912,7 +929,7 @@ if __name__ == "__main__":
             with open(table_file) as f:
                 data = yaml.safe_load(f)
                 errors = run_tests_get_errors(
-                    logsource_dir, opts, table_schema, table_file, data
+                    logsource_dir, opts, table_schema, table_file, data, update_snapshot=opts.update_snapshot
                 )
                 all_passed = errors is None
                 if not all_passed:
