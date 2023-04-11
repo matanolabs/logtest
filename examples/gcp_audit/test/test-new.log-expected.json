@@ -36,6 +36,9 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "firebase-measurement@system.gserviceaccount.com"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -103,6 +106,9 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "firebase-measurement@system.gserviceaccount.com"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -162,6 +168,10 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "samrose@matano.dev",
+                        "principal_subject": "user:samrose@matano.dev"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -223,6 +233,9 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "samrose@matano.dev"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -289,6 +302,10 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "samrose@matano.dev",
+                        "principal_subject": "user:samrose@matano.dev"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -352,6 +369,10 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "samrose@matano.dev",
+                        "principal_subject": "user:samrose@matano.dev"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -415,6 +436,10 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "samrose@matano.dev",
+                        "principal_subject": "user:samrose@matano.dev"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -480,6 +505,10 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "samrose@matano.dev",
+                        "principal_subject": "user:samrose@matano.dev"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -550,6 +579,9 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "samrose@matano.dev"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -610,6 +642,10 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "samrose@matano.dev",
+                        "principal_subject": "user:samrose@matano.dev"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -672,6 +708,9 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "service-933997534588@gcf-admin-robot.iam.gserviceaccount.com"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -733,6 +772,10 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "samrose@matano.dev",
+                        "principal_subject": "user:samrose@matano.dev"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -807,6 +850,9 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "service-933997534588@gcf-admin-robot.iam.gserviceaccount.com"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -872,6 +918,9 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "service-933997534588@gcf-admin-robot.iam.gserviceaccount.com"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -928,6 +977,10 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "samrose@matano.dev",
+                        "principal_subject": "user:samrose@matano.dev"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -1000,6 +1053,10 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "samrose@matano.dev",
+                        "principal_subject": "user:samrose@matano.dev"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -1058,6 +1115,10 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "samrose@matano.dev",
+                        "principal_subject": "user:samrose@matano.dev"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -1127,6 +1188,9 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "service-933997534588@gcf-admin-robot.iam.gserviceaccount.com"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -1186,6 +1250,9 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "service-933997534588@gcf-admin-robot.iam.gserviceaccount.com"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -1326,6 +1393,9 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "service-933997534588@gcp-sa-eventarc.iam.gserviceaccount.com"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -1387,6 +1457,9 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "service-933997534588@gcp-sa-eventarc.iam.gserviceaccount.com"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -1447,6 +1520,10 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "samrose@matano.dev",
+                        "principal_subject": "user:samrose@matano.dev"
+                    },
                     "logentry_operation": {
                         "id": "projects/matano-test/locations/europe-west2/operations/operation-1678345894319-5f6725ad75682-bc22fa06-4734daba",
                         "last": true,
@@ -1500,6 +1577,10 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "samrose@matano.dev",
+                        "principal_subject": "user:samrose@matano.dev"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -1563,6 +1644,10 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "samrose@matano.dev",
+                        "principal_subject": "user:samrose@matano.dev"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -1634,6 +1719,10 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "samrose@matano.dev",
+                        "principal_subject": "user:samrose@matano.dev"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -1702,6 +1791,10 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "samrose@matano.dev",
+                        "principal_subject": "user:samrose@matano.dev"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -1774,6 +1867,9 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "samrose@matano.dev"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -1838,6 +1934,9 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "service-933997534588@gcp-sa-eventarc.iam.gserviceaccount.com"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -1897,6 +1996,9 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "service-933997534588@gcp-sa-eventarc.iam.gserviceaccount.com"
+                    },
                     "request": "{\"@type\":\"type.googleapis.com/google.pubsub.v1.DeleteSubscriptionRequest\",\"subscription\":\"projects/matano-test/subscriptions/eventarc-europe-west2-matano-946413832404-events-delivery-function-8e86c40-898183-sub-303\"}",
                     "request_metadata": {
                         "caller_ip": "private"
@@ -1951,6 +2053,10 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "samrose@matano.dev",
+                        "principal_subject": "user:samrose@matano.dev"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -2008,6 +2114,9 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "service-933997534588@gcf-admin-robot.iam.gserviceaccount.com"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -2107,6 +2216,10 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "samrose@matano.dev",
+                        "principal_subject": "user:samrose@matano.dev"
+                    },
                     "logentry_operation": {
                         "id": "projects/matano-test/locations/europe-west2/operations/operation-1678346005550-5f672617894c4-8a1d548c-a908daf9",
                         "last": true,
@@ -2166,6 +2279,10 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "samrose@matano.dev",
+                        "principal_subject": "user:samrose@matano.dev"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -2231,6 +2348,10 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "samrose@matano.dev",
+                        "principal_subject": "user:samrose@matano.dev"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -2297,6 +2418,10 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "samrose@matano.dev",
+                        "principal_subject": "user:samrose@matano.dev"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -2360,6 +2485,10 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "samrose@matano.dev",
+                        "principal_subject": "user:samrose@matano.dev"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -2416,6 +2545,9 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "samrose@matano.dev"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -2486,6 +2618,10 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "samrose@matano.dev",
+                        "principal_subject": "user:samrose@matano.dev"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -2546,6 +2682,9 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "samrose@matano.dev"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -2612,6 +2751,10 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "samrose@matano.dev",
+                        "principal_subject": "user:samrose@matano.dev"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -2674,6 +2817,10 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "samrose@matano.dev",
+                        "principal_subject": "user:samrose@matano.dev"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -2737,6 +2884,10 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "samrose@matano.dev",
+                        "principal_subject": "user:samrose@matano.dev"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -2802,6 +2953,10 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "samrose@matano.dev",
+                        "principal_subject": "user:samrose@matano.dev"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -2874,6 +3029,10 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "samrose@matano.dev",
+                        "principal_subject": "user:samrose@matano.dev"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -2935,6 +3094,9 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "samrose@matano.dev"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -2995,6 +3157,10 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "samrose@matano.dev",
+                        "principal_subject": "user:samrose@matano.dev"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -3058,6 +3224,10 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "samrose@matano.dev",
+                        "principal_subject": "user:samrose@matano.dev"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -3120,6 +3290,9 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "service-933997534588@gcf-admin-robot.iam.gserviceaccount.com"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -3181,6 +3354,10 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "samrose@matano.dev",
+                        "principal_subject": "user:samrose@matano.dev"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -3255,6 +3432,9 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "service-933997534588@gcf-admin-robot.iam.gserviceaccount.com"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -3320,6 +3500,9 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "service-933997534588@gcf-admin-robot.iam.gserviceaccount.com"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -3374,6 +3557,10 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "samrose@matano.dev",
+                        "principal_subject": "user:samrose@matano.dev"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -3440,6 +3627,10 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "samrose@matano.dev",
+                        "principal_subject": "user:samrose@matano.dev"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -3506,6 +3697,10 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "samrose@matano.dev",
+                        "principal_subject": "user:samrose@matano.dev"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -3575,6 +3770,9 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "service-933997534588@gcf-admin-robot.iam.gserviceaccount.com"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -3634,6 +3832,9 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "service-933997534588@gcf-admin-robot.iam.gserviceaccount.com"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -3774,6 +3975,9 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "service-933997534588@gcp-sa-eventarc.iam.gserviceaccount.com"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -3835,6 +4039,9 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "service-933997534588@gcp-sa-eventarc.iam.gserviceaccount.com"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -3895,6 +4102,10 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "samrose@matano.dev",
+                        "principal_subject": "user:samrose@matano.dev"
+                    },
                     "logentry_operation": {
                         "id": "projects/matano-test/locations/europe-west2/operations/operation-1678347504130-5f672bacb1a9a-c72a981f-fe25844c",
                         "last": true,
@@ -3952,6 +4163,9 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "firebase-measurement@system.gserviceaccount.com"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -4006,6 +4220,9 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "firebase-measurement@system.gserviceaccount.com"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -4064,6 +4281,9 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "firebase-measurement@system.gserviceaccount.com"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -4131,6 +4351,9 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "firebase-measurement@system.gserviceaccount.com"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -4189,6 +4412,9 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "firebase-measurement@system.gserviceaccount.com"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,

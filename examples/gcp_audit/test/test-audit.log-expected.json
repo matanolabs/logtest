@@ -32,6 +32,9 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "xxx@xxx.xxx"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -89,6 +92,9 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "xxx@xxx.xxx"
+                    },
                     "authorization_info": [
                         {
                             "granted": false,
@@ -154,6 +160,9 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "xxx@xxx.xxx"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -221,6 +230,9 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "xxx@xxx.xxx"
+                    },
                     "authorization_info": [
                         {
                             "permission": "compute.instances.list",
@@ -290,6 +302,9 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "system:serviceaccount:cert-manager:cert-manager-webhook"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -370,6 +385,9 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "user@mycompany.com"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -442,6 +460,9 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "user@mycompany.com"
+                    },
                     "logentry_operation": {
                         "id": "operation-1596646123456-5ac2438b775f6-f8ca1382-e70b6831",
                         "last": true,
@@ -499,6 +520,9 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "xxx@xxx.xxx"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -572,6 +596,9 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "xxx@xxx.xxx"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -646,6 +673,9 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "system:anonymous"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -718,6 +748,9 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "system:serviceaccount:kube-system:generic-garbage-collector"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -791,6 +824,8 @@
             "gcp": {
                 "audit": {
                     "authentication_info": {
+                        "principal_email": "xxx@xxx.xxx",
+                        "principal_subject": "sub",
                         "service_account_key_name": "//xxx@xxx"
                     },
                     "authorization_info": [
@@ -852,6 +887,9 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "xxx@xxx.xxx"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -927,6 +965,9 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "system:addon-manager"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -1005,6 +1046,10 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "service-150691754250@container-engine-robot.iam.gserviceaccount.com",
+                        "principal_subject": "serviceAccount:service-150691754250@container-engine-robot.iam.gserviceaccount.com"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -1074,6 +1119,9 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "xxx-compute@developer.gserviceaccount.com"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,
@@ -1138,6 +1186,10 @@
             },
             "gcp": {
                 "audit": {
+                    "authentication_info": {
+                        "principal_email": "service-150691754250@container-engine-robot.iam.gserviceaccount.com",
+                        "principal_subject": "serviceAccount:service-150691754250@container-engine-robot.iam.gserviceaccount.com"
+                    },
                     "authorization_info": [
                         {
                             "granted": true,

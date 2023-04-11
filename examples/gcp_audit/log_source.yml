@@ -216,7 +216,7 @@ transform: |-
   .event.category = []
   .event.type = []
   .event.kind = "event"
-  .event.original = encode_json(.json)
+  # .event.original = encode_json(.json)
 
   .gcp.audit.type = .json.protoPayload."@type"
   if .gcp.audit.type != "type.googleapis.com/google.cloud.audit.AuditLog" {
@@ -271,9 +271,6 @@ transform: |-
     }
   }
 
-  .client.user.email = del(.json.protoPayload.authenticationInfo.principalEmail)
-  .client.user.id = del(.json.protoPayload.authenticationInfo.principalSubject)
-
   if .json.protoPayload.authenticationInfo != null {
     authn_info = object!(.json.protoPayload.authenticationInfo)
     authn_info.principal_email = del(authn_info.principalEmail)
@@ -303,14 +300,8 @@ transform: |-
     authn_info.principal_subject = del(authn_info.principalSubject)
     .gcp.audit.authentication_info = authn_info
   }
-
-  if .client.user.email == null {
-      .client.user.email = del(.gcp.audit.authentication_info.principal_email)
-  }
-
-  if .client.user.id == null {
-      .client.user.id = del(.gcp.audit.authentication_info.principal_subject)
-  }
+  .client.user.email = .gcp.audit.authentication_info.principal_email
+  .client.user.id = .gcp.audit.authentication_info.principal_subject
 
   .gcp.audit.authorization_info = del(.json.protoPayload.authorizationInfo)
   if is_array(.gcp.audit.authorization_info) {
