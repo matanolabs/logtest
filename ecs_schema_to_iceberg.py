@@ -50,8 +50,14 @@ def merge(a, b, path=None):
             elif a[key] == b[key]:
                 pass  # same leaf value
             else:
-                # print({ "path": path, "key": key, "a": a[key], "b": b[key] })
-                if {a[key], b[key]} == {"string", "boolean"}:
+                print({ "path": path, "key": key, "a": a[key], "b": b[key] })
+                # try:
+                if type(a[key]) != dict and type(b[key]) == dict:
+                    print(
+                        f"WARN: Auto-coerced {'.'.join(path + [str(key)])} conflict with string -> object."
+                    )
+                    pass
+                elif {a[key], b[key]} == {"string", "boolean"}:
                     print(
                         f"WARN: Auto-coerced {'.'.join(path + [str(key)])} conflict with string -> boolean."
                     )
@@ -63,6 +69,8 @@ def merge(a, b, path=None):
                         b[key],
                     )
                     raise Exception(msg)
+                # except:
+                #     breakpoint()
         else:
             try:
                 a[key] = b[key]
@@ -121,7 +129,12 @@ def deep_find(obj, keys, delimiter="."):
             path += "[0]"
             value = value[0]
 
-        value = value.get(key, None)
+        try:
+            value = value.get(key, None)
+        except:
+            print(
+                f"[yellow]WARN: Skipping potential conflict at: {path}.{key} (value: {value})"
+            )
 
         return (
             value,

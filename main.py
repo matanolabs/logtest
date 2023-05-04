@@ -125,7 +125,7 @@ if .__expected == true {
         }
     }
     .host.ip = [ .host.ip ]
-    .network.application = if .network.application != null { downcase!(.network.application) } else { null }
+    .network.application = if .network.application != null { downcase(.network.application[0]) ?? downcase!(.network.application) } else { null }
 }
 
 if .event.category != null && !is_array(.event.category) && .__expected == true {
@@ -504,6 +504,90 @@ if .__expected == true && exists(.google_workspace.alert) {
       ret = if is_string(v) { v } else { encode_json(v) }
       to_string(ret)
     }
+}
+
+# PANW fixes
+if .__expected == true && exists(.panw.panos) {
+    del(.panw.panos.network.nat.community_id)
+    del(.labels) # TODO: fix this...
+    del(.event.timezone) # TODO: fix this...
+      # duplicate fields removed, todo keep
+  	del(.panw.panos.bytes_sent)
+    del(.panw.panos.bytes_received)
+  	del(.panw.panos.certificate.fingerprint)
+  	del(.panw.panos.certificate.not_after)
+  	del(.panw.panos.certificate.not_before)
+  	del(.panw.panos.certificate.serial_number)
+  	del(.panw.panos.certificate.size)
+  	del(.panw.panos.certificate.version)
+  	del(.panw.panos.client.os)
+  	del(.panw.panos.client.os_version)
+  	del(.panw.panos.destination.ip)
+  	del(.panw.panos.destination.location)
+  	del(.panw.panos.destination.nat.ip)
+  	del(.panw.panos.destination.nat.port)
+  	del(.panw.panos.destination.port)
+  	del(.panw.panos.destination.user)
+  	del(.panw.panos.destination.zone)
+  	del(.panw.panos.device_name)
+  	del(.panw.panos.elapsed_time)
+  	del(.panw.panos.elliptic_curve)
+  	del(.panw.panos.event.id)
+  	del(.panw.panos.event.reason)
+  	del(.panw.panos.event.status)
+  	del(.panw.panos.file.type)
+  	del(.panw.panos.forwarded_ip)
+  	del(.panw.panos.generated_time)
+  	del(.panw.panos.host.id)
+  	del(.panw.panos.host.ip)
+  	del(.panw.panos.http_method)
+  	del(.panw.panos.inbound_interface)
+  	del(.panw.panos.location)
+  	del(.panw.panos.login_duration)
+  	del(.panw.panos.machine.mac_address)
+  	del(.panw.panos.machine.name)
+  	del(.panw.panos.machine.os)
+  	del(.panw.panos.misc)
+  	del(.panw.panos.network.application)
+  	del(.panw.panos.network.bytes)
+  	del(.panw.panos.network.direction)
+  	del(.panw.panos.network.packets)
+  	del(.panw.panos.normalize_user)
+  	del(.panw.panos.observer.serial_number)
+  	del(.panw.panos.outbound_interface)
+  	del(.panw.panos.packets_received)
+  	del(.panw.panos.packets_sent)
+  	del(.panw.panos.private.ip)
+  	del(.panw.panos.private.ipv6)
+  	del(.panw.panos.protocol)
+  	del(.panw.panos.public.ip)
+  	del(.panw.panos.public.ipv6)
+  	del(.panw.panos.received_time)
+  	del(.panw.panos.recipient)
+  	del(.panw.panos.referrer)
+  	del(.panw.panos.rule_uuid)
+  	del(.panw.panos.sender)
+  	del(.panw.panos.server_name_indication.value)
+  	del(.panw.panos.severity)
+  	del(.panw.panos.source.ip)
+  	del(.panw.panos.source.ipv6)
+  	del(.panw.panos.source.location)
+  	del(.panw.panos.source.nat.ip)
+  	del(.panw.panos.source.nat.port)
+  	del(.panw.panos.source.port)
+  	del(.panw.panos.source.region)
+  	del(.panw.panos.source.user)
+  	del(.panw.panos.source.zone)
+  	del(.panw.panos.start_time)
+  	del(.panw.panos.tls.encryption)
+  	del(.panw.panos.tls.version)
+  	del(.panw.panos.tunnel_inspection_rule)
+  	del(.panw.panos.user)
+  	del(.panw.panos.user_agent)
+  	del(.panw.panos.user_by_source)
+  	del(.panw.panos.subject_common_name.value)
+  	del(.panw.panos.issuer_common_name.value)
+  	del(.panw.panos.hash)
 }
 
 del(.__expected)
