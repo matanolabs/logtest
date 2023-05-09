@@ -240,8 +240,12 @@ if is_array(.file.name) {
 
         # normalize UTC timestamp strings
         if length(v) < 50 && match(v, r'^(-?(?:[1-9][0-9]*)?[0-9]{4})-(1[0-2]|0[1-9])-(3[01]|0[1-9]|[12][0-9])T(2[0-3]|[01][0-9]):([0-5][0-9]):([0-5][0-9])(\\.[0-9]+)?(\.?)([0-9]*)?(Z)?$') {
-            if !contains(v, "+") && !ends_with(v, "Z") {
-                v = v + "Z"
+            if !match(v, r'([+-]\d{2}):(\d{2})$|Z$') {
+                if  .__expected == true {
+                    v = v + (string(.event.timezone) ?? "Z")
+                } else {
+                    v = v + "Z"
+                }
             }
             # v = slice!(to_string(to_timestamp!(v)), 0, 22)
             v = slice!(to_string(to_timestamp!(v)), 0, 21) # check only first two decimal places (avoid diff on decimal round differences)
