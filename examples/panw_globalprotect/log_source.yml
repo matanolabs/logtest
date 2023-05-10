@@ -78,26 +78,27 @@ schema:
   - http.request.referrer
   - http.version
   - labels
-  - labels.captive_portal
-  - labels.client_server_policy_based_forwarding
-  - labels.connect_to_destination_host
-  - labels.container_page
-  - labels.decrypted_traffic
-  - labels.enterprise_credential_submission
-  - labels.file_submitted_to_WildFire
-  - labels.http_proxy
-  - labels.ipv6_session
-  - labels.nat_translated
-  - labels.non_standard_port_usage
-  - labels.payload_outer_tunnel
-  - labels.pcap_included
-  - labels.server_client_policy_based_forwarding
-  - labels.source_flow_allow_list
-  - labels.ssl_decrypted
-  - labels.symmetric_return
-  - labels.temporary_match
-  - labels.url_filter_denied
-  - labels.x_forwarded_for
+  # Labels:
+  # - captive_portal
+  # - client_server_policy_based_forwarding
+  # - connect_to_destination_host
+  # - container_page
+  # - decrypted_traffic
+  # - enterprise_credential_submission
+  # - file_submitted_to_WildFire
+  # - http_proxy
+  # - ipv6_session
+  # - nat_translated
+  # - non_standard_port_usage
+  # - payload_outer_tunnel
+  # - pcap_included
+  # - server_client_policy_based_forwarding
+  # - source_flow_allow_list
+  # - ssl_decrypted
+  # - symmetric_return
+  # - temporary_match
+  # - url_filter_denied
+  # - x_forwarded_for
   - log.file.path
   - log.level
   - log.syslog.facility.code
