@@ -1,0 +1,132 @@
+{
+    "expected": [
+        {
+            "aws": {
+                "cloudtrail": {
+                    "event_category": "Management",
+                    "event_type": "AwsApiCall",
+                    "event_version": "1.08",
+                    "flattened": {
+                        "request_parameters": "{\"pipelineConfigurationBody\":\"version: \\\"2\\\"\\nlog-pipeline:\\n  source:\\n    http:\\n        path: \\\"/test/logs\\\"\\n  processor:\\n    - grok:\\n        match:\\n          log: [ '%{COMMONAPACHELOG}' ]\\n    - date:\\n        from_time_received: true\\n        destination: \\\"@timestamp\\\"\\n  sink:\\n    - opensearch:\\n        hosts: [ \\\"https://search-b5zd22mwxhggheqpj5ftslgyle.us-west-2.es.amazonaws.com\\\" ]\\n        index: \\\"apache_logs2\\\"\\n        aws_sts_role_arn: \\\"arn:aws:iam::709387180454:role/canary-bootstrap-OsisRole-J1BARLD26QKN\\\"\\n        aws_region: \\\"us-west-2\\\"\\n        aws_sigv4: true\\n\",\"pipelineName\":\"my-pipeline\"}",
+                        "response_elements": "{\"pipeline\":{\"createdAt\":\"Mar 29, 2023 1:03:44 PM\",\"ingestEndpointUrls\":[\"my-pipeline-tu33ldsgdltgv7x7tjqiudvf7m.us-west-2.osis.amazonaws.com\"],\"lastUpdatedAt\":\"Apr 21, 2023 9:49:21 AM\",\"maxUnits\":1,\"minUnits\":1,\"pipelineArn\":\"arn:aws:osis:us-west-2:123456789012:pipeline/my-pipeline\",\"pipelineConfigurationBody\":\"version: \\\"2\\\"\\nlog-pipeline:\\n  source:\\n    http:\\n        path: \\\"/test/logs\\\"\\n  processor:\\n    - grok:\\n        match:\\n          log: [ '%{COMMONAPACHELOG}' ]\\n    - date:\\n        from_time_received: true\\n        destination: \\\"@timestamp\\\"\\n  sink:\\n    - opensearch:\\n        hosts: [ \\\"https://search-b5zd22mwxhggheqpj5ftslgyle.us-west-2.es.amazonaws.com\\\" ]\\n        index: \\\"apache_logs2\\\"\\n        aws_sts_role_arn: \\\"arn:aws:iam::709387180454:role/canary-bootstrap-OsisRole-J1BARLD26QKN\\\"\\n        aws_region: \\\"us-west-2\\\"\\n        aws_sigv4: true\\n\",\"pipelineName\":\"my-pipeline\",\"status\":\"UPDATING\",\"statusReason\":{\"description\":\"An update was triggered for the pipeline. It is still available to ingest data.\"}}}"
+                    },
+                    "management_event": true,
+                    "read_only": false,
+                    "recipient_account_id": "709387180454",
+                    "request_id": "12345678-1234-1234-1234-987654321098",
+                    "session_credential_from_console": true,
+                    "user_identity": {
+                        "access_key_id": "access-key",
+                        "arn": "arn:aws:iam::123456789012:user/test-user",
+                        "session_context": {
+                            "creation_date": "2023-04-21T16:48:33",
+                            "mfa_authenticated": "false",
+                            "session_issuer": {
+                                "account_id": "123456789012",
+                                "arn": "arn:aws:iam::123456789012:role/Admin",
+                                "principal_id": "AIDACKCEVSQ6C2EXAMPLE",
+                                "type": "Role"
+                            }
+                        },
+                        "type": "AssumedRole"
+                    }
+                }
+            },
+            "cloud": {
+                "account": {
+                    "id": "123456789012"
+                },
+                "region": "us-west-2"
+            },
+            "destination": {
+                "domain": "osis.us-west-2.amazonaws.com"
+            },
+            "event": {
+                "action": "UpdatePipeline",
+                "id": "12345678-1234-1234-1234-987654321098",
+                "kind": "event",
+                "outcome": "success",
+                "provider": "osis.amazonaws.com",
+                "type": [
+                    "info"
+                ]
+            },
+            "source": {
+                "address": "123.456.789.012"
+            },
+            "tls": {
+                "cipher": "ECDHE-RSA-AES128-GCM-SHA256",
+                "client": {
+                    "server_name": "osis.us-west-2.amazonaws.com"
+                },
+                "version": "1.2",
+                "version_protocol": "tls"
+            },
+            "ts": "2023-04-21T16:49:22",
+            "user": {
+                "id": "AIDACKCEVSQ6C2EXAMPLE",
+                "name": "Admin"
+            }
+        },
+        {
+            "aws": {
+                "cloudtrail": {
+                    "addendum": {
+                        "original_event_id": "ee3b4e0c-ab12-459b-9998-0a5a6f2e4015",
+                        "original_request_id": "8E96D972160306FA",
+                        "reason": "UPDATED_DATA",
+                        "updated_fields": "eventCategory"
+                    },
+                    "edge_device_details": "{\"deviceID\":\"op-01ac5d28a6a232904\",\"type\":\"outposts\"}",
+                    "event_category": "Data",
+                    "event_type": "AwsApiCall",
+                    "event_version": "1.08",
+                    "flattened": {
+                        "additional_eventdata": "{\"AuthenticationMethod\":\"AuthHeader\",\"CipherSuite\":\"ECDHE-RSA-AES128-SHA\",\"SignatureVersion\":\"SigV4\",\"bytesTransferredIn\":10,\"bytesTransferredOut\":20,\"x-amz-id-2\":\"29xXQBV2O+xOHKItvzY1suLv1i6A52E0zOX159fpfsItYd58JhXwKxXAXI4IQkp6\"}",
+                        "request_parameters": "{\"Cache-Control\":\"no-cache\",\"Content-Disposition\":\"attachment\",\"Content-Encoding\":\"gzip\",\"Content-Language\":\"english\",\"Content-Length\":\"10\",\"Content-MD5\":\"je7MtGbClwBF/2Zp9Utk/h3yCo8nvbEXAMPLEKEY\",\"Content-Type\":\"text/html; charset=UTF-8\",\"Key\":\"path/upload.sh\",\"ObjectCannedACL\":\"BucketOwnerFullControl\",\"bucketName\":\"DOC-EXAMPLE-BUCKET1\",\"expires\":\"Wed, 21 Oct 2020 07:28:00 GMT\",\"x-amz-server-side-encryption\":\"Aes256\",\"x-amz-server-side-encryption-customer-algorithm\":\"Aes256\",\"x-amz-server-side-encryption-customer-key-MD5\":\"wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY\",\"x-amz-storage-class\":\"Outposts\"}",
+                        "response_elements": "{\"ETag\":\"d41d8cd98f00b204e9800998ecf8427f\",\"x-amz-server-side-encryption\":\"Aes256\",\"x-amz-server-side-encryption-customer-algorithm\":\"Aes256\",\"x-amz-server-side-encryption-customer-key-MD5\":\"wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY\",\"x-amz-version-id\":\"001\"}"
+                    },
+                    "management_event": false,
+                    "read_only": false,
+                    "recipient_account_id": "444455556666",
+                    "request_id": "8E96D972160306FA",
+                    "user_identity": {
+                        "access_key_id": "AKIAIOSFODNN7EXAMPLE",
+                        "arn": "arn:aws:iam::111122223333:user/yourUserName",
+                        "type": "IAMUser"
+                    }
+                }
+            },
+            "cloud": {
+                "account": {
+                    "id": "222222222222"
+                },
+                "region": "us-east-1"
+            },
+            "event": {
+                "action": "PutObject",
+                "id": "ee3b4e0c-ab12-459b-9998-0a5a6f2e4015",
+                "kind": "event",
+                "outcome": "success",
+                "provider": "s3-outposts.amazonaws.com",
+                "type": [
+                    "info"
+                ]
+            },
+            "related": {
+                "user": [
+                    "yourUserName"
+                ]
+            },
+            "source": {
+                "address": "26.29.66.20",
+                "ip": "26.29.66.20"
+            },
+            "ts": "2020-11-30T15:44:33",
+            "user": {
+                "id": "111122223333",
+                "name": "yourUserName"
+            }
+        }
+    ]
+}

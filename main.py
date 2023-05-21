@@ -633,7 +633,7 @@ def table(s):
         return {"log_source": log_source, "table": table}
 
 
-def run_tests_get_errors(logsource_dir, opts, table_schema, table_file, data, update_snapshot=False):
+def run_tests_get_errors(logsource_dir, opts, table_schema, table_file, data, update_snapshot=False, replace_expected=False):
     global count_passed
 
     from_test_seen = opts.from_test is None
@@ -772,7 +772,7 @@ def run_tests_get_errors(logsource_dir, opts, table_schema, table_file, data, up
                 )
                 return ["errors"]
 
-            if n_res != n_expected and not update_snapshot:
+            if n_res != n_expected and not update_snapshot and not replace_expected:
                 console.print("\n❌ Test failed: ", testname, style="bold red")
                 print("\n[red bold]Actual: ", n_res)
                 print("\n[green bold]Expected: ", n_expected)
@@ -840,6 +840,11 @@ def run_tests_get_errors(logsource_dir, opts, table_schema, table_file, data, up
             with open(new_updated_fp, "w") as f:
                 f.write(json.dumps({ "expected": events }, indent=4))
 
+        if replace_expected and found_diff:
+            fp = f"{test_event_f}-expected.json"
+            with open(fp, "w") as f:
+                f.write(json.dumps({ "expected": events }, indent=4))
+
 if __name__ == "__main__":
     parser = ArgumentParser()
     # parser.add_argument("dir", help="the path to log sources", type=str)
@@ -861,6 +866,14 @@ if __name__ == "__main__":
         const=True,
         default=False,
         help="Update snapshot.",
+    )
+    parser.add_argument(
+        "--replace-expected",
+        type=str2bool,
+        nargs="?",
+        const=True,
+        default=False,
+        help="Overwrite expected files.",
     )
     parser.add_argument("--from-test", type=str, default=None)
     parser.add_argument(
@@ -1017,7 +1030,7 @@ if __name__ == "__main__":
             with open(table_file) as f:
                 data = yaml.safe_load(f)
                 errors = run_tests_get_errors(
-                    logsource_dir, opts, table_schema, table_file, data, update_snapshot=opts.update_snapshot
+                    logsource_dir, opts, table_schema, table_file, data, update_snapshot=opts.update_snapshot, replace_expected=opts.replace_expected
                 )
                 all_passed = errors is None
                 if not all_passed:
