@@ -116,7 +116,7 @@ examples (an example directory)
 Set the alias of logtest with below commmand. 
 
 ```bash
-alias logtest=`docker run --network=host -v `pwd`:/logtest/test/ -it <logtest-image>
+alias logtest=`docker run --network=host -v `pwd`:/logtest/test/ -it <logtest image>
 ```
 
 
@@ -131,7 +131,7 @@ logtest --logsource-dir test/examples/aws_vpcflow # example for devloping a new 
 ```
 
 Note:
-  Prefix `test` before using the relative paths in your current directory. It is so because the current directory is mounted within test folder relative to the logtest's folder.
+  Prefix `test` before using the relative paths in your current directory. It is so because the current directory is mounted within `test` folder relative to the logtest's folder.
 
 ---
 

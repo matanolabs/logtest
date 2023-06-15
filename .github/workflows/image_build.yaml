@@ -1,6 +1,9 @@
 name: Logtest image builder
 
 on:
+  # Just in case to upgrade chainguard base image
+  workflow_dispatch:
+  
   push:
     paths-ignore:
       - '*.md'
