@@ -7,3 +7,5 @@ vrl-web
 log_source_generated.yml.go
 **/*log_source_generated.yml.go
 .vscode
+env
+.vscode/**
