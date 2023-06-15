@@ -7,7 +7,11 @@ on:
       - '.gitignore'
     branches:
       - main
-      
+
+permissions:
+  contents: read  
+  packages: write 
+
 jobs:
   logtest-image-build: 
     runs-on: ubuntu-latest
