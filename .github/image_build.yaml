@@ -1,7 +1,6 @@
 name: Log test image builder
 
 on:
-
   push:
     paths-ignore:
       - '*.md'
