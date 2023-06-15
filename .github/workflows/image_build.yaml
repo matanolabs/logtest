@@ -1,8 +1,6 @@
 name: Logtest image builder
 
 on:
-  workflow-dispatch:
-
   push:
     paths-ignore:
       - '*.md'
