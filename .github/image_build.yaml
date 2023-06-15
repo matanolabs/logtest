@@ -1,24 +1,24 @@
-name: Log test image builder
+name: Logtest image builder
 
 on:
+  workflow-dispatch:
+
   push:
     paths-ignore:
       - '*.md'
       - '.gitignore'
     branches:
       - main
-
+      
 jobs:
   logtest-image-build: 
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      
       - name: Build Container Image
         id: container_image_build
         run: |
               docker build -t logtest .
-      
       - name: Push image to Github Registry
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
