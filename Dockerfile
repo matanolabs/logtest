@@ -16,5 +16,4 @@ USER 0
 WORKDIR /logtest
 COPY --from=builder /logtest /logtest
 COPY --from=builder /usr/bin/difft /usr/bin/difft
-#RUN mv difft /usr/bin/
 ENTRYPOINT  ["python3", "-u", "main.py" ]
