@@ -74,27 +74,26 @@ schema:
   - http.request.referrer
   - http.version
   - labels
-  # Labels:
-  # - captive_portal
-  # - client_server_policy_based_forwarding
-  # - connect_to_destination_host
-  # - container_page
-  # - decrypted_traffic
-  # - enterprise_credential_submission
-  # - file_submitted_to_WildFire
-  # - http_proxy
-  # - ipv6_session
-  # - nat_translated
-  # - non_standard_port_usage
-  # - payload_outer_tunnel
-  # - pcap_included
-  # - server_client_policy_based_forwarding
-  # - source_flow_allow_list
-  # - ssl_decrypted
-  # - symmetric_return
-  # - temporary_match
-  # - url_filter_denied
-  # - x_forwarded_for
+  - labels.captive_portal
+  - labels.client_server_policy_based_forwarding
+  - labels.connect_to_destination_host
+  - labels.container_page
+  - labels.decrypted_traffic
+  - labels.enterprise_credential_submission
+  - labels.file_submitted_to_WildFire
+  - labels.http_proxy
+  - labels.ipv6_session
+  - labels.nat_translated
+  - labels.non_standard_port_usage
+  - labels.payload_outer_tunnel
+  - labels.pcap_included
+  - labels.server_client_policy_based_forwarding
+  - labels.source_flow_allow_list
+  - labels.ssl_decrypted
+  - labels.symmetric_return
+  - labels.temporary_match
+  - labels.url_filter_denied
+  - labels.x_forwarded_for
   - log.file.path
   - log.level
   - log.syslog.facility.code
@@ -1227,9 +1226,9 @@ transform: |
 
   if ._temp_.srcuser != null {                                                             
   	_grokked, err = parse_groks(._temp_.srcuser, [
-      "^%{HOSTNAME:source.user.domain}\\\\%{USERNAMEM:source.user.name}$", "^%{HOSTNAME:source.user.domain}\\\\\\\\%{USERNAMEM:source.user.name}$", "^%{USERNAME:source.user.name}@%{HOSTNAME:source.user.domain}$", "^%{USERNAME:source.user.name}$"
+      "^%{HOSTNAME:source.user.domain}\\\\%{USERNAME:source.user.name}$", "^%{HOSTNAME:source.user.domain}\\\\\\\\%{USERNAME:source.user.name}$", "^%{USERNAME:source.user.name}@%{HOSTNAME:source.user.domain}$", "^%{USERNAME:source.user.name}$"
     ], {
-      "USERNAMEM": "%{USERNAME}[$]?"
+      "USERNAME": "[ a-zA-Z0-9._-]+[$]?"
     })  
   	if err == null {                                                            
   	    .source.user = _grokked.source.user                                                           
@@ -1238,9 +1237,9 @@ transform: |
 
   if ._temp_.dstuser != null {                                                                  
   	_grokked, err = parse_groks(._temp_.dstuser, [
-      "^%{HOSTNAME:destination.user.domain}\\\\%{USERNAMEM:destination.user.name}$", "^%{HOSTNAME:destination.user.domain}\\\\\\\\%{USERNAMEM:destination.user.name}$", "^%{USERNAME:destination.user.name}@%{HOSTNAME:destination.user.domain}$", "^%{USERNAME:destination.user.name}$"
+      "^%{HOSTNAME:destination.user.domain}\\\\%{USERNAME:destination.user.name}$", "^%{HOSTNAME:destination.user.domain}\\\\\\\\%{USERNAME:destination.user.name}$", "^%{USERNAME:destination.user.name}@%{HOSTNAME:destination.user.domain}$", "^%{USERNAME:destination.user.name}$"
     ], {
-      "USERNAMEM": "%{USERNAME}[$]?"
+      "USERNAME": "[ a-zA-Z0-9._-]+[$]?"
     }) 
   	if err == null {                                                            
   	    .destination.user = _grokked.destination.user                                                           
@@ -1706,15 +1705,15 @@ transform: |
   }
 
   if .log.level == "critical" { 
-      .event.severity = "1"
+      .event.severity = 1
   } else if .log.level == "high" { 
-      .event.severity = "2"
+      .event.severity = 2
   } else if .log.level == "medium" { 
-      .event.severity = "3"
+      .event.severity = 3
   } else if .log.level == "low" { 
-      .event.severity = "4"
+      .event.severity = 4
   } else if .log.level == "informational" { 
-      .event.severity = "5"
+      .event.severity = 5
   }
 
   if .panw.panos.action == "drop icmp" || .panw.panos.action == "drop ICMP" { 

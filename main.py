@@ -239,10 +239,14 @@ if is_array(.file.name) {
         # v = replace(v, r'\\\\,', "")
 
         # normalize UTC timestamp strings
-        if length(v) < 50 && match(v, r'^(-?(?:[1-9][0-9]*)?[0-9]{4})-(1[0-2]|0[1-9])-(3[01]|0[1-9]|[12][0-9])T(2[0-3]|[01][0-9]):([0-5][0-9]):([0-5][0-9])(\\.[0-9]+)?(\.?)([0-9]*)?(Z)?$') {
+        if length(v) < 50 && match(v, r'^(-?(?:[1-9][0-9]*)?[0-9]{4})-(1[0-2]|0[1-9])-(3[01]|0[1-9]|[12][0-9])T(2[0-3]|[01][0-9]):([0-5][0-9]):([0-5][0-9])(\\.[0-9]+)?(\.?)([0-9]*)?(Z|([+-]\d{2}):(\d{2}))?$') {
             if !match(v, r'([+-]\d{2}):(\d{2})$|Z$') {
                 if  .__expected == true {
-                    v = v + (string(.event.timezone) ?? "Z")
+                    suffix = string(.event.timezone) ?? "Z"
+                    if is_empty(suffix) {
+                        suffix = "Z"
+                    }
+                    v = v + suffix
                 } else {
                     v = v + "Z"
                 }
@@ -835,10 +839,14 @@ def run_tests_get_errors(logsource_dir, opts, table_schema, table_file, data, up
             count_passed += 1
             print(f"Test {i} passed: ✅", testname)
 
-        if update_snapshot and found_diff:
-            new_updated_fp = f"{test_event_f}-snapshot-expected.json"
-            with open(new_updated_fp, "w") as f:
-                f.write(json.dumps({ "expected": events }, indent=4))
+        if update_snapshot:
+            if found_diff or expected is None:
+                new_updated_fp = f"{test_event_f}-snapshot-expected.json"
+                print(f"ss: {new_updated_fp}")
+                with open(new_updated_fp, "w") as f:
+                    f.write(json.dumps({ "expected": events }, indent=4))
+            else:
+                print(f"Found no diff, skipping snapshot update: {test_event_f}")
 
         if replace_expected and found_diff:
             fp = f"{test_event_f}-expected.json"

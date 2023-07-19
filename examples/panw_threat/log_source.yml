@@ -1,4 +1,4 @@
-name: panw_globalprotect
+name: panw_threat
 schema:
   ecs_field_names:
   - client.bytes
@@ -64,10 +64,6 @@ schema:
   - host.architecture
   - host.domain
   - host.hostname
-  - host.id
-  - host.ip
-  - host.name
-  - host.os.family
   - host.os.full
   - host.os.kernel
   - host.os.name
@@ -936,7 +932,9 @@ schema:
               - name: category
                 type: string
           - name: url_category_list
-            type: string
+            type:
+              element: string
+              type: list
           - name: url_idx
             type: string
           - name: user
@@ -1010,98 +1008,257 @@ transform: |-
   message_values = parse_csv!(.message)
   # todo: make more efficient
   message_values = map_values(message_values) -> |v| {
-    if v == " " { null } else { v }
+    if v == " " || v == "" { null } else { v }
   }
 
-  # globalprotect pipeline
-  .panw.panos.virtual_sys = message_values[0]
-  .panw.panos.event.id = message_values[1]
-  .panw.panos.stage = message_values[2]
-  .panw.panos.auth_method = message_values[3]
-  .panw.panos.tunnel_type = message_values[4]
+  .panw.panos.source.ip = message_values[0]
+  .panw.panos.destination.ip = message_values[1]
+  .panw.panos.source.nat.ip = message_values[2]
+  .panw.panos.destination.nat.ip = message_values[3]
+  .panw.panos.ruleset = message_values[4]
   ._temp_.srcuser = message_values[5]
-  ._temp_.srcloc = message_values[6]
-  .panw.panos.machine.name = message_values[7]
-  .panw.panos.public.ip = message_values[8]
-  ._temp_.public_ipv6 = message_values[9]
-  .panw.panos.private.ip = message_values[10]
-  ._temp_.private_ipv6 = message_values[11]
-  .panw.panos.host.id = message_values[12]
-  .panw.panos.serial_number = message_values[13]
-  .panw.panos.client_ver = message_values[14]
-  .panw.panos.client.os = message_values[15]
-  .panw.panos.client.os_version = message_values[16]
-  .panw.panos.repeat_count = message_values[17]
-  .panw.panos.event.reason = message_values[18]
-  .panw.panos.error_message = message_values[19]
-  .panw.panos.description = message_values[20]
-  .panw.panos.event.status = message_values[21]
-  .panw.panos.location = message_values[22]
-  .panw.panos.login_duration = message_values[23]
-  .panw.panos.connect_method = message_values[24]
-  .panw.panos.error_code = message_values[25]
-  .panw.panos.portal = message_values[26]
-  .panw.panos.sequence_number = message_values[27]
-  .panw.panos.action_flags = message_values[28]
-  ._temp_.high_res_timestamp = message_values[29]
-  .panw.panos.selection_type = message_values[30]
-  .panw.panos.response_time = message_values[31]
-  .panw.panos.priority = message_values[32]
-  .panw.panos.attempted_gateways = message_values[33]
-  .panw.panos.gateway = message_values[34]
-  .panw.panos.device_group_hierarchy1 = message_values[35]
-  .panw.panos.device_group_hierarchy2 = message_values[36]
-  .panw.panos.device_group_hierarchy3 = message_values[37]
-  .panw.panos.device_group_hierarchy4 = message_values[38]
-  .panw.panos.vsys_name = message_values[39]
-  .panw.panos.device_name = message_values[40]
-  .panw.panos.vsys_id = message_values[41]               
+  ._temp_.dstuser = message_values[6]
+  .panw.panos.network.application = message_values[7]
+  .panw.panos.virtual_sys = message_values[8]
+  .panw.panos.source.zone = message_values[9]
+  .panw.panos.destination.zone = message_values[10]
+  .panw.panos.inbound_interface = message_values[11]
+  .panw.panos.outbound_interface = message_values[12]
+  .panw.panos.log_profile = message_values[13]
+  ._temp_.logged_time = message_values[14]
+  .panw.panos.flow_id = message_values[15]
+  .panw.panos.repeat_count = message_values[16]
+  .panw.panos.source.port = message_values[17]
+  .panw.panos.destination.port = message_values[18]
+  .panw.panos.source.nat.port = message_values[19]
+  .panw.panos.destination.nat.port = message_values[20]
+  ._temp_.labels = message_values[21]
+  .panw.panos.protocol = message_values[22]
+  .panw.panos.action = message_values[23]
+  .panw.panos.misc = message_values[24]
+  .panw.panos.threat.name = message_values[25]
+  .panw.panos.url.category = message_values[26]
+  .panw.panos.severity = message_values[27]
+  ._temp_.direction = message_values[28]
+  .panw.panos.sequence_number = message_values[29]
+  .panw.panos.action_flags = message_values[30]
+  ._temp_.srcloc = message_values[31]
+  ._temp_.dstloc = message_values[32]
+  ._temp_.future_use2 = message_values[33]
+  .panw.panos.http_content_type = message_values[34]
+  .panw.panos.network.pcap_id = message_values[35]
+  .panw.panos.file.hash = message_values[36]
+  .panw.panos.wildfire.name = message_values[37]
+  .panw.panos.url_idx = message_values[38]
+  ._temp_.user_agent = message_values[39]
+  .panw.panos.file.type = message_values[40]
+  ._temp_.forwarded_ip = message_values[41]
+  .panw.panos.referrer = message_values[42]
+  .panw.panos.sender = message_values[43]
+  .panw.panos.subject = message_values[44]
+  .panw.panos.recipient = message_values[45]
+  .panw.panos.wildfire.report_id = message_values[46]
+  .panw.panos.device_group_hierarchy1 = message_values[47]
+  .panw.panos.device_group_hierarchy2 = message_values[48]
+  .panw.panos.device_group_hierarchy3 = message_values[49]
+  .panw.panos.device_group_hierarchy4 = message_values[50]
+  .panw.panos.vsys_name = message_values[51]
+  .panw.panos.device_name = message_values[52]
+  ._temp_.future_use3 = message_values[53]
+  .panw.panos.source_vm_uuid = message_values[54]
+  .panw.panos.destination_vm_uuid = message_values[55]
+  .panw.panos.http_method = message_values[56]
+  .panw.panos.imsi = message_values[57]
+  .panw.panos.imei = message_values[58]
+  .panw.panos.parent_session.id = message_values[59]
+  .panw.panos.parent_session.start_time = message_values[60]
+  .panw.panos.tunnel_type = message_values[61]
+  .panw.panos.threat_category = message_values[62]
+  .panw.panos.content_version = message_values[63]
+  ._temp_.future_use4 = message_values[64]
+  .panw.panos.sctp.assoc_id = message_values[65]
+  .panw.panos.payload_protocol_id = message_values[66]
+  .panw.panos.http_headers = message_values[67]
+  .panw.panos.url_category_list = message_values[68]
+  .panw.panos.rule_uuid = message_values[69]
+  .panw.panos.http2_connection = message_values[70]
+  .panw.panos.dynamic_user.group.name = message_values[71]
+  .panw.panos.xff.ip = message_values[72]
+  .panw.panos.src.category = message_values[73]
+  .panw.panos.src.profile = message_values[74]
+  .panw.panos.src.model = message_values[75]
+  .panw.panos.src.vendor = message_values[76]
+  .panw.panos.src.os.family = message_values[77]
+  .panw.panos.src.os.version = message_values[78]
+  .panw.panos.src.host = message_values[79]
+  .panw.panos.src.mac = message_values[80]
+  .panw.panos.dst.category = message_values[81]
+  .panw.panos.dst.profile = message_values[82]
+  .panw.panos.dst.model = message_values[83]
+  .panw.panos.dst.vendor = message_values[84]
+  .panw.panos.dst.os.family = message_values[85]
+  .panw.panos.dst.os.version = message_values[86]
+  .panw.panos.dst.host = message_values[87]
+  .panw.panos.dst.mac = message_values[88]
+  .panw.panos.container.id = message_values[89]
+  .panw.panos.pod.namespace = message_values[90]
+  .panw.panos.pod.name = message_values[91]
+  .panw.panos.src.external_dynamic_list = message_values[92]
+  .panw.panos.dst.external_dynamic_list = message_values[93]
+  .panw.panos.host.id = message_values[94]
+  .panw.panos.serial_number = message_values[95]
+  .panw.panos.domain_edl = message_values[96]
+  .panw.panos.src.dynamic_address_group = message_values[97]
+  .panw.panos.dst.dynamic_address_group = message_values[98]
+  .panw.panos.partial_hash = message_values[99]
+  ._temp_.high_res_timestamp = message_values[100]
+  .panw.panos.reason = message_values[101]
+  .panw.panos.justification = message_values[102]
+  .panw.panos.nssai_sst = message_values[103]
+  .panw.panos.application.sub_category = message_values[104]
+  .panw.panos.application.category = message_values[105]
+  .panw.panos.application.technology = message_values[106]
+  .panw.panos.application.risk_level = message_values[107]
+  .panw.panos.application.characteristics = message_values[108]
+  .panw.panos.application.container = message_values[109]
+  .panw.panos.application.tunneled = message_values[110]
+  .panw.panos.application.is_saas = message_values[111]
+  .panw.panos.application.is_sanctioned = message_values[112]
+  .panw.panos.cloud_report.id = message_values[113]                
 
-  .source.ip = .panw.panos.private.ip
+  if .panw.panos.http2_connection != null && .panw.panos.http2_connection != 0 && .panw.panos.http2_connection != "0" { 
+      .http.version = "2"
+  }
+   
+  if ._temp_.direction == "0" || ._temp_.direction == "client-to-server" { 
+      .network.direction = "inbound"
+  } else if ._temp_.direction == "1" || ._temp_.direction == "server-to-client" { 
+      .network.direction = "outbound"
+  } else {
+      .network.direction = "unknown"
+  }
+      
+  .event.kind = "alert"
+  .event.category = push(.event.category, "intrusion_detection")
+  .event.category = push(.event.category, "threat")
+  .event.category = push(.event.category, "network")
 
-  if (is_nullish(.source.ip) || .source.ip == "0.0.0.0") && ._temp_.private_ipv6 != null && ._temp_.private_ipv6 != "0.0.0.0" { 
-      .source.ip = ._temp_.private_ipv6
+  if .panw.panos.action != null && includes(["alert", "allow", "continue"], .panw.panos.action) { 
+      .event.outcome = "success"
+  } else { 
+      .event.outcome = "failure"
   }
 
-  if .source.ip != null { 
-      .host.ip = [.source.ip]
-  }
+  if ._temp_.forwarded_ip != null {                       
+      .network.forwarded_ip = to_string(._temp_.forwarded_ip) 
+  }                                                  
 
-  .source.nat.ip = .panw.panos.public.ip
+  .panw.panos.destination.location = ._temp_.dstloc
 
-  if (is_nullish(.source.nat.ip) || .source.nat.ip == "0.0.0.0") && ._temp_.public_ipv6 != null && ._temp_.public_ipv6 != "0.0.0.0" { 
-      .source.nat.ip = ._temp_.public_ipv6
-  }
+  .destination.ip = .panw.panos.destination.ip
 
-  .event.kind = "event"
+  .destination.nat.ip = .panw.panos.destination.nat.ip
 
-  .event.category = push(.event.category, "network") 
+  .destination.nat.port = .panw.panos.destination.nat.port
 
-  .event.code = .panw.panos.event.id
+  .destination.port = .panw.panos.destination.port
 
-  .event.duration = .panw.panos.login_duration
+  .destination.user.email = .panw.panos.recipient
 
-  .event.outcome = .panw.panos.event.status
+  .file.type = .panw.panos.file.type
 
-  .event.reason = .panw.panos.event.reason
+  .http.request.method = .panw.panos.http_method
 
-  .host.id = .panw.panos.host.id
+  .http.request.referrer = .panw.panos.referrer
 
-  .host.name = .panw.panos.machine.name
+  .log.level = .panw.panos.severity
 
-  .host.os.family = .panw.panos.client.os
+  .network.application = .panw.panos.network.application
 
-  .host.os.full = .panw.panos.client.os_version
+  .panw.panos.network.direction = ._temp_.direction
 
-  .observer.geo.name = .panw.panos.location
+  .panw.panos.forwarded_ip = .network.forwarded_ip
+
+  .network.transport = .panw.panos.protocol
+
+  .observer.egress.interface.name = .panw.panos.outbound_interface
+
+  .observer.egress.zone = .panw.panos.destination.zone
 
   .observer.hostname = .panw.panos.device_name
 
-  .panw.panos.source.region = .source.geo.name
+  .observer.ingress.interface.name = .panw.panos.inbound_interface
 
-  .panw.panos.public.ipv6 = ._temp_.public_ipv6
+  .observer.ingress.zone = .panw.panos.source.zone
 
-  .panw.panos.private.ipv6 = ._temp_.private_ipv6
+  .rule.uuid = .panw.panos.rule_uuid
+
+  .panw.panos.source.location = ._temp_.srcloc
+
+  .source.ip = .panw.panos.source.ip
+
+  .source.nat.ip = .panw.panos.source.nat.ip
+
+  .source.port = .panw.panos.source.port
+
+  .source.nat.port = .panw.panos.source.nat.port
+
+  .source.user.email = .panw.panos.sender
+
+  if .url.scheme == null && .panw.panos.sub_type == "url" && is_string(.panw.panos.misc) && contains!(.panw.panos.misc, "/") { 
+    url = {}
+  	url_original = .panw.panos.misc
+  	url.original = url_original
+    url_parts = split!(.panw.panos.misc, "/", 2)
+    domain_port = string!(url_parts[0])
+  	if contains(domain_port, ":") {
+        parts = split(domain_port, ":", 2)
+  	    url.domain = parts[0]
+  	    url.port = parts[1]
+  	} else {
+  	    url.domain = domain_port
+  	    .destination.domain = domain_port
+  	}
+  	after_domain = "/" + string!(url_parts[1])
+  	if !contains(after_domain, "?") {
+  	    url.path = after_domain
+  	} else {
+        parts = split(after_domain, "?", 2)
+  	    url.path = parts[0]
+  	    url.query = parts[1]
+  	}
+  	if contains(string!(url.path), ".") {
+        parts = split!(url.path, ".", 2)
+  	    url.extension = parts[1]
+  	}
+  	.url = url                      
+  }
+
+  if .panw.panos.sub_type == "file" && is_string(.panw.panos.misc) {
+    if contains!(.panw.panos.misc, "/") || contains!(.panw.panos.misc, "\\") {
+      .file.path = .panw.panos.misc
+    } else {
+      .file.name = .panw.panos.misc
+    }
+  }
+
+  if is_string(.file.path) {      
+    parts = split!(.file.path, "/")
+    if length(parts) == 1 {
+      parts = split!(.file.path, "\\")
+    }
+    for_each(parts) -> |i, part| {
+      if i == length(parts) - 1 {
+        .file.name = part
+      }
+    }                       
+  }
+
+  .panw.panos.user_agent = ._temp_.user_agent
+
+  if .panw.panos.url_category_list != null {
+    .panw.panos.url_category_list = split(strip_whitespace!(.panw.panos.url_category_list), ",")
+  }
 
   # default pipeline
   .panw.panos.observer.serial_number = .observer.serial_number
@@ -1209,7 +1366,7 @@ transform: |-
   }                                                  
 
   if .destination.ip != null {                       
-    .destination.ip = to_string!(.destination.ip) 
+    .destination.ip = to_string(.destination.ip) 
   }                                                  
 
   if .source.nat.ip != null {                       
@@ -1217,7 +1374,7 @@ transform: |-
   }                                                  
 
   if .destination.nat.ip != null {                       
-    .destination.nat.ip = to_string!(.destination.nat.ip) 
+    .destination.nat.ip = to_string(.destination.nat.ip) 
   }                                                  
 
   # if .host.ip != null {                       
@@ -1229,11 +1386,11 @@ transform: |-
   }                                                  
 
   if .panw.panos.xff.ip != null {                       
-    .panw.panos.xff.ip = to_string!(.panw.panos.xff.ip) 
+    .panw.panos.xff.ip = to_string(.panw.panos.xff.ip) 
   }                                                  
 
   if .panw.panos.source.ip != null {                       
-    .panw.panos.source.ip = to_string!(.panw.panos.source.ip) 
+    .panw.panos.source.ip = to_string(.panw.panos.source.ip) 
   }                                                  
 
   if .panw.panos.source.ipv6 != null {                       
@@ -1241,15 +1398,15 @@ transform: |-
   }                                                  
 
   if .panw.panos.source.nat.ip != null {                       
-    .panw.panos.source.nat.ip = to_string!(.panw.panos.source.nat.ip) 
+    .panw.panos.source.nat.ip = to_string(.panw.panos.source.nat.ip) 
   }                                                  
 
   if .panw.panos.destination.ip != null {                       
-    .panw.panos.destination.ip = to_string!(.panw.panos.destination.ip) 
+    .panw.panos.destination.ip = to_string(.panw.panos.destination.ip) 
   }                                                  
 
   if .panw.panos.destination.nat.ip != null {                       
-    .panw.panos.destination.nat.ip = to_string!(.panw.panos.destination.nat.ip) 
+    .panw.panos.destination.nat.ip = to_string(.panw.panos.destination.nat.ip) 
   }                                                  
 
   if .panw.panos.forwarded_ip != null {                       
@@ -1261,19 +1418,19 @@ transform: |-
   }                                                  
 
   if .panw.panos.public.ip != null {                       
-    .panw.panos.public.ip = to_string(.panw.panos.public.ip) 
+    .panw.panos.public.ip = to_string!(.panw.panos.public.ip) 
   }                                                  
 
   if .panw.panos.private.ip != null {                       
-    .panw.panos.private.ip = to_string(.panw.panos.private.ip) 
+    .panw.panos.private.ip = to_string!(.panw.panos.private.ip) 
   }                                                  
 
   if .panw.panos.public.ipv6 != null {                       
-    .panw.panos.public.ipv6 = to_string(.panw.panos.public.ipv6) 
+    .panw.panos.public.ipv6 = to_string!(.panw.panos.public.ipv6) 
   }                                                  
 
   if .panw.panos.private.ipv6 != null {                       
-    .panw.panos.private.ipv6 = to_string(.panw.panos.private.ipv6) 
+    .panw.panos.private.ipv6 = to_string!(.panw.panos.private.ipv6) 
   }                                                  
 
   if .panw.panos.end_ip_address != null {                       
@@ -1594,7 +1751,7 @@ transform: |-
       .event.action = "url_filtering"
   }
 
-  if .panw.panos.sub_type == "virus" { 
+  if .panw.panos.sub_type == "virus" || .panw.panos.sub_type == "ml-virus" { 
       .event.action = "virus_detected"
   }
 
