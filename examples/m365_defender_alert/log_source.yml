@@ -1,0 +1,1142 @@
+schema:
+  ecs_field_names:
+  - cloud.account.id
+  - cloud.availability_zone
+  - cloud.instance.id
+  - cloud.instance.name
+  - cloud.machine.type
+  - cloud.project.id
+  - cloud.provider
+  - cloud.region
+  - container.id
+  - container.image.name
+  - container.labels
+  - container.name
+  - destination.domain
+  - destination.ip
+  - destination.port
+  - dll.hash.md5
+  - dll.hash.sha1
+  - dll.hash.sha256
+  - dll.name
+  - dll.path
+  - ecs.version
+  - email.direction
+  - email.from.address
+  - email.local_id
+  - email.message_id
+  - email.subject
+  - email.to.address
+  - event.action
+  - event.category
+  - event.created
+  - event.dataset
+  - event.id
+  - event.kind
+  - event.module
+  - event.original
+  - event.outcome
+  - event.provider
+  - event.reference
+  - event.severity
+  - event.type
+  - file.code_signature.exists
+  - file.code_signature.subject_name
+  - file.code_signature.trusted
+  - file.directory
+  - file.extension
+  - file.hash.md5
+  - file.hash.sha1
+  - file.hash.sha256
+  - file.name
+  - file.size
+  - file.x509.issuer.common_name
+  - file.x509.not_after
+  - file.x509.serial_number
+  - host.architecture
+  - host.domain
+  - host.hostname
+  - host.id
+  - host.ip
+  - host.mac
+  - host.name
+  - host.os.family
+  - host.os.full
+  - host.os.kernel
+  - host.os.name
+  - host.os.platform
+  - host.os.version
+  - host.type
+  - message
+  - network.direction
+  - network.protocol
+  - observer.type
+  - observer.version
+  - process.args
+  - process.args_count
+  - process.code_signature.status
+  - process.command_line
+  - process.executable
+  - process.hash.md5
+  - process.hash.sha1
+  - process.hash.sha256
+  - process.name
+  - process.parent.args
+  - process.parent.args_count
+  - process.parent.code_signature.status
+  - process.parent.command_line
+  - process.parent.executable
+  - process.parent.group_leader.name
+  - process.parent.group_leader.pid
+  - process.parent.group_leader.start
+  - process.parent.hash.md5
+  - process.parent.hash.sha1
+  - process.parent.hash.sha256
+  - process.parent.name
+  - process.parent.pe.company
+  - process.parent.pe.description
+  - process.parent.pe.file_version
+  - process.parent.pe.original_file_name
+  - process.parent.pe.product
+  - process.parent.pid
+  - process.parent.start
+  - process.pe.company
+  - process.pe.description
+  - process.pe.file_version
+  - process.pe.original_file_name
+  - process.pe.product
+  - process.pid
+  - process.start
+  - registry.data.strings
+  - registry.key
+  - registry.value
+  - related.hash
+  - related.hosts
+  - related.ip
+  - related.user
+  - source.domain
+  - source.geo.city_name
+  - source.geo.country_iso_code
+  - source.ip
+  - source.port
+  - source.user.domain
+  - source.user.id
+  - source.user.name
+  - tags
+  - threat.group.name
+  - threat.indicator.file.directory
+  - threat.indicator.file.hash.sha1
+  - threat.indicator.file.hash.sha256
+  - threat.indicator.file.name
+  - threat.indicator.file.size
+  - threat.indicator.registry.data.strings
+  - threat.indicator.registry.key
+  - threat.indicator.registry.value
+  - threat.indicator.type
+  - threat.technique.subtechnique.id
+  - threat.technique.subtechnique.name
+  - url.domain
+  - url.extension
+  - url.fragment
+  - url.original
+  - url.password
+  - url.path
+  - url.port
+  - url.query
+  - url.scheme
+  - url.username
+  - user.domain
+  - user.id
+  - user.name
+  - user_agent.device.name
+  - user_agent.name
+  - user_agent.original
+  - user_agent.os.full
+  - user_agent.os.name
+  - user_agent.os.version
+  - user_agent.version
+  fields:
+  - name: m365_defender
+    type:
+      type: struct
+      fields:
+      - name: event
+        type:
+          type: struct
+          fields:
+          - name: aad_device_id
+            type: string
+          - name: account
+            type:
+              type: struct
+              fields:
+              - name: display_name
+                type: string
+              - name: domain
+                type: string
+              - name: id
+                type: string
+              - name: name
+                type: string
+              - name: object_id
+                type: string
+              - name: sid
+                type: string
+              - name: type
+                type: string
+              - name: upn
+                type: string
+          - name: action
+            type:
+              type: struct
+              fields:
+              - name: result
+                type: string
+              - name: trigger
+                type: string
+              - name: type
+                type: string
+              - name: value
+                type: string
+          - name: active_users
+            type: string
+          - name: activity
+            type:
+              type: struct
+              fields:
+              - name: objects
+                type: string
+              - name: type
+                type: string
+          - name: additional_fields
+            type: string
+          - name: alert
+            type:
+              type: struct
+              fields:
+              - name: categories
+                type: string
+              - name: category
+                type: string
+              - name: id
+                type: string
+          - name: app_guard_container_id
+            type: string
+          - name: app_instance_id
+            type: long
+          - name: application
+            type: string
+          - name: application_id
+            type: string
+          - name: asset_value
+            type: string
+          - name: attachment_count
+            type: long
+          - name: attack_techniques
+            type: string
+          - name: authentication_details
+            type: string
+          - name: bulk_complaint_level
+            type: long
+          - name: category
+            type: string
+          - name: certificate
+            type:
+              type: struct
+              fields:
+              - name: countersignature_time
+                type: timestamp
+              - name: creation_time
+                type: timestamp
+              - name: expiration_time
+                type: timestamp
+              - name: serial_number
+                type: string
+          - name: city
+            type: string
+          - name: client_version
+            type: string
+          - name: confidence_level
+            type: string
+          - name: connected_networks
+            type: string
+          - name: connectors
+            type: string
+          - name: country_code
+            type: string
+          - name: crl_distribution_point_urls
+            type: string
+          - name: default_gateways
+            type: string
+          - name: delivery
+            type:
+              type: struct
+              fields:
+              - name: action
+                type: string
+              - name: location
+                type: string
+          - name: destination
+            type:
+              type: struct
+              fields:
+              - name: device_name
+                type: string
+              - name: ip_address
+                type: string
+              - name: port
+                type: long
+          - name: detection
+            type:
+              type: struct
+              fields:
+              - name: methods
+                type: string
+              - name: source
+                type: string
+          - name: device
+            type:
+              type: struct
+              fields:
+              - name: category
+                type: string
+              - name: id
+                type: string
+              - name: name
+                type: string
+              - name: sub_type
+                type: string
+              - name: type
+                type: string
+          - name: device_dynamic_tags
+            type: string
+          - name: device_manual_tags
+            type: string
+          - name: dns_addresses
+            type: string
+          - name: email
+            type:
+              type: struct
+              fields:
+              - name: action
+                type: string
+              - name: action_policy
+                type: string
+              - name: action_policy_guid
+                type: string
+              - name: cluster_id
+                type: string
+              - name: direction
+                type: string
+              - name: language
+                type: string
+              - name: subject
+                type: string
+          - name: entity_type
+            type: string
+          - name: evidence
+            type:
+              type: struct
+              fields:
+              - name: direction
+                type: string
+              - name: role
+                type: string
+          - name: exclusion_reason
+            type: string
+          - name: exposure_level
+            type: string
+          - name: failure_reason
+            type: string
+          - name: file
+            type:
+              type: struct
+              fields:
+              - name: name
+                type: string
+              - name: origin_ip
+                type: string
+              - name: origin_referrer_url
+                type: string
+              - name: origin_url
+                type: string
+              - name: size
+                type: long
+              - name: type
+                type: string
+          - name: folder_path
+            type: string
+          - name: initiating_process
+            type:
+              type: struct
+              fields:
+              - name: account_domain
+                type: string
+              - name: account_name
+                type: string
+              - name: account_object_id
+                type: string
+              - name: account_sid
+                type: string
+              - name: account_upn
+                type: string
+              - name: command_line
+                type: string
+              - name: creation_time
+                type: timestamp
+              - name: file_name
+                type: string
+              - name: file_size
+                type: long
+              - name: folder_path
+                type: string
+              - name: id
+                type: long
+              - name: integrity_level
+                type: string
+              - name: logon_id
+                type: string
+              - name: md5
+                type: string
+              - name: parent_creation_time
+                type: timestamp
+              - name: parent_file_name
+                type: string
+              - name: parent_id
+                type: long
+              - name: sha1
+                type: string
+              - name: sha256
+                type: string
+              - name: signature_status
+                type: string
+              - name: signer_type
+                type: string
+              - name: token_elevation
+                type: string
+              - name: version_info_company_name
+                type: string
+              - name: version_info_file_description
+                type: string
+              - name: version_info_internal_file_name
+                type: string
+              - name: version_info_original_file_name
+                type: string
+              - name: version_info_product_name
+                type: string
+              - name: version_info_product_version
+                type: string
+          - name: internet_message_id
+            type: string
+          - name: ip_address
+            type: string
+          - name: ip_addresses
+            type: string
+          - name: ip_category
+            type: string
+          - name: ip_tags
+            type: string
+          - name: ipv4_dhcp
+            type: string
+          - name: ipv6_dhcp
+            type: string
+          - name: is_admin_operation
+            type: boolean
+          - name: is_anonymous_proxy
+            type: boolean
+          - name: is_azure_ad_joined
+            type: boolean
+          - name: is_azure_info_protection_applied
+            type: boolean
+          - name: is_clicked_through
+            type: boolean
+          - name: is_excluded
+            type: boolean
+          - name: is_external_user
+            type: boolean
+          - name: is_impersonated
+            type: boolean
+          - name: is_internet_facing
+            type: boolean
+          - name: is_local_admin
+            type: boolean
+          - name: is_root_signer_microsoft
+            type: boolean
+          - name: is_signed
+            type: boolean
+          - name: is_trusted
+            type: boolean
+          - name: isp
+            type: string
+          - name: issuer
+            type: string
+          - name: issuer_hash
+            type: string
+          - name: join_type
+            type: string
+          - name: local
+            type:
+              type: struct
+              fields:
+              - name: ip
+                type: string
+              - name: ip_type
+                type: string
+              - name: port
+                type: long
+          - name: location
+            type: string
+          - name: logon
+            type:
+              type: struct
+              fields:
+              - name: id
+                type: string
+              - name: type
+                type: string
+          - name: mac_address
+            type: string
+          - name: machine_group
+            type: string
+          - name: md5
+            type: string
+          - name: merged_device_ids
+            type: string
+          - name: merged_to_device_id
+            type: string
+          - name: model
+            type: string
+          - name: network
+            type:
+              type: struct
+              fields:
+              - name: adapter_name
+                type: string
+              - name: adapter_status
+                type: string
+              - name: adapter_type
+                type: string
+              - name: adapter_vendor
+                type: string
+              - name: message_id
+                type: string
+          - name: network_direction
+            type: string
+          - name: oauth_application_id
+            type: string
+          - name: object
+            type:
+              type: struct
+              fields:
+              - name: id
+                type: string
+              - name: name
+                type: string
+              - name: type
+                type: string
+          - name: onboarding_status
+            type: string
+          - name: operation_name
+            type: string
+          - name: org_level
+            type:
+              type: struct
+              fields:
+              - name: action
+                type: string
+              - name: policy
+                type: string
+          - name: os
+            type:
+              type: struct
+              fields:
+              - name: architecture
+                type: string
+              - name: build
+                type: string
+              - name: distribution
+                type: string
+              - name: platform
+                type: string
+              - name: version
+                type: string
+              - name: version_info
+                type: string
+          - name: port
+            type: long
+          - name: previous
+            type:
+              type: struct
+              fields:
+              - name: file_name
+                type: string
+              - name: folder_path
+                type: string
+              - name: registry_key
+                type: string
+              - name: registry_value_data
+                type: string
+              - name: registry_value_name
+                type: string
+          - name: process
+            type:
+              type: struct
+              fields:
+              - name: command_line
+                type: string
+              - name: creation_time
+                type: timestamp
+              - name: id
+                type: long
+              - name: integrity_level
+                type: string
+              - name: token_elevation
+                type: string
+              - name: version_info_company_name
+                type: string
+              - name: version_info_file_description
+                type: string
+              - name: version_info_internal_file_name
+                type: string
+              - name: version_info_original_file_name
+                type: string
+              - name: version_info_product_name
+                type: string
+              - name: version_info_product_version
+                type: string
+          - name: protocol
+            type: string
+          - name: public_ip
+            type:
+              type: struct
+              fields:
+              - name: geo
+                type:
+                  type: struct
+                  fields:
+                  - name: city_name
+                    type: string
+                  - name: continent_name
+                    type: string
+                  - name: country_iso_code
+                    type: string
+                  - name: country_name
+                    type: string
+                  - name: location
+                    type:
+                      type: struct
+                      fields:
+                      - name: lat
+                        type: float
+                      - name: lon
+                        type: float
+                  - name: region_iso_code
+                    type: string
+                  - name: region_name
+                    type: string
+              - name: value
+                type: string
+          - name: query
+            type:
+              type: struct
+              fields:
+              - name: target
+                type: string
+              - name: type
+                type: string
+              - name: value
+                type: string
+          - name: raw_event_data
+            type: string
+          - name: recipient
+            type:
+              type: struct
+              fields:
+              - name: email_address
+                type: string
+              - name: object_id
+                type: string
+          - name: registry
+            type:
+              type: struct
+              fields:
+              - name: device_tag
+                type: string
+              - name: key
+                type: string
+              - name: value_data
+                type: string
+              - name: value_name
+                type: string
+              - name: value_type
+                type: string
+          - name: remote
+            type:
+              type: struct
+              fields:
+              - name: device_name
+                type: string
+              - name: ip
+                type: string
+              - name: ip_type
+                type: string
+              - name: port
+                type: long
+              - name: url
+                type: string
+          - name: report_id
+            type: string
+          - name: request
+            type:
+              type: struct
+              fields:
+              - name: account_domain
+                type: string
+              - name: account_name
+                type: string
+              - name: account_sid
+                type: string
+              - name: protocol
+                type: string
+              - name: source_ip
+                type: string
+              - name: source_port
+                type: long
+          - name: sender
+            type:
+              type: struct
+              fields:
+              - name: display_name
+                type: string
+              - name: from_address
+                type: string
+              - name: from_domain
+                type: string
+              - name: ipv4
+                type: string
+              - name: ipv6
+                type: string
+              - name: mail_from_address
+                type: string
+              - name: mail_from_domain
+                type: string
+              - name: object_id
+                type: string
+          - name: sensitivity
+            type:
+              type: struct
+              fields:
+              - name: label
+                type: string
+              - name: sub_label
+                type: string
+          - name: sensor_health_state
+            type: string
+          - name: service_source
+            type: string
+          - name: severity
+            type: string
+          - name: sha1
+            type: string
+          - name: sha256
+            type: string
+          - name: share_name
+            type: string
+          - name: signature_type
+            type: string
+          - name: signer
+            type: string
+          - name: signer_hash
+            type: string
+          - name: subject
+            type: string
+          - name: target
+            type:
+              type: struct
+              fields:
+              - name: account_display_name
+                type: string
+              - name: account_upn
+                type: string
+              - name: device_name
+                type: string
+          - name: tenant
+            type:
+              type: struct
+              fields:
+              - name: id
+                type: string
+              - name: name
+                type: string
+          - name: threat
+            type:
+              type: struct
+              fields:
+              - name: family
+                type: string
+              - name: names
+                type: string
+              - name: types
+                type: string
+          - name: time
+            type: timestamp
+          - name: timestamp
+            type: timestamp
+          - name: title
+            type: string
+          - name: tunnel_type
+            type: string
+          - name: url
+            type: string
+          - name: url_chain
+            type: string
+          - name: url_count
+            type: long
+          - name: url_domain
+            type: string
+          - name: url_location
+            type: string
+          - name: user_agent
+            type: string
+          - name: user_agent_tags
+            type: string
+          - name: user_level_action
+            type: string
+          - name: user_level_policy
+            type: string
+          - name: vendor
+            type: string
+          - name: workload
+            type: string
+  - name: url
+    type:
+      type: struct
+      fields:
+      - name: user_info
+        type: string
+transform: |
+  .related.user = []
+  .related.ip = []
+  .related.hash = []
+  .related.hosts = []
+
+  #ls level
+  .error.message = []
+
+  .ecs.version = "8.10.0"
+
+  if .event.original == null { 
+      .event.original = encode_json(.json)
+  }
+
+  .m365_defender.event.category = del(.json.category)
+
+  .m365_defender.event.operation_name = del(.json.operationName)
+
+  .m365_defender.event.tenant.name = del(.json.Tenant)
+
+  .m365_defender.event.tenant.id = del(.json.tenantId)
+
+  if .json.time != null { 
+  	.m365_defender.event.time = to_timestamp!(.json.time, "seconds") 
+  }
+
+      
+  if .json.properties.Timestamp != null { 
+  	.m365_defender.event.timestamp = to_timestamp!(.json.properties.Timestamp, "seconds") 
+  }
+
+  .ts = .m365_defender.event.timestamp
+
+  if .m365_defender.event.category == null || .m365_defender.event.category == "" { 
+      .error.message = push(.error.message, "Missing required field: m365_defender.event.category.") 
+  } else if !includes(["AdvancedHunting-AlertEvidence","AdvancedHunting-AlertInfo","AdvancedHunting-DeviceEvents","AdvancedHunting-DeviceFileCertificateInfo","AdvancedHunting-DeviceFileEvents","AdvancedHunting-DeviceImageLoadEvents","AdvancedHunting-DeviceInfo","AdvancedHunting-DeviceLogonEvents","AdvancedHunting-DeviceNetworkEvents","AdvancedHunting-DeviceNetworkInfo","AdvancedHunting-DeviceProcessEvents","AdvancedHunting-DeviceRegistryEvents","AdvancedHunting-EmailAttachmentInfo","AdvancedHunting-EmailEvents","AdvancedHunting-EmailPostDeliveryEvents","AdvancedHunting-EmailUrlInfo","AdvancedHunting-IdentityLogonEvents","AdvancedHunting-IdentityQueryEvents","AdvancedHunting-IdentityDirectoryEvents","AdvancedHunting-CloudAppEvents","AdvancedHunting-UrlClickEvents"], .m365_defender.event.category) {
+      m365_defender_event_category = string!(.m365_defender.event.category)
+      .error.message = push(.error.message, "The event category {{m365_defender_event_category}} is not supported.") 
+  }
+
+  # table level
+  .event.category = []
+  .event.type = []
+  .threat.indicator.registry.data.strings = []
+  .registry.data.strings = []
+
+  .event.kind = "alert"
+
+  entity_type = downcase(.json.properties.EntityType) ?? null
+  if entity_type == "file" { 
+      .event.category = push(.event.category, "file") 
+  } else if entity_type == "process" { 
+      .event.category = push(.event.category, "process") 
+  } else if entity_type == "device" { 
+      .event.category = push(.event.category, "host") 
+  } else if entity_type == "user" { 
+      .event.category = push(.event.category, "iam") 
+  }
+
+  if .json.properties.Category != null && includes(["malware","ransomware"], downcase!(.json.properties.Category)) { 
+      .event.category = push(.event.category, "malware") 
+  }
+
+  if .json.properties.Category != null && includes(["persistence","privilegeescalation","suspiciousactivity","threatmanagement"], downcase!(.json.properties.Category)) { 
+      .event.category = push(.event.category, "threat") 
+  }
+
+  if .event.category != null && includes(.event.category, "threat") { 
+      .event.type = push(.event.type, "indicator") 
+  }
+      
+  if .event.type == [] { 
+      .event.type = push(.event.type, "info") 
+  }
+
+  if .json.properties.RemoteIP != "" && .json.properties.RemoteIP != null {                       
+  	  .m365_defender.event.remote.ip = to_string!(.json.properties.RemoteIP)                                            
+  }
+
+  if .json.properties.FileSize != "" && .json.properties.FileSize != null {                       
+      .m365_defender.event.file.size = to_int!(.json.properties.FileSize)                                               
+  }
+      
+  if .json.properties.LocalIP != "" && .json.properties.LocalIP != null {                       
+  	  .m365_defender.event.local.ip = to_string!(.json.properties.LocalIP)                                               
+  }
+   
+  .m365_defender.event.alert.id = del(.json.properties.AlertId)
+
+  .m365_defender.event.service_source = del(.json.properties.ServiceSource)
+
+  .m365_defender.event.device.name = del(.json.properties.DeviceName)
+
+  .m365_defender.event.network.message_id = del(.json.properties.NetworkMessageId)
+
+  .m365_defender.event.oauth_application_id = del(.json.properties.OAuthApplicationId)
+
+  .m365_defender.event.remote.url = del(.json.properties.RemoteUrl)
+
+  .m365_defender.event.attack_techniques = del(.json.properties.AttackTechniques)
+
+  .m365_defender.event.account.object_id = del(.json.properties.AccountObjectId)
+
+  .m365_defender.event.alert.category = del(.json.properties.Category)
+
+  .m365_defender.event.alert.categories = del(.json.properties.Categories)
+
+  .m365_defender.event.detection.source = del(.json.properties.DetectionSource)
+
+  .m365_defender.event.machine_group = del(.json.properties.MachineGroup)
+
+  .m365_defender.event.device.id = del(.json.properties.DeviceId)
+
+  .m365_defender.event.evidence.direction = del(.json.properties.EvidenceDirection)
+
+  .m365_defender.event.process.command_line = del(.json.properties.ProcessCommandLine)
+
+  .m365_defender.event.registry.key = del(.json.properties.RegistryKey)
+
+  .m365_defender.event.registry.value_name = del(.json.properties.RegistryValueName)
+
+  .m365_defender.event.registry.value_data = del(.json.properties.RegistryValueData)
+
+  .m365_defender.event.sha1 = del(.json.properties.SHA1)
+
+  .m365_defender.event.folder_path = del(.json.properties.FolderPath)
+
+  .m365_defender.event.sha256 = del(.json.properties.SHA256)
+
+  .m365_defender.event.file.name = del(.json.properties.FileName)
+
+  .m365_defender.event.threat.family = del(.json.properties.ThreatFamily)
+
+  .m365_defender.event.account.sid = del(.json.properties.AccountSid)
+
+  .m365_defender.event.account.name = del(.json.properties.AccountName)
+
+  .m365_defender.event.title = del(.json.properties.Title)
+
+  .m365_defender.event.account.domain = del(.json.properties.AccountDomain)
+
+  .m365_defender.event.account.upn = del(.json.properties.AccountUpn)
+
+  .m365_defender.event.additional_fields = del(.json.properties.AdditionalFields)
+
+  .m365_defender.event.application = del(.json.properties.Application)
+
+  .m365_defender.event.application_id = del(.json.properties.ApplicationId)
+
+  .m365_defender.event.email.subject = del(.json.properties.EmailSubject)
+
+  .m365_defender.event.entity_type = del(.json.properties.EntityType)
+
+  .m365_defender.event.evidence.role = del(.json.properties.EvidenceRole)
+
+  .event.id = .m365_defender.event.alert.id
+
+  .event.provider = .m365_defender.event.service_source
+
+  .event.reference = .m365_defender.event.remote.url
+
+  .m365_defender.event.severity = downcase(.json.properties.Severity) ?? null                  
+
+  if .m365_defender.event.severity == "informational" { 
+      .event.severity = 1
+  } else if .m365_defender.event.severity == "low" { 
+      .event.severity = 2
+  } else if .m365_defender.event.severity == "medium" { 
+      .event.severity = 3
+  } else if .m365_defender.event.severity == "high" { 
+      .event.severity = 4
+  }
+
+  .host.name = .m365_defender.event.device.name
+
+  .host.name = downcase(.host.name) ?? null                
+
+  .host.id = .m365_defender.event.device.id
+
+  .network.direction = .m365_defender.event.evidence.direction
+
+  .network.direction = downcase(.network.direction) ?? null                      
+
+  .process.command_line = .m365_defender.event.process.command_line
+
+  if .process.command_line != null && .process.command_line != "" { 
+    command_line = string!(.process.command_line)
+    command_line = strip_whitespace(command_line)
+    if command_line != "" {
+      .process.command_line = command_line
+      args = compact(split(command_line, " "))
+      if length(args) > 0 {
+        .process.executable = args[0]
+        .process.args = args
+        .process.args_count = length(args)
+      }
+    }                    
+  }
+
+  if .event.category != null && includes(.event.category, "threat") { 
+      .threat.indicator.registry.key = .m365_defender.event.registry.key
+      .threat.indicator.registry.value = .m365_defender.event.registry.value_name
+      .threat.indicator.file.directory = .m365_defender.event.folder_path
+      if .m365_defender.event.registry.value_data != null { 
+        .threat.indicator.registry.data.strings = push(.threat.indicator.registry.data.strings, .m365_defender.event.registry.value_data) 
+      }
+      .threat.indicator.file.hash.sha1 = .m365_defender.event.sha1
+      .threat.indicator.file.hash.sha256 = .m365_defender.event.sha256
+      .threat.indicator.file.name = .m365_defender.event.file.name
+      .threat.indicator.file.size = .m365_defender.event.file.size
+      .threat.group.name = .m365_defender.event.threat.family
+  }
+
+  if !is_nullish(.m365_defender.event.attack_techniques) { 
+    attack_techniques = array!(parse_json!(.m365_defender.event.attack_techniques))
+    subtechnique_name = []
+    subtechnique_id = []
+    for_each(attack_techniques) -> |_i, item| {
+      grokked = parse_groks!(item, ["%{GREEDYDATA:name} \\(%{GREEDYDATA:id}\\)"])
+      subtechnique_name = push(subtechnique_name, grokked.name)
+      subtechnique_id = push(subtechnique_id, grokked.id)
+    }
+    .threat.technique.subtechnique.id = subtechnique_id
+    .threat.technique.subtechnique.name = subtechnique_name                  
+  }
+
+  if .event.category != null && !includes(.event.category, "threat") { 
+      .file.directory = .m365_defender.event.folder_path
+      .file.hash.sha1 = .m365_defender.event.sha1
+      .file.hash.sha256 = .m365_defender.event.sha256
+      .file.name = .m365_defender.event.file.name
+      .file.size = .m365_defender.event.file.size
+      .registry.key = .m365_defender.event.registry.key
+      if .m365_defender.event.registry.value_data != null { 
+        .registry.data.strings = push(.registry.data.strings, .m365_defender.event.registry.value_data) 
+      }
+  }
+
+  .destination.ip = .m365_defender.event.remote.ip
+
+  .source.ip = .m365_defender.event.local.ip
+
+  .user.id = .m365_defender.event.account.sid
+
+  .user.name = .m365_defender.event.account.name
+
+  .user.domain = .m365_defender.event.account.domain
+
+  if .user.id == null { 
+      .user.id = .m365_defender.event.account.object_id
+  }
+
+  .email.subject = .m365_defender.event.email.subject
+
+  .email.message_id = .m365_defender.event.network.message_id
+
+  .message = .m365_defender.event.title
+
+  if .host.name != null { 
+      .related.hosts = push(.related.hosts, .host.name) 
+  }
+
+  if .user.domain != null { 
+      .related.hosts = push(.related.hosts, .user.domain) 
+  }
+
+      
+  if .host.id != null { 
+      .related.hosts = push(.related.hosts, .host.id) 
+  }
+
+  if .m365_defender.event.account.object_id != null { 
+      .related.user = push(.related.user, .m365_defender.event.account.object_id) 
+  }
+
+  if .user.name != null { 
+      .related.user = push(.related.user, .user.name) 
+  }
+
+  if .source.ip != null { 
+      .related.ip = push(.related.ip, .source.ip) 
+  }
+
+  if .destination.ip != null { 
+      .related.ip = push(.related.ip, .destination.ip) 
+  }
+
+  if .m365_defender.event.sha256 != null { 
+      .related.hash = push(.related.hash, .m365_defender.event.sha256) 
+  }
+
+  if .m365_defender.event.sha1 != null { 
+      .related.hash = push(.related.hash, .m365_defender.event.sha1) 
+  }
+      
+  # TODO: implement this
+  # if .tags == null || !includes(array!(.tags), "preserve_duplicate_custom_fields") { 
+  #   del(.m365_defender.event.timestamp)
+  # 	del(.m365_defender.event.remote.url)
+  # 	del(.m365_defender.event.alert.id)
+  # 	del(.m365_defender.event.service_source)
+  # 	del(.m365_defender.event.device.name)
+  # 	del(.m365_defender.event.device.id)
+  # 	del(.m365_defender.event.evidence.direction)
+  # 	del(.m365_defender.event.process.command_line)
+  # 	del(.m365_defender.event.registry.key)
+  # 	del(.m365_defender.event.registry.value_name)
+  # 	del(.m365_defender.event.registry.value_data)
+  # 	del(.m365_defender.event.remote.ip)
+  # 	del(.m365_defender.event.folder_path)
+  # 	del(.m365_defender.event.sha1)
+  # 	del(.m365_defender.event.sha256)
+  # 	del(.m365_defender.event.file.name)
+  # 	del(.m365_defender.event.file.size)
+  # 	del(.m365_defender.event.threat.family)
+  # 	del(.m365_defender.event.account.name)
+  # 	del(.m365_defender.event.account.domain)
+  # 	del(.m365_defender.event.account.sid)
+  # 	del(.m365_defender.event.account.object_id)
+  # 	del(.m365_defender.event.network.message_id)
+  # 	del(.m365_defender.event.email.subject)
+  # 	del(.m365_defender.event.title)
+  # }
+     
+name: m365_defender_alert
