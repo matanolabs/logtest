@@ -1,0 +1,220 @@
+{
+    "expected": [
+        {
+            "abusech": {
+                "url": {
+                    "threat": "malware_download",
+                    "url_status": "online"
+                }
+            },
+            "event": {
+                "category": [
+                    "threat"
+                ],
+                "id": "2686307",
+                "kind": "enrichment",
+                "type": [
+                    "indicator"
+                ]
+            },
+            "threat": {
+                "indicator": {
+                    "first_seen": "2023-07-20T14:28:03",
+                    "last_seen": "2023-07-20T14:28:03",
+                    "provider": "geenensp",
+                    "reference": "https://urlhaus.abuse.ch/url/2686307/",
+                    "type": "url"
+                }
+            }
+        },
+        {
+            "abusech": {
+                "url": {
+                    "threat": "malware_download",
+                    "url_status": "online"
+                }
+            },
+            "event": {
+                "category": [
+                    "threat"
+                ],
+                "id": "2686304",
+                "kind": "enrichment",
+                "type": [
+                    "indicator"
+                ]
+            },
+            "threat": {
+                "indicator": {
+                    "first_seen": "2023-07-20T14:24:06",
+                    "last_seen": "2023-07-20T14:24:06",
+                    "provider": "geenensp",
+                    "reference": "https://urlhaus.abuse.ch/url/2686304/",
+                    "type": "url"
+                }
+            }
+        },
+        {
+            "abusech": {
+                "url": {
+                    "threat": "malware_download",
+                    "url_status": "online"
+                }
+            },
+            "event": {
+                "category": [
+                    "threat"
+                ],
+                "id": "2686305",
+                "kind": "enrichment",
+                "type": [
+                    "indicator"
+                ]
+            },
+            "threat": {
+                "indicator": {
+                    "first_seen": "2023-07-20T14:25:06",
+                    "last_seen": "2023-07-20T14:25:06",
+                    "provider": "geenensp",
+                    "reference": "https://urlhaus.abuse.ch/url/2686305/",
+                    "type": "url"
+                }
+            }
+        },
+        {
+            "abusech": {
+                "url": {
+                    "threat": "malware_download",
+                    "url_status": "online"
+                }
+            },
+            "event": {
+                "category": [
+                    "threat"
+                ],
+                "id": "2686308",
+                "kind": "enrichment",
+                "type": [
+                    "indicator"
+                ]
+            },
+            "threat": {
+                "indicator": {
+                    "first_seen": "2023-07-20T14:33:07",
+                    "last_seen": "2023-07-20T14:33:07",
+                    "provider": "geenensp",
+                    "reference": "https://urlhaus.abuse.ch/url/2686308/",
+                    "type": "url"
+                }
+            }
+        },
+        {
+            "abusech": {
+                "url": {
+                    "threat": "malware_download",
+                    "url_status": "online"
+                }
+            },
+            "event": {
+                "category": [
+                    "threat"
+                ],
+                "id": "2686309",
+                "kind": "enrichment",
+                "type": [
+                    "indicator"
+                ]
+            },
+            "threat": {
+                "indicator": {
+                    "first_seen": "2023-07-20T14:35:09",
+                    "last_seen": "2023-07-20T14:35:09",
+                    "provider": "geenensp",
+                    "reference": "https://urlhaus.abuse.ch/url/2686309/",
+                    "type": "url"
+                }
+            }
+        },
+        {
+            "abusech": {
+                "url": {
+                    "threat": "malware_download",
+                    "url_status": "online"
+                }
+            },
+            "event": {
+                "category": [
+                    "threat"
+                ],
+                "id": "2686311",
+                "kind": "enrichment",
+                "type": [
+                    "indicator"
+                ]
+            },
+            "threat": {
+                "indicator": {
+                    "first_seen": "2023-07-20T14:39:05",
+                    "last_seen": "2023-07-20T14:39:05",
+                    "provider": "geenensp",
+                    "reference": "https://urlhaus.abuse.ch/url/2686311/",
+                    "type": "url"
+                }
+            }
+        },
+        {
+            "abusech": {
+                "url": {
+                    "threat": "malware_download",
+                    "url_status": "online"
+                }
+            },
+            "event": {
+                "category": [
+                    "threat"
+                ],
+                "id": "2686306",
+                "kind": "enrichment",
+                "type": [
+                    "indicator"
+                ]
+            },
+            "threat": {
+                "indicator": {
+                    "first_seen": "2023-07-20T14:26:06",
+                    "last_seen": "2023-07-20T14:26:06",
+                    "provider": "geenensp",
+                    "reference": "https://urlhaus.abuse.ch/url/2686306/",
+                    "type": "url"
+                }
+            }
+        },
+        {
+            "abusech": {
+                "url": {
+                    "threat": "malware_download",
+                    "url_status": "online"
+                }
+            },
+            "event": {
+                "category": [
+                    "threat"
+                ],
+                "id": "2686310",
+                "kind": "enrichment",
+                "type": [
+                    "indicator"
+                ]
+            },
+            "threat": {
+                "indicator": {
+                    "first_seen": "2023-07-20T14:36:05",
+                    "last_seen": "2023-07-20T14:36:05",
+                    "provider": "geenensp",
+                    "reference": "https://urlhaus.abuse.ch/url/2686310/",
+                    "type": "url"
+                }
+            }
+        }
+    ]
+}
