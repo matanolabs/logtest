@@ -1,0 +1,138 @@
+schema:
+  ecs_field_names:
+  - ecs.version
+  - event.action
+  - event.category
+  - event.created
+  - event.dataset
+  - event.kind
+  - event.module
+  - event.type
+  - related.ip
+  - related.user
+  - source.as.number
+  - source.as.organization.name
+  - source.geo.city_name
+  - source.geo.continent_name
+  - source.geo.country_iso_code
+  - source.geo.country_name
+  - source.geo.location
+  - source.geo.region_iso_code
+  - source.geo.region_name
+  - source.ip
+  - tags
+  - user.email
+  - user.id
+  - user.name
+  fields:
+  - name: onepassword
+    type:
+      type: struct
+      fields:
+      - name: actor_details
+        type:
+          type: struct
+          fields:
+          - name: email
+            type: string
+          - name: name
+            type: string
+          - name: uuid
+            type: string
+      - name: actor_uuid
+        type: string
+      - name: aux_details
+        type:
+          type: struct
+          fields:
+          - name: email
+            type: string
+          - name: name
+            type: string
+          - name: uuid
+            type: string
+      - name: aux_id
+        type: long
+      - name: aux_info
+        type: string
+      - name: aux_uuid
+        type: string
+      - name: object_details
+        type:
+          type: struct
+          fields:
+          - name: email
+            type: string
+          - name: name
+            type: string
+          - name: uuid
+            type: string
+      - name: object_type
+        type: string
+      - name: object_uuid
+        type: string
+      - name: session
+        type:
+          type: struct
+          fields:
+          - name: device_uuid
+            type: string
+          - name: login_time
+            type: timestamp
+          - name: uuid
+            type: string
+      - name: uuid
+        type: string
+transform: |
+  .event.kind = "event"
+  .event.category = ["configuration"]
+  .event.type = ["access"]
+
+  .event.original = encode_json(.json)
+
+  .onepassword = del(.json)                    
+
+  if .onepassword.timestamp == null { 
+      abort
+  }
+
+  .event.created = .ts
+
+  .event.action = del(.onepassword.action)
+
+  if .onepassword.actor_uuid != null { 
+      .related.user = push(.related.user, .onepassword.actor_uuid) 
+  }
+
+  if .onepassword.object_type == "user" && .onepassword.object_uuid != null { 
+      .related.user = push(.related.user, .onepassword.object_uuid) 
+  }
+
+  if includes(["user", "gm", "device", "uva"], .onepassword.object_type) && .onepassword.aux_uuid != null { 
+      .related.user = push(.related.user, .onepassword.aux_uuid) 
+  }
+      
+  if .onepassword.session.ip != null { 
+      .related.ip = push(.related.ip, .onepassword.session.ip) 
+  }
+      
+  .user.id = del(.onepassword.actor_uuid)
+
+  .user.name = del(.onepassword.actor_details.name)
+
+  .user.email = del(.onepassword.actor_details.email)
+
+  .source.ip = del(.onepassword.session.ip)
+
+  .source.as.number = del(.source.as.asn)
+
+  .source.as.organization.name = del(.source.as.organization_name)
+
+  if .onepassword.timestamp != null {                                               
+    .ts = to_timestamp!(.onepassword.timestamp, "seconds") 
+  }
+
+  del(.onepassword.timestamp)
+  del(.onepassword.user)
+  del(.onepassword.location)
+name: onepassword_audit
