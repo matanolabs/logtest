@@ -1,5 +1,6 @@
 from fileinput import filename
 from ecs_schema_to_iceberg import *
+from ecs_pipeline_to_vrl import *
 from validate import validate_iceberg_schema
 from runner import run_transform_vrl, vrl
 import os
@@ -124,7 +125,7 @@ if .__expected == true {
             .file.x509.subject.distinguished_name = array!(.file.x509.subject.distinguished_name)[0]
         }
     }
-    .host.ip = [ .host.ip ]
+    .host.ip = if !is_array(.host.ip) { [ .host.ip ] } else { .host.ip }
     .network.application = if .network.application != null { downcase(.network.application[0]) ?? downcase!(.network.application) } else { null }
 }
 
@@ -143,6 +144,16 @@ del(.source.geo)
 del(.source.as)
 del(.observer.geo)
 
+# TODO: remove once we add a sort() function
+if .carbon_black_cloud != null {
+    max_hash = ""
+    for_each(array(.related.hash) ?? []) -> |i, v| {
+        if max_hash == null || string!(v) > max_hash {
+            max_hash = v
+        }
+    }
+    .related.hash = [max_hash]
+}
 
 # if .process.args != null && .process.args_arr_str == null {
 #     .process.args_arr_str = encode_json(.process.args)
@@ -327,6 +338,22 @@ if .okta.debug_context.debug_data.flattened != null {
     del(.okta.debug_context.debug_data.flattened.risk_object)
     .okta.debug_context.debug_data.flattened = encode_json(.okta.debug_context.debug_data.flattened)
 }
+.okta.target = if .okta.target != null {
+    map_values(array!(.okta.target)) -> |v| {
+      removed_detail_entry = del(v.detailEntry)
+      if exists(removed_detail_entry.methodTypeUsed) {
+        v.detail_entry.method_type_used = removed_detail_entry.methodTypeUsed
+      }
+      if exists(removed_detail_entry.methodUsedVerifiedProperties) { 
+        grokked, err = parse_groks(removed_detail_entry.methodUsedVerifiedProperties, [\"%{data:method_used_verified_properties:array(\\"[]\\", \\", \\")}\"])
+        if err == null {
+          v.detail_entry.method_used_verified_properties = grokked.method_used_verified_properties
+        }
+      }
+
+      v
+    }
+  }
 
 # crowdstrike fdr fixes
 if exists(.crowdstrike) && .crowdstrike.DownloadPort == null && .url.scheme != null {
@@ -596,6 +623,16 @@ if .__expected == true && exists(.panw.panos) {
   	del(.panw.panos.subject_common_name.value)
   	del(.panw.panos.issuer_common_name.value)
   	del(.panw.panos.hash)
+}
+
+# m365 defender fixes
+if .__expected == true && exists(.m365_defender) {
+    if is_object(.m365_defender.event.additional_fields) {
+        .m365_defender.event.additional_fields = encode_json(.m365_defender.event.additional_fields)
+    }
+    if is_array(.m365_defender.event.attack_techniques) {
+        .m365_defender.event.attack_techniques = encode_json(.m365_defender.event.attack_techniques)
+    }
 }
 
 del(.__expected)

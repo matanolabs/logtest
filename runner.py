@@ -67,32 +67,32 @@ def vrl(prog, event):
 
 
 if __name__ == "__main__":
+    pass
+    # parser = ArgumentParser()
+    # parser.add_argument("file", type=str)
+    # opts = parser.parse_args()
 
-    parser = ArgumentParser()
-    parser.add_argument("file", type=str)
-    opts = parser.parse_args()
-
-    with open(Path(opts.file)) as f:
-        pipeline = yaml.safe_load(f)
-        event = {
-            "ts": 1591367999.512593,
-            "uid": "C5bLoe2Mvxqhawzqqd",
-            "id.orig_h": "192.168.4.76",
-            "id.orig_p": 46378,
-            "id.resp_h": "31.3.245.133",
-            "id.resp_p": 80,
-            "trans_depth": 1,
-            "method": "GET",
-            "host": "testmyids.com",
-            "uri": "/",
-            "version": "1.1",
-            "user_agent": "curl/7.47.0",
-            "request_body_len": 0,
-            "response_body_len": 39,
-            "status_code": 200,
-            "status_msg": "OK",
-            "tags": [],
-            "resp_fuids": ["FEEsZS1w0Z0VJIb5x4"],
-            "resp_mime_types": ["text/plain"],
-        }
-        run_transform_vrl(pipeline["transform"], event)
+    # with open(Path(opts.file)) as f:
+    #     pipeline = yaml.safe_load(f)
+    #     event = {
+    #         "ts": 1591367999.512593,
+    #         "uid": "C5bLoe2Mvxqhawzqqd",
+    #         "id.orig_h": "192.168.4.76",
+    #         "id.orig_p": 46378,
+    #         "id.resp_h": "31.3.245.133",
+    #         "id.resp_p": 80,
+    #         "trans_depth": 1,
+    #         "method": "GET",
+    #         "host": "testmyids.com",
+    #         "uri": "/",
+    #         "version": "1.1",
+    #         "user_agent": "curl/7.47.0",
+    #         "request_body_len": 0,
+    #         "response_body_len": 39,
+    #         "status_code": 200,
+    #         "status_msg": "OK",
+    #         "tags": [],
+    #         "resp_fuids": ["FEEsZS1w0Z0VJIb5x4"],
+    #         "resp_mime_types": ["text/plain"],
+    #     }
+    #     run_transform_vrl(pipeline["transform"], event)

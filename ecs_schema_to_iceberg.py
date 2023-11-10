@@ -27,9 +27,19 @@ def merge(a, b, path=None):
     if path is None:
         path = []
 
+    if type(a) == str and type(b) == dict:
+        print(
+            f"WARN: Auto-coerced {'.'.join(path)} conflict with string -> object."
+        )
+        return b
+
     if not isinstance(b, dict) or not isinstance(a, dict):
         if a == b:
             return a
+        elif type(a) == list and type(b) == list:
+            if len(a) != 1 and len(b) != 1:
+                raise Exception("Cannot merge lists of different length")
+            return [merge(a[0], b[0], path)]
         else:
             raise Exception(f"Conflict at {path}: {a} != {b}")
 
@@ -233,8 +243,6 @@ def ecs_to_iceberg_type(item, normalization=None):
         ret = "string"
     elif ecs_type == "float":
         ret = "float"
-    elif ecs_type == "object":
-        ret = "string"
     elif ecs_type == "constant_keyword":
         ret = "string"
     elif ecs_type == "boolean":
@@ -259,18 +267,24 @@ def ecs_to_iceberg_type(item, normalization=None):
     elif ecs_type == "array":
         ret = {
             "type": "list",
+            # "element": "json",
             "element": "string",
         }
     elif ecs_type == "nested":
         ret = {
             "type": "list",
+            # "element": "json",
             "element": "string",
         }
     elif ecs_type == "match_only_text":
         ret = "string"
     elif ecs_type == "ip":
         ret = "string"
+    elif ecs_type == "object":
+        # ret = "json"
+        ret = "string"
     elif ecs_type == "flattened":
+        # ret = "json"
         ret = "string"
     elif ecs_type == "alias":
         return
@@ -280,7 +294,7 @@ def ecs_to_iceberg_type(item, normalization=None):
     if ret is None:
         raise Exception(f"Unknown ECS type: {ecs_type}")
 
-    if ecs_type != "nested" and normalization == "array":
+    if ecs_type != "nested" and ecs_type != "array" and normalization == "array":
         ret = {
             "type": "list",
             "element": ret,

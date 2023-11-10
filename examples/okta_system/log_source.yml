@@ -11,6 +11,7 @@ schema:
   - client.ip
   - client.user.full_name
   - client.user.id
+  - client.user.name
   - cloud.account.id
   - cloud.availability_zone
   - cloud.instance.id
@@ -78,6 +79,7 @@ schema:
   - source.ip
   - source.user.full_name
   - source.user.id
+  - source.user.name
   - tags
   - user.domain
   - user.email
@@ -176,9 +178,21 @@ schema:
                 type: string
               - name: risk_level
                 type: string
+              - name: risk_reasons
+                type:
+                  type: list
+                  element: string
+              - name: risk_behaviors
+                type:
+                  type: list
+                  element: string
+              - name: factor
+                type: string
               - name: threat_suspected
                 type: string
               - name: url
+                type: string
+              - name: dt_hash
                 type: string
       - name: display_message
         type: string
@@ -266,6 +280,16 @@ schema:
               type: string
             - name: display_name
               type: string
+            - name: detail_entry
+              type:
+                type: struct
+                fields:
+                - name: method_type_used
+                  type: string
+                - name: method_used_verified_properties
+                  type:
+                    type: list
+                    element: string
       - name: transaction
         type:
           type: struct
@@ -278,6 +302,30 @@ schema:
         type: string
       - name: version
         type: string
+      - name: device
+        type:
+          type: struct
+          fields:
+          - name: device_integrator
+            type: string
+          - name: disk_encryption_type
+            type: string
+          - name: id
+            type: string
+          - name: managed
+            type: boolean
+          - name: name
+            type: string
+          - name: os_platform
+            type: string
+          - name: os_version
+            type: string
+          - name: registered
+            type: boolean
+          - name: screen_lock_type
+            type: string
+          - name: secure_hardware_present
+            type: boolean
 transform: |
   .event.kind = "event"
   .event.category = []
@@ -394,7 +442,7 @@ transform: |
     r'application.user_membership.remove',
     r'application.user_membership.change_username',
   ]) {
-    .event.type = push(.event.type, "user") 
+    .event.type = push(.event.type, "info") 
   }
 
   if match_any(.okta.event_type, [
@@ -442,6 +490,12 @@ transform: |
   .okta.uuid = del(.json.uuid)
 
   .okta.actor.alternate_id = del(.json.actor.alternateId)
+  grokked, err = parse_groks(.okta.actor.alternate_id, ["%{USER:user.name}@.*"])
+  if err == null {
+    .user.name = grokked.user.name
+    .source.user.name = .user.name
+    .client.user.name = .user.name
+  }
 
   .okta.actor.display_name = del(.json.actor.displayName)
 
@@ -481,6 +535,15 @@ transform: |
 
   .okta.target = del(.json.target)
 
+  .okta.device = del(.json.device)
+  if exists(.okta.device.device_integrator) {
+    device_integrator, err = parse_json(del(.okta.device.device_integrator))
+    device_integrator, err = object(device_integrator)
+    if err == null && !is_empty(device_integrator) {
+      .okta.device.device_integrator = device_integrator
+    }
+  }
+
   .okta.transaction.id = del(.json.transaction.id)
 
   .okta.transaction.type = del(.json.transaction.type)
@@ -498,7 +561,7 @@ transform: |
     parse_key_value(behaviors, "=", ", ") ??  debug_data.flattened.logOnlySecurityData.behaviors
   } else {
     debug_data.flattened.logOnlySecurityData.behaviors
-  }   
+  }
 
   # TODO: ugh can we use a more robust kv parser rather than do this manually?
   risk = string!(debug_data.flattened.risk || "")
@@ -531,6 +594,23 @@ transform: |
     debug_data.risk_level = debug_data.flattened.risk.level
   }
 
+  if debug_data.flattened.risk.reasons != null && debug_data.flattened.risk.reasons != "" { 
+    debug_data.risk_reasons = split(debug_data.flattened.risk.reasons, ", ") ?? debug_data.flattened.risk.reasons
+  }
+
+  if !is_nullish(debug_data.flattened.behaviors) {
+    debug_data.risk_behaviors = []
+    for_each(object!(debug_data.flattened.behaviors)) -> |k, v| {
+      if v == "POSITIVE" {
+        debug_data.risk_behaviors = push(debug_data.risk_behaviors, k)
+      }
+    }
+  }
+
+  if debug_data.flattened.factor != null && debug_data.flattened.factor != "" {
+    debug_data.factor = string!(debug_data.flattened.factor)
+  }
+
   debug_data.device_fingerprint = del(.json.debugContext.debugData.deviceFingerprint)
 
   debug_data.request_id = del(.json.debugContext.debugData.requestId)
@@ -540,6 +620,8 @@ transform: |
   debug_data.threat_suspected = del(.json.debugContext.debugData.threatSuspected)
 
   debug_data.url = del(.json.debugContext.debugData.url)
+
+  debug_data.dt_hash = del(.json.debugContext.debugData.dtHash)
 
   .okta.authentication_context.authentication_provider = del(.json.authenticationContext.authenticationProvider)
 
@@ -604,18 +686,27 @@ transform: |
   }
 
   oktargets = {}
-  is_user_event = .okta.event_type != null && contains(.okta.event_type, "user.")
-  is_group_event = .okta.event_type != null && contains(.okta.event_type, "group.")
+  # is_user_event = .okta.event_type != null && contains(.okta.event_type, "user.")
+  # is_group_event = .okta.event_type != null && contains(.okta.event_type, "group.")
   .okta.target = if .okta.target != null {
     map_values(array!(.okta.target)) -> |v| {
       v.alternate_id = del(v.alternateId)
       v.display_name = del(v.displayName)
-      del(v.detailEntry)
+      removed_detail_entry = del(v.detailEntry)
+      if exists(removed_detail_entry.methodTypeUsed) {
+        v.detail_entry.method_type_used = removed_detail_entry.methodTypeUsed
+      }
+      if exists(removed_detail_entry.methodUsedVerifiedProperties) { 
+        grokked, err = parse_groks(removed_detail_entry.methodUsedVerifiedProperties, ["%{data:method_used_verified_properties:array(\"[]\", \", \")}"])
+        if err == null {
+          v.detail_entry.method_used_verified_properties = grokked.method_used_verified_properties
+        }
+      }
 
       type = downcase(v.type) ?? ""
-      if is_user_event && contains(type, "user") {
+      if type == "user" {
         oktargets.user = v
-      } else if is_group_event && contains(type, "group") {
+      } else if type == "usergroup" {
         oktargets.group = v
       }
 
@@ -652,6 +743,11 @@ transform: |
       .related.user = push(.related.user, .user.target.full_name) 
   }
 
+  if .user.name != null { 
+      .related.user = push(.related.user, .user.name) 
+  }
+  .related.user = unique(.related.user)
+
   if .source.ip != null { 
       .related.ip = push(.related.ip, .source.ip) 
   }
@@ -674,4 +770,7 @@ transform: |
 
   .okta.debug_context.debug_data = debug_data
   # TODO(): should inject based on schema
-  .okta.debug_context.debug_data.flattened = encode_json(compact(.okta.debug_context.debug_data.flattened))
+  flattened = compact(.okta.debug_context.debug_data.flattened)
+  if !is_empty(flattened) {
+    .okta.debug_context.debug_data.flattened = encode_json(flattened)
+  }
