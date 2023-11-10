@@ -1,0 +1,52 @@
+name: zscaler_zia_alerts
+
+schema:
+  ecs_field_names:
+  - event.dataset
+  - event.module
+  - log.syslog.priority
+  - related.ip
+  - related.user
+  - tags
+  fields:
+  - name: zscaler_zia
+    type:
+      type: struct
+      fields:
+      - name: alerts
+        type:
+          type: struct
+          fields:
+          - name: connection_lost_minutes
+            type: double
+          - name: log_feed_name
+            type: string
+
+transform: |
+  .event.original = del(.message)
+                                             
+  _grokked, err = parse_groks(.event.original, ["^<%{NUMBER:log.syslog.priority}>%{SYSLOGTIMESTAMP:_tmp.timestamp} \\[%{IPORHOST:destination.address}\\] %{GREEDYDATA:message}$"])  
+  if err == null {                                                            
+      . |= _grokked                                                            
+  }                                                                      
+                                                        
+  _grokked, err = parse_groks(.message, ["^ZscalerNSS: Zscaler cloud configuration connection to  %{IPORHOST:destination.address}:%{NUMBER:destination.port} lost and unavailable for the past %{NUMBER:zscaler_zia.alerts.connection_lost_minutes} minutes$", "^ZscalerNSS: SIEM Feed connection \"%{GREEDYDATA:zscaler_zia.alerts.log_feed_name}\" to %{IPORHOST:destination.address}:%{NUMBER:destination.port} lost and unavailable for the past %{NUMBER:zscaler_zia.alerts.connection_lost_minutes} minutes$"])  
+  if err == null {                                                            
+      . |= _grokked                                                            
+  }
+
+  .zscaler_zia.alerts.connection_lost_minutes = to_float(.zscaler_zia.alerts.connection_lost_minutes) ?? null
+  .log.syslog.priority = to_int(.log.syslog.priority) ?? null
+  .destination.port = to_int(.destination.port) ?? null                                                          
+
+  if .destination.address != null {                       
+      .destination.ip = to_string!(.destination.address) 
+  }                                                  
+
+  if .destination.ip != null { 
+      .related.ip = push!(.related.ip, .destination.ip) 
+  }
+      
+  if !is_nullish(._tmp.timestamp) { 
+  	  .ts = to_timestamp!(._tmp.timestamp, "seconds") 
+  }
