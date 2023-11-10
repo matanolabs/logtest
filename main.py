@@ -920,6 +920,12 @@ if __name__ == "__main__":
         default=False,
         help="Overwrite expected files.",
     )
+    parser.add_argument(
+        "--pipeline",
+        help="the pipeline to reference",
+        type=str,
+        default=None
+    )
     parser.add_argument("--from-test", type=str, default=None)
     parser.add_argument(
         "--skip-tests",
@@ -935,6 +941,7 @@ if __name__ == "__main__":
 
     # "/Users/shaeqahmed/testt/matano/data/managed/"
     logsource_dir = Path(opts.logsource_dir)
+    pipeline_path = Path(opts.pipeline) if opts.pipeline else None
 
     if not logsource_dir.is_dir():
         print(
@@ -948,11 +955,11 @@ if __name__ == "__main__":
         )
         exit(1)
 
-    if not (logsource_dir / "fields").is_dir():
-        print(
-            f"\n[red bold]Log source dir does not contain a fields dir at: [reset]{(logsource_dir / 'fields').resolve()}"
-        )
-        exit(1)
+    # if not (logsource_dir / "fields").is_dir():
+    #     print(
+    #         f"\n[red bold]Log source dir does not contain a fields dir at: [reset]{(logsource_dir / 'fields').resolve()}"
+    #     )
+    #     exit(1)
 
     print(logsource_dir)
 
@@ -1004,6 +1011,14 @@ if __name__ == "__main__":
 
         # print(yaml.dump(table["schema"]["schema"], sort_keys=False))
         del table["schema"]["schema"]
+        if pipeline_path:
+            for h in pipeline_path.rglob("elasticsearch/ingest_pipeline/default.yml") if not str(pipeline_path).endswith(".yml") else [pipeline_path]:
+                with open(h) as f:
+                    p = yaml.safe_load(f)
+
+                template = pipeline_to_vrl(p, mode=Mode.prod)
+                # print("\n", template, "\n")
+                table["transform"] = template
 
         tablename = logsource_dir.name
 
