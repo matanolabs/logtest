@@ -1,0 +1,763 @@
+schema:
+  ecs_field_names:
+  - client.ip
+  - client.port
+  - cloud.account.id
+  - cloud.availability_zone
+  - cloud.instance.id
+  - cloud.instance.name
+  - cloud.machine.type
+  - cloud.project.id
+  - cloud.provider
+  - cloud.region
+  - container.id
+  - container.image.name
+  - container.labels
+  - container.name
+  - dll.hash.md5
+  - dll.hash.sha256
+  - dll.path
+  - ecs.version
+  - event.action
+  - event.created
+  - event.dataset
+  - event.id
+  - event.module
+  - event.original
+  - event.reason
+  - file.hash.md5
+  - file.hash.sha256
+  - file.path
+  - host.architecture
+  - host.domain
+  - host.hostname
+  - host.id
+  - host.ip
+  - host.mac
+  - host.name
+  - host.os.family
+  - host.os.kernel
+  - host.os.name
+  - host.os.platform
+  - host.os.type
+  - host.type
+  - network.direction
+  - network.transport
+  - process.command_line
+  - process.entity_id
+  - process.executable
+  - process.hash.md5
+  - process.hash.sha256
+  - process.parent.command_line
+  - process.parent.entity_id
+  - process.parent.executable
+  - process.parent.hash.md5
+  - process.parent.hash.sha256
+  - process.parent.pid
+  - process.pid
+  - registry.path
+  - related.hash
+  - related.hosts
+  - related.ip
+  - related.user
+  - source.address
+  - source.ip
+  - source.port
+  - tags
+  - user.domain
+  fields:
+  - name: carbon_black_cloud
+    type:
+      type: struct
+      fields:
+      - name: endpoint_event
+        type:
+          type: struct
+          fields:
+          - name: alert_id
+            type: string
+          - name: backend
+            type:
+              type: struct
+              fields:
+              - name: timestamp
+                type: string
+          - name: childproc
+            type:
+              type: struct
+              fields:
+              - name: guid
+                type: string
+              - name: hash
+                type:
+                  type: struct
+                  fields:
+                  - name: md5
+                    type: string
+                  - name: sha256
+                    type: string
+              - name: name
+                type: string
+              - name: pid
+                type: long
+              - name: publisher
+                type:
+                  type: list
+                  element:
+                    type: struct
+                    fields:
+                    - name: name
+                      type: string
+                    - name: state
+                      type:
+                        type: list
+                        element: string
+              - name: reputation
+                type: string
+              - name: username
+                type: string
+          - name: crossproc
+            type:
+              type: struct
+              fields:
+              - name: action
+                type: string
+              - name: api
+                type: string
+              - name: guid
+                type: string
+              - name: hash
+                type:
+                  type: struct
+                  fields:
+                  - name: md5
+                    type: string
+                  - name: sha256
+                    type: string
+              - name: name
+                type: string
+              - name: publisher
+                type:
+                  type: list
+                  element:
+                    type: struct
+                    fields:
+                    - name: name
+                      type: string
+                    - name: state
+                      type:
+                        type: list
+                        element: string
+              - name: reputation
+                type: string
+              - name: target
+                type: boolean
+          - name: device
+            type:
+              type: struct
+              fields:
+              - name: external_ip
+                type: string
+              - name: internal_ip
+                type: string
+              - name: os
+                type: string
+              - name: timestamp
+                type: string
+          - name: event_origin
+            type: string
+          - name: fileless_scriptload
+            type:
+              type: struct
+              fields:
+              - name: cmdline
+                type: string
+              - name: cmdline_length
+                type: string
+              - name: hash
+                type:
+                  type: struct
+                  fields:
+                  - name: md5
+                    type: string
+                  - name: sha256
+                    type: string
+          - name: modload
+            type:
+              type: struct
+              fields:
+              - name: count
+                type: long
+              - name: effective_reputation
+                type: string
+              - name: publisher
+                type:
+                  type: list
+                  element:
+                    type: struct
+                    fields:
+                    - name: name
+                      type: string
+                    - name: state
+                      type:
+                        type: list
+                        element: string
+          - name: netconn
+            type:
+              type: struct
+              fields:
+              - name: proxy
+                type:
+                  type: struct
+                  fields:
+                  - name: domain
+                    type: string
+                  - name: ip
+                    type: string
+                  - name: port
+                    type: string
+          - name: organization_key
+            type: string
+          - name: process
+            type:
+              type: struct
+              fields:
+              - name: duration
+                type: long
+              - name: parent
+                type:
+                  type: struct
+                  fields:
+                  - name: reputation
+                    type: string
+              - name: publisher
+                type:
+                  type: list
+                  element:
+                    type: struct
+                    fields:
+                    - name: name
+                      type: string
+                    - name: state
+                      type:
+                        type: list
+                        element: string
+              - name: reputation
+                type: string
+              - name: terminated
+                type: boolean
+              - name: username
+                type: string
+          - name: schema
+            type: long
+          - name: scriptload
+            type:
+              type: struct
+              fields:
+              - name: count
+                type: long
+              - name: effective_reputation
+                type: string
+              - name: hash
+                type:
+                  type: struct
+                  fields:
+                  - name: md5
+                    type: string
+                  - name: sha256
+                    type: string
+              - name: name
+                type: string
+              - name: publisher
+                type:
+                  type: list
+                  element:
+                    type: struct
+                    fields:
+                    - name: name
+                      type: string
+                    - name: state
+                      type:
+                        type: list
+                        element: string
+              - name: reputation
+                type: string
+          - name: sensor_action
+            type: string
+          - name: target_cmdline
+            type: string
+          - name: type
+            type: string
+transform: |-
+  .host.ip = []
+  .related.hosts = []
+
+  .ecs.version = "8.10.0"
+
+  .event.original = encode_json(.json)                 
+
+  if .json.create_time != null && .json.create_time != "" { 
+  	  .ts = to_timestamp!(.json.create_time, "seconds")
+  }
+   
+  .event.action = del(.json.action)
+
+  .event.id = del(.json.event_id)
+
+  .event.reason = del(.json.event_description)
+
+  .file.path = del(.json.filemod_name)
+
+  .dll.path = del(.json.modload_name)
+
+  if .json.netconn_protocol == "PROTO_UDP" { 
+      .network.transport = "udp"
+  } else if .json.netconn_protocol == "PROTO_TCP" { 
+      .network.transport = "tcp"
+  } else if .json.netconn_inbound == true { 
+      .network.direction = "inbound"
+  }
+
+  if .json.netconn_inbound == false { 
+      .network.direction = "outbound"
+  }
+
+  if .json.remote_port != null {                       
+      .source.port = to_int!(.json.remote_port) 
+  }                                                  
+
+  if .json.remote_ip != null {                       
+      .source.ip = to_string!(.json.remote_ip) 
+  }                                                  
+
+  if .source.ip != null { 
+      .related.ip = push(.related.ip, .source.ip) 
+  }
+      
+  .source.address = del(.json.netconn_domain)
+
+  if .json.local_port != null {                       
+      .client.port = to_int!(.json.local_port) 
+  }                                                  
+
+  if .json.local_ip != null {                       
+      .client.ip = to_string!(.json.local_ip) 
+  }                                                  
+
+  if .client.ip != null { 
+      .related.ip = push(.related.ip, .client.ip) 
+  }
+      
+  if .json.device_id != null {                       
+      .host.id = to_string!(.json.device_id) 
+  }                                                  
+
+  if .json.device_os == "WINDOWS" { 
+      .host.os.type = "windows"
+  } else if .json.device_os == "LINUX" { 
+      .host.os.type = "linux"
+  } else if .json.device_os == "MAC" { 
+      .host.os.type = "macos"
+  }
+
+  .host.hostname = del(.json.device_name)
+                               
+  _grokked, err = parse_groks(.host.hostname, ["^(%{DATA:user.domain})\\\\(%{GREEDYDATA:host.hostname})$"])  
+  if err == null {                                                            
+      .user.domain = _grokked.user.domain
+      .host.hostname = _grokked.host.hostname                                                       
+  }                                                                           
+
+  .host.name = .host.hostname
+
+  if .host.hostname != null { 
+      .related.hosts = push(.related.hosts, .host.hostname) 
+  }
+
+  if .user.domain != null { 
+      .related.hosts = push(.related.hosts, .user.domain) 
+  }
+
+  .host.os.family = del(.json.device_group) || .host.os.family
+
+  .process.command_line = del(.json.process_cmdline)
+
+  .process.entity_id = del(.json.process_guid)
+
+  .process.executable = del(.json.process_path)
+
+  if .json.process_pid != null {                       
+      .process.pid = to_int!(.json.process_pid) 
+  }                                                  
+
+  .process.parent.command_line = del(.json.parent_cmdline)
+
+  .process.parent.entity_id = del(.json.parent_guid)
+
+  .process.parent.executable = del(.json.parent_path)
+
+  if .json.parent_pid != null {                       
+      .process.parent.pid = to_int!(.json.parent_pid) 
+  }                                                  
+
+  .registry.path = del(.json.regmod_name)
+
+  if is_array(.json.process_hash) { 
+      for_each(array!(.json.process_hash)) -> |i, v| {
+          if length!(v) == 32 { 
+              .json.process_hash_md5 = v
+          } else if length!(v) == 64 {
+              .json.process_hash_sha256 = v
+          }
+      }
+  }
+  if is_array(.json.parent_hash) { 
+      for_each(array!(.json.parent_hash)) -> |i, v| {
+          if length!(v) == 32 { 
+              .json.parent_hash_md5 = v
+          } else if length!(v) == 64 {
+              .json.parent_hash_sha256 = v
+          }
+      }
+  }
+  if is_array(.json.filemod_hash) { 
+      for_each(array!(.json.filemod_hash)) -> |i, v| {
+          if length!(v) == 32 { 
+              .json.filemod_hash_md5 = v
+          } else if length!(v) == 64 {
+              .json.filemod_hash_sha256 = v
+          }
+      }
+  }
+  if is_array(.json.childproc_hash) { 
+      for_each(array!(.json.childproc_hash)) -> |i, v| {
+          if length!(v) == 32 { 
+              .json.childproc_hash_md5 = v
+          } else if length!(v) == 64 {
+              .json.childproc_hash_sha256 = v
+          }
+      }
+  }
+  if is_array(.json.crossproc_hash) { 
+      for_each(array!(.json.crossproc_hash)) -> |i, v| {
+          if length!(v) == 32 { 
+              .json.crossproc_hash_md5 = v
+          } else if length!(v) == 64 {
+              .json.crossproc_hash_sha256 = v
+          }
+      }
+  }
+  if is_array(.json.scriptload_hash) { 
+      for_each(array!(.json.scriptload_hash)) -> |i, v| {
+          if length!(v) == 32 { 
+              .json.scriptload_hash_md5 = v
+          } else if length!(v) == 64 {
+              .json.scriptload_hash_sha256 = v
+          }
+      }
+  }              
+
+  .process.hash.md5 = del(.json.process_hash_md5)
+
+  if .process.hash.md5 != null { 
+      .related.hash = push(.related.hash, .process.hash.md5) 
+  }
+
+  .process.hash.sha256 = del(.json.process_hash_sha256)
+
+  if .process.hash.sha256 != null { 
+      .related.hash = push(.related.hash, .process.hash.sha256) 
+  }
+   
+  .process.parent.hash.md5 = del(.json.parent_hash_md5)
+
+  if .process.parent.hash.md5 != null { 
+      .related.hash = push(.related.hash, .process.parent.hash.md5) 
+  }
+
+  .process.parent.hash.sha256 = del(.json.parent_hash_sha256)
+
+  if .process.parent.hash.sha256 != null { 
+      .related.hash = push(.related.hash, .process.parent.hash.sha256) 
+  }
+
+  .carbon_black_cloud.endpoint_event.backend.timestamp = del(.json.backend_timestamp)
+
+  .carbon_black_cloud.endpoint_event.device.timestamp = del(.json.device_timestamp)
+
+  .carbon_black_cloud.endpoint_event.device.os = del(.json.device_os)
+
+  .carbon_black_cloud.endpoint_event.organization_key = del(.json.org_key)
+
+  if .json.process_duration != null {                       
+      .carbon_black_cloud.endpoint_event.process.duration = to_int!(.json.process_duration) 
+  }
+
+  if .json.process_publisher != null {
+    .json.process_publisher = map_values(array!(.json.process_publisher)) -> |v| {
+        v.state = split!(v.state, " | ")
+        v
+    }
+  }                  
+
+  .carbon_black_cloud.endpoint_event.process.publisher = del(.json.process_publisher)
+
+  .carbon_black_cloud.endpoint_event.process.reputation = del(.json.process_reputation)
+
+  if .json.process_terminated != null {                       
+      .carbon_black_cloud.endpoint_event.process.terminated = to_bool!(.json.process_terminated) 
+  }                                                  
+
+  .carbon_black_cloud.endpoint_event.process.username = del(.json.process_username)
+
+  if .carbon_black_cloud.endpoint_event.process.username != null { 
+      .related.user = push(.related.user, .carbon_black_cloud.endpoint_event.process.username) 
+  }
+   
+  .carbon_black_cloud.endpoint_event.process.parent.reputation = del(.json.parent_reputation)
+
+  .carbon_black_cloud.endpoint_event.target_cmdline = del(.json.target_cmdline)
+
+  .carbon_black_cloud.endpoint_event.type = del(.json.type)
+
+  .carbon_black_cloud.endpoint_event.crossproc.action = del(.json.crossproc_action)
+
+  .carbon_black_cloud.endpoint_event.crossproc.api = del(.json.crossproc_api)
+
+  .carbon_black_cloud.endpoint_event.crossproc.guid = del(.json.crossproc_guid)
+
+  .carbon_black_cloud.endpoint_event.crossproc.name = del(.json.crossproc_name)
+
+  if .json.crossproc_target != null {                       
+      .carbon_black_cloud.endpoint_event.crossproc.target = to_bool!(.json.crossproc_target) 
+  }                                                  
+
+  .carbon_black_cloud.endpoint_event.crossproc.reputation = del(.json.crossproc_reputation)
+
+  if .json.crossproc_publisher != null {
+    .json.crossproc_publisher = map_values(array!(.json.crossproc_publisher)) -> |v| {
+        v.state = split!(v.state, " | ")
+        v
+    }
+  }                 
+
+  .carbon_black_cloud.endpoint_event.crossproc.publisher = del(.json.crossproc_publisher)
+
+  .carbon_black_cloud.endpoint_event.crossproc.hash.md5 = del(.json.crossproc_hash_md5)
+
+  if .carbon_black_cloud.endpoint_event.crossproc.hash.md5 != null { 
+      .related.hash = push(.related.hash, .carbon_black_cloud.endpoint_event.crossproc.hash.md5) 
+  }
+   
+  .carbon_black_cloud.endpoint_event.crossproc.hash.sha256 = del(.json.crossproc_hash_sha256)
+
+  if .carbon_black_cloud.endpoint_event.crossproc.hash.sha256 != null { 
+      .related.hash = push(.related.hash, .carbon_black_cloud.endpoint_event.crossproc.hash.sha256) 
+  }
+
+  .file.hash.md5 = del(.json.filemod_hash_md5)
+
+  if .file.hash.md5 != null { 
+      .related.hash = push(.related.hash, .file.hash.md5) 
+  }
+      
+  .file.hash.sha256 = del(.json.filemod_hash_sha256)
+
+  if .file.hash.sha256 != null { 
+      .related.hash = push(.related.hash, .file.hash.sha256) 
+  }
+
+  .carbon_black_cloud.endpoint_event.fileless_scriptload.cmdline = del(.json.fileless_scriptload_cmdline)
+
+  .carbon_black_cloud.endpoint_event.fileless_scriptload.cmdline_length = del(.json.fileless_scriptload_cmdline_length)
+
+  .carbon_black_cloud.endpoint_event.fileless_scriptload.hash.md5 = del(.json.fileless_scriptload_hash_md5)
+
+  if .carbon_black_cloud.endpoint_event.fileless_scriptload.hash.md5 != null { 
+      .related.hash = push(.related.hash, .carbon_black_cloud.endpoint_event.fileless_scriptload.hash.md5) 
+  }
+
+  .carbon_black_cloud.endpoint_event.fileless_scriptload.hash.sha256 = del(.json.fileless_scriptload_hash_sha256)
+
+  if .carbon_black_cloud.endpoint_event.fileless_scriptload.hash.sha256 != null { 
+      .related.hash = push(.related.hash, .carbon_black_cloud.endpoint_event.fileless_scriptload.hash.sha256) 
+  }
+
+  .dll.hash.md5 = del(.json.modload_md5)
+
+  if .dll.hash.md5 != null { 
+      .related.hash = push(.related.hash, .dll.hash.md5) 
+  }
+   
+  .dll.hash.sha256 = del(.json.modload_sha256)
+
+  if .dll.hash.sha256 != null { 
+      .related.hash = push(.related.hash, .dll.hash.sha256) 
+  }
+
+  .carbon_black_cloud.endpoint_event.modload.effective_reputation = del(.json.modload_effective_reputation)
+
+  if .json.modload_count != null {                       
+      .carbon_black_cloud.endpoint_event.modload.count = to_int!(.json.modload_count) 
+  }
+
+  if .json.modload_publisher != null {                            
+    .json.modload_publisher = map_values(array!(.json.modload_publisher)) -> |v| {
+        v.state = split!(v.state, " | ")
+        v
+    }
+  }                  
+
+  .carbon_black_cloud.endpoint_event.modload.publisher = del(.json.modload_publisher)
+
+  .carbon_black_cloud.endpoint_event.netconn.proxy.domain = del(.json.netconn_proxy_domain)
+
+  .carbon_black_cloud.endpoint_event.netconn.proxy.port = del(.json.netconn_proxy_port)
+
+  if .json.netconn_proxy_ip != null {                       
+      .carbon_black_cloud.endpoint_event.netconn.proxy.ip = to_string!(.json.netconn_proxy_ip) 
+  }                                                  
+
+  if .carbon_black_cloud.endpoint_event.netconn.proxy.ip != null { 
+      .related.ip = push(.related.ip, .carbon_black_cloud.endpoint_event.netconn.proxy.ip) 
+  }
+      
+  .carbon_black_cloud.endpoint_event.childproc.guid = del(.json.childproc_guid)
+
+  .carbon_black_cloud.endpoint_event.childproc.name = del(.json.childproc_name)
+
+  if .json.childproc_pid != null {                       
+      .carbon_black_cloud.endpoint_event.childproc.pid = to_int!(.json.childproc_pid) 
+  }
+
+  if .json.childproc_publisher != null {
+    .json.childproc_publisher = map_values(array!(.json.childproc_publisher)) -> |v| {
+        v.state = split!(v.state, " | ")
+        v
+    }
+  }                  
+
+  .carbon_black_cloud.endpoint_event.childproc.publisher = del(.json.childproc_publisher)
+
+  .carbon_black_cloud.endpoint_event.childproc.reputation = del(.json.childproc_reputation)
+
+  .carbon_black_cloud.endpoint_event.childproc.username = del(.json.childproc_username)
+
+  if .carbon_black_cloud.endpoint_event.childproc.username != null { 
+      .related.user = push(.related.user, .carbon_black_cloud.endpoint_event.childproc.username) 
+  }
+
+      
+  .carbon_black_cloud.endpoint_event.childproc.hash.md5 = del(.json.childproc_hash_md5)
+
+  if .carbon_black_cloud.endpoint_event.childproc.hash.md5 != null { 
+      .related.hash = push(.related.hash, .carbon_black_cloud.endpoint_event.childproc.hash.md5) 
+  }
+      
+  .carbon_black_cloud.endpoint_event.childproc.hash.sha256 = del(.json.childproc_hash_sha256)
+
+  if .carbon_black_cloud.endpoint_event.childproc.hash.sha256 != null { 
+      .related.hash = push(.related.hash, .carbon_black_cloud.endpoint_event.childproc.hash.sha256) 
+  }
+
+  .carbon_black_cloud.endpoint_event.scriptload.name = del(.json.scriptload_name)
+
+  if .json.scriptload_publisher != null {
+    .json.scriptload_publisher = map_values(array!(.json.scriptload_publisher)) -> |v| {
+        v.state = split!(v.state, " | ")
+        v
+    }
+  }                 
+
+  .carbon_black_cloud.endpoint_event.scriptload.publisher = del(.json.scriptload_publisher)
+
+  if .json.scriptload_count != null {                       
+      .carbon_black_cloud.endpoint_event.scriptload.count = to_int!(.json.scriptload_count) 
+  }                                                  
+
+  .carbon_black_cloud.endpoint_event.scriptload.hash.md5 = del(.json.scriptload_hash_md5)
+
+  if .carbon_black_cloud.endpoint_event.scriptload.hash.md5 != null { 
+      .related.hash = push(.related.hash, .carbon_black_cloud.endpoint_event.scriptload.hash.md5) 
+  }
+
+  .carbon_black_cloud.endpoint_event.scriptload.hash.sha256 = del(.json.scriptload_hash_sha256)
+
+  if .carbon_black_cloud.endpoint_event.scriptload.hash.sha256 != null { 
+      .related.hash = push(.related.hash, .carbon_black_cloud.endpoint_event.scriptload.hash.sha256) 
+  }
+      
+  .carbon_black_cloud.endpoint_event.scriptload.effective_reputation = del(.json.scriptload_effective_reputation)
+
+  .carbon_black_cloud.endpoint_event.scriptload.reputation = del(.json.scriptload_reputation)
+
+  if .json.device_internal_ip != null {                       
+      .carbon_black_cloud.endpoint_event.device.internal_ip = to_string!(.json.device_internal_ip) 
+  }                                                  
+
+  if .carbon_black_cloud.endpoint_event.device.internal_ip != null { 
+      .host.ip = push(.host.ip, .carbon_black_cloud.endpoint_event.device.internal_ip) 
+      .related.ip = push(.related.ip, .carbon_black_cloud.endpoint_event.device.internal_ip)
+  }
+
+  if .json.device_external_ip != null {                       
+      .carbon_black_cloud.endpoint_event.device.external_ip = to_string!(.json.device_external_ip) 
+  }                                             
+
+  if .json.schema != null {                       
+      .carbon_black_cloud.endpoint_event.schema = to_int!(.json.schema) 
+  }
+
+  if .carbon_black_cloud.endpoint_event.device.external_ip != null { 
+      .host.ip = push(.host.ip, .carbon_black_cloud.endpoint_event.device.external_ip) 
+  }
+
+  if .carbon_black_cloud.endpoint_event.device.external_ip != null { 
+      .related.ip = push(.related.ip, .carbon_black_cloud.endpoint_event.device.external_ip) 
+  }
+      
+  del(.json.remote_port)
+  del(.json.local_port)
+  del(.json.process_pid)
+  del(.json.parent_pid)
+  del(.json.process_duration)
+  del(.json.modload_count)
+  del(.json.crossproc_target)
+  del(.json.childproc_pid)
+  del(.json.scriptload_count)
+  del(.json.process_terminated)
+  del(.json.create_time)
+  del(.json.schema)
+  del(.json.device_id)
+  del(.json.process_hash)
+  del(.json.parent_hash)
+  del(.json.crossproc_hash)
+  del(.json.filemod_hash)
+  del(.json.childproc_hash)
+  del(.json.modload_hash)
+  del(.json.scriptload_hash)
+  del(.json.netconn_inbound)
+  del(.json.netconn_protocol)
+  del(.json.remote_ip)
+  del(.json.local_ip)
+  del(.json.device_external_ip)
+  del(.json.device_internal_ip)
+  del(.json.netconn_proxy_ip)
+
+  if .json != null {
+    .carbon_black_cloud.endpoint_event = merge(.carbon_black_cloud.endpoint_event, .json, deep: true) ?? .carbon_black_cloud.endpoint_event                       
+  }
+
+  del(.json)
+
+  if .related.user != null { 
+      .related.user = unique(.related.user) 
+  }
+  if .related.ip != null { 
+      .related.ip = unique(.related.ip) 
+  }
+  # TODO(): sort related.hash
+  if .related.hash != null { 
+      .related.hash = unique(.related.hash) 
+  }
+name: carbon_black_cloud_endpoint_event

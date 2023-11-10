@@ -1,0 +1,401 @@
+schema:
+  ecs_field_names:
+  - cloud.account.id
+  - cloud.availability_zone
+  - cloud.instance.id
+  - cloud.instance.name
+  - cloud.machine.type
+  - cloud.project.id
+  - cloud.provider
+  - cloud.region
+  - container.id
+  - container.image.name
+  - container.labels
+  - container.name
+  - ecs.version
+  - event.created
+  - event.dataset
+  - event.end
+  - event.id
+  - event.kind
+  - event.module
+  - event.original
+  - event.reason
+  - event.severity
+  - event.start
+  - host.architecture
+  - host.domain
+  - host.hostname
+  - host.id
+  - host.mac
+  - host.name
+  - host.os.family
+  - host.os.kernel
+  - host.os.name
+  - host.os.platform
+  - host.os.type
+  - host.os.version
+  - host.type
+  - process.entity_id
+  - process.executable
+  - process.name
+  - related.hash
+  - related.hosts
+  - related.user
+  - tags
+  - user.domain
+  - user.name
+  fields:
+  - name: carbon_black_cloud
+    type:
+      type: struct
+      fields:
+      - name: alert
+        type:
+          type: struct
+          fields:
+          - name: blocked_threat_category
+            type: string
+          - name: category
+            type: string
+          - name: count
+            type: long
+          - name: created_by_event_id
+            type: string
+          - name: device
+            type:
+              type: struct
+              fields:
+              - name: location
+                type: string
+              - name: os
+                type: string
+          - name: document_guid
+            type: string
+          - name: ioc
+            type:
+              type: struct
+              fields:
+              - name: field
+                type: string
+              - name: hit
+                type: string
+              - name: id
+                type: string
+          - name: kill_chain_status
+            type:
+              type: list
+              element: string
+          - name: last_update_time
+            type: timestamp
+          - name: legacy_alert_id
+            type: string
+          - name: not_blocked_threat_category
+            type: string
+          - name: notes_present
+            type: boolean
+          - name: organization_key
+            type: string
+          - name: policy
+            type:
+              type: struct
+              fields:
+              - name: applied
+                type: string
+              - name: id
+                type: long
+              - name: name
+                type: string
+          - name: product_id
+            type: string
+          - name: product_name
+            type: string
+          - name: reason_code
+            type: string
+          - name: report
+            type:
+              type: struct
+              fields:
+              - name: id
+                type: string
+              - name: name
+                type: string
+          - name: run_state
+            type: string
+          - name: sensor_action
+            type: string
+          - name: serial_number
+            type: string
+          - name: status
+            type: string
+          - name: tags
+            type: string
+          - name: target_value
+            type: string
+          - name: threat_activity
+            type:
+              type: struct
+              fields:
+              - name: c2
+                type: string
+              - name: dlp
+                type: string
+              - name: phish
+                type: string
+          - name: threat_cause
+            type:
+              type: struct
+              fields:
+              - name: actor
+                type:
+                  type: struct
+                  fields:
+                  - name: md5
+                    type: string
+                  - name: name
+                    type: string
+                  - name: process_pid
+                    type: string
+                  - name: sha256
+                    type: string
+              - name: cause_event_id
+                type: string
+              - name: process
+                type:
+                  type: struct
+                  fields:
+                  - name: guid
+                    type: string
+                  - name: parent
+                    type:
+                      type: struct
+                      fields:
+                      - name: guid
+                        type: string
+              - name: reputation
+                type: string
+              - name: threat_category
+                type: string
+              - name: vector
+                type: string
+          - name: threat_id
+            type: string
+          - name: threat_indicators
+            type:
+              type: list
+              element:
+                type: struct
+                fields:
+                - name: process_name
+                  type: string
+                - name: sha256
+                  type: string
+                - name: ttps
+                  type:
+                    type: list
+                    element: string
+          - name: type
+            type: string
+          - name: vendor_id
+            type: string
+          - name: vendor_name
+            type: string
+          - name: watchlists
+            type:
+              type: list
+              element:
+                type: struct
+                fields:
+                - name: id
+                  type: string
+                - name: name
+                  type: string
+          - name: workflow
+            type:
+              type: struct
+              fields:
+              - name: changed_by
+                type: string
+              - name: comment
+                type: string
+              - name: last_update_time
+                type: timestamp
+              - name: remediation
+                type: string
+              - name: state
+                type: string
+transform: |
+  .ecs.version = "8.10.0"
+  .event.kind = "alert"
+  .related.hosts = []
+
+  .event.original = encode_json(.json)
+       
+  if .json.create_time != null && .json.create_time != "" { 
+  	  .ts = to_timestamp!(.json.create_time, "seconds")
+  }
+      
+  if .json.last_update_time != null && .json.last_update_time != "" { 
+  	  .carbon_black_cloud.alert.last_update_time = to_timestamp!(.json.last_update_time, "seconds") 
+  }
+
+  .event.id = del(.json.id)
+
+  if .json.first_event_time != null && .json.first_event_time != "" { 
+  	.event.start = to_timestamp!(.json.first_event_time, "seconds")
+  }
+
+      
+  if .json.last_event_time != null && .json.last_event_time != "" { 
+  	.event.end = to_timestamp!(.json.last_event_time, "seconds")
+  }
+
+  if .json.severity != null {                       
+      .event.severity = to_int!(.json.severity) 
+  }                                                  
+
+  .event.reason = del(.json.reason)
+
+  if .json.device_id != null {                       
+      .host.id = to_string!(.json.device_id) 
+  }                                                  
+
+  if .json.device_os == "WINDOWS" { 
+      .host.os.type = "windows"
+  } else if .json.device_os == "LINUX" { 
+      .host.os.type = "linux"
+  } else if .json.device_os == "MAC" { 
+      .host.os.type = "macos"
+  }
+
+  .host.os.version = del(.json.device_os_version)
+
+  .host.hostname = del(.json.device_name)
+
+                                                                  
+  _grokked, err = parse_groks(.host.hostname, ["^(%{DATA:user.domain})\\\\(%{GREEDYDATA:host.hostname})$"])  
+  if err == null {                                                            
+      .user.domain = _grokked.user.domain
+      .host.hostname = _grokked.host.hostname                                                 
+  }
+
+  .host.name = .host.hostname
+
+  if .host.hostname != null { 
+      .related.hosts = push(.related.hosts, .host.hostname) 
+  }
+
+  .user.name = del(.json.device_username)
+                                                    
+  _grokked, err = parse_groks(.user.name, ["^(%{DATA:user.domain})\\\\(%{GREEDYDATA:user.name})$"])  
+  if err == null {                                                            
+      .user |= object!(_grokked.user)                                                          
+  }                                                                           
+
+  if .user.domain != null { 
+      .related.hosts = push(.related.hosts, .user.domain) 
+  }
+
+  if .user.name != null { 
+      .related.user = push(.related.user, .user.name) 
+  }
+
+  .process.name = del(.json.process_name)
+
+  .process.executable = del(.json.process_path)
+
+  .process.entity_id = del(.json.process_guid)
+
+  .carbon_black_cloud.alert.vendor_name = del(.json.vendor_name)
+
+  .carbon_black_cloud.alert.product_name = del(.json.product_name)
+
+  .carbon_black_cloud.alert.serial_number = del(.json.serial_number)
+
+  .carbon_black_cloud.alert.policy.id = del(.json.policy_id)
+
+  .carbon_black_cloud.alert.policy.name = del(.json.policy_name)
+
+  .carbon_black_cloud.alert.threat_id = del(.json.threat_id)
+
+  .carbon_black_cloud.alert.policy.applied = del(.json.policy_applied)
+
+  .carbon_black_cloud.alert.threat_activity.c2 = del(.json.threat_activity_c2)
+
+  .carbon_black_cloud.alert.threat_activity.dlp = del(.json.threat_activity_dlp)
+
+  .carbon_black_cloud.alert.threat_activity.phish = del(.json.threat_activity_phish)
+
+  .carbon_black_cloud.alert.threat_cause.actor.name = del(.json.threat_cause_actor_name)
+
+  .carbon_black_cloud.alert.threat_cause.actor.process_pid = del(.json.threat_cause_actor_process_pid)
+
+  .carbon_black_cloud.alert.threat_cause.actor.sha256 = del(.json.threat_cause_actor_sha256)
+
+  if .carbon_black_cloud.alert.threat_cause.actor.sha256 != null { 
+      .related.hash = push(.related.hash, .carbon_black_cloud.alert.threat_cause.actor.sha256) 
+  }
+
+  .carbon_black_cloud.alert.threat_cause.actor.md5 = del(.json.threat_cause_actor_md5)
+
+  if .carbon_black_cloud.alert.threat_cause.actor.md5 != null { 
+      .related.hash = push(.related.hash, .carbon_black_cloud.alert.threat_cause.actor.md5) 
+  }
+      
+  .carbon_black_cloud.alert.threat_cause.cause_event_id = del(.json.threat_cause_cause_event_id)
+
+  .carbon_black_cloud.alert.threat_cause.process.parent.guid = del(.json.threat_cause_parent_guid)
+
+  .carbon_black_cloud.alert.threat_cause.process.guid = del(.json.threat_cause_process_guid)
+
+  .carbon_black_cloud.alert.threat_cause.reputation = del(.json.threat_cause_reputation)
+
+  .carbon_black_cloud.alert.threat_cause.threat_category = del(.json.threat_cause_threat_category)
+
+  .carbon_black_cloud.alert.threat_cause.vector = del(.json.threat_cause_vector)
+
+  .carbon_black_cloud.alert.ioc.field = del(.json.ioc_field)
+
+  .carbon_black_cloud.alert.ioc.hit = del(.json.ioc_hit)
+
+  if .json.count != null {                       
+    .carbon_black_cloud.alert.count = to_int!(.json.count) 
+  }                                                  
+
+  if .json.notes_present != null {                       
+    .carbon_black_cloud.alert.notes_present = to_bool!(.json.notes_present) 
+  }                                                  
+
+  .carbon_black_cloud.alert.ioc.id = del(.json.ioc_id)
+
+  .carbon_black_cloud.alert.report.id = del(.json.report_id)
+
+  .carbon_black_cloud.alert.report.name = del(.json.report_name)
+
+  .carbon_black_cloud.alert.organization_key = del(.json.org_key)
+
+  .carbon_black_cloud.alert.device.location = del(.json.device_location)
+
+  .carbon_black_cloud.alert.device.os = del(.json.device_os)
+
+  .carbon_black_cloud.alert.workflow = del(.json.workflow)
+
+  if .carbon_black_cloud.alert.workflow.last_update_time != null && .carbon_black_cloud.alert.workflow.last_update_time != "" { 
+  	.carbon_black_cloud.alert.workflow.last_update_time = to_timestamp!(.carbon_black_cloud.alert.workflow.last_update_time, "seconds")
+  }
+
+  .json.category = downcase(.json.category) ?? null                   
+
+  del(.json.severity)
+  del(.json.create_time)
+  del(.json.last_event_time)
+  del(.json.last_update_time)
+  del(.json.first_event_time)
+  del(.json.device_id)
+  del(.json.count)
+  del(.json.notes_present)
+
+  .carbon_black_cloud.alert |= .json
+
+  del(.json)
+name: carbon_black_cloud_alert

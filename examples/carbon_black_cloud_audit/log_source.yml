@@ -1,0 +1,95 @@
+schema:
+  ecs_field_names:
+  - client.ip
+  - client.user.id
+  - cloud.account.id
+  - cloud.availability_zone
+  - cloud.instance.id
+  - cloud.instance.name
+  - cloud.machine.type
+  - cloud.project.id
+  - cloud.provider
+  - cloud.region
+  - container.id
+  - container.image.name
+  - container.labels
+  - container.name
+  - ecs.version
+  - event.created
+  - event.dataset
+  - event.id
+  - event.kind
+  - event.module
+  - event.original
+  - event.outcome
+  - event.reason
+  - host.architecture
+  - host.domain
+  - host.mac
+  - host.os.family
+  - host.os.kernel
+  - host.os.name
+  - host.os.platform
+  - host.type
+  - organization.name
+  - related.ip
+  - tags
+  - url.original
+  fields:
+  - name: carbon_black_cloud
+    type:
+      type: struct
+      fields:
+      - name: audit
+        type:
+          type: struct
+          fields:
+          - name: flagged
+            type: boolean
+          - name: verbose
+            type: boolean
+transform: |
+  .ecs.version = "8.10.0"
+  .event.kind = "event"
+
+  .event.original = encode_json(.json)                    
+
+  if .json.eventTime != null && .json.eventTime != "" {                                     
+  	  .ts = to_timestamp!(.json.eventTime, "milliseconds")
+  }
+
+  if .json.flagged != null {                       
+      .carbon_black_cloud.audit.flagged = to_bool!(.json.flagged) 
+  }                                                  
+
+  .event.outcome = "success"
+  if .json.flagged == true { 
+      .event.outcome = "failure"
+  }
+
+  .event.reason = del(.json.description)
+
+  if .json.clientIp != null {                       
+      .client.ip = to_string!(.json.clientIp) 
+  }                                                  
+
+  if .client.ip != null { 
+      .related.ip = push(.related.ip, .client.ip) 
+  }
+
+  .client.user.id = del(.json.loginName)
+
+  .event.id = del(.json.eventId)
+
+  .organization.name = del(.json.orgName)
+
+  if .json.requestUrl != null {                       
+      .url.original = decode_percent!(.json.requestUrl) 
+  }                     
+
+  if .json.verbose != null {                       
+      .carbon_black_cloud.audit.verbose = to_bool!(.json.verbose) 
+  }                                                  
+
+  del(.json)
+name: carbon_black_cloud_audit
