@@ -4,7 +4,7 @@ import string
 import struct
 import yaml
 
-from runner import vrl
+# from runner import vrl
 from rich import print
 from pathlib import Path
 import json
@@ -67,9 +67,9 @@ def merge(a, b, path=None):
                         f"WARN: Auto-coerced {'.'.join(path + [str(key)])} conflict with string -> object."
                     )
                     pass
-                elif {a[key], b[key]} == {"string", "boolean"}:
+                elif {a[key], b[key]} == {"string", "json"}:
                     print(
-                        f"WARN: Auto-coerced {'.'.join(path + [str(key)])} conflict with string -> boolean."
+                        f"WARN: Auto-coerced {'.'.join(path + [str(key)])} conflict with string -> json."
                     )
                     a[key]
                 else:
@@ -199,9 +199,22 @@ def _to_schema(item, is_root=False):
                 field_item = field_item[0]
             # print(field_item, field_schema)
             try:
-                merge(field_item, field_schema)
+                if field_item == {} and isinstance(field_schema, list):
+                    field_item = field_schema
+                else:
+                    merge(field_item, field_schema)
             except:
                 breakpoint()
+
+        if item.get("normalize"):
+            if (isinstance(item["normalize"], list) and "array" in item["normalize"]) or item["normalize"] == "array":
+                # schema = [schema]
+                # index ino keys in schema and make it an array
+                current = schema
+                for k in keys[:-1]:
+                    current = current[k]
+                current[keys[-1]] = [current[keys[-1]]]
+        
         return schema
 
     field_item = ensurepath(schema, keys)
@@ -286,6 +299,12 @@ def ecs_to_iceberg_type(item, normalization=None):
     elif ecs_type == "flattened":
         # ret = "json"
         ret = "string"
+    elif ecs_type == "json":
+        # print yellow warning in bold header and white text that this is a special edited field
+        print(
+            f"[yellow]WARN: [white]Modified ECS matano edited field[reset]: {item['name']} (type: {ecs_type})"
+        )
+        ret = "json"
     elif ecs_type == "alias":
         return
     elif ecs_type == "integer":
@@ -426,7 +445,7 @@ ECS_SCHEMA = {}
 
 def ecs_subschema_from_fields(fields):
     def reducer(acc, field):
-        value, path = deep_find(ECS_SCHEMA, field)
+        value, path = deep_find(load_ecs_schema(), field)
         if field == "@timestamp":
             return acc
         if path is None:
@@ -437,7 +456,7 @@ def ecs_subschema_from_fields(fields):
 
 
 def is_ecs_field(*keys):
-    return deep_find(ECS_SCHEMA, keys)[0] is not None
+    return deep_find(load_ecs_schema(), keys)[0] is not None
 
 
 def schema_to_iceberg(p, extract_ecs_fields=True):
@@ -451,17 +470,29 @@ def schema_to_iceberg(p, extract_ecs_fields=True):
         if not extract_ecs_fields:
             schema["ts"] = v
 
-    schema = vrl(
-        """
-    . = compact(.)
-    del(.host.containerized)
-    del(.host.os.build)
-    del(.host.os.codename)
-    del(.cloud.image.id)
-    """,
-        schema,
-    )[0]
-
+    # schema = vrl(
+    #     """
+    # . = compact(.)
+    # del(.host.containerized)
+    # del(.host.os.build)
+    # del(.host.os.codename)
+    # del(.cloud.image.id)
+    # """,
+    #     schema,
+    # )[0]
+    if "host" in schema:
+        if "containerized" in schema["host"]:
+            del schema["host"]["containerized"]
+        if "os" in schema["host"]:
+            if "build" in schema["host"]["os"]:
+                del schema["host"]["os"]["build"]
+            if "codename" in schema["host"]["os"]:
+                del schema["host"]["os"]["codename"]
+    if "cloud" in schema:
+        if "image" in schema["cloud"]:
+            if "id" in schema["cloud"]["image"]:
+                del schema["cloud"]["image"]["id"]
+        
     ecs_fields = []
     if extract_ecs_fields:
         paths = [path for path in traverse(schema)]
@@ -481,10 +512,17 @@ def schema_to_iceberg(p, extract_ecs_fields=True):
     return schema, ecs_fields
 
 
-with open("fields.ecs.yml") as f:
-    d = yaml.load(f, Loader=yaml.FullLoader)
-    ECS_SCHEMA = schema_to_iceberg(d[0]["fields"], extract_ecs_fields=False)[0]
-    # print(yaml.dump(ecs_schema, sort_keys=False))
+def load_ecs_schema():
+    global ECS_SCHEMA
+    if not ECS_SCHEMA:
+        with open("fields.ecs.yml") as f:
+            d = yaml.load(f, Loader=yaml.FullLoader)
+            ECS_SCHEMA = schema_to_iceberg(d[0]["fields"], extract_ecs_fields=False)[0]
+            # print(yaml.dump(ecs_schema, sort_keys=False))
+    return ECS_SCHEMA
+
+
+
 
 if __name__ == "__main__":
     parser = ArgumentParser()
@@ -498,6 +536,8 @@ if __name__ == "__main__":
 
     # res = schema_to_iceberg(p)
     # res = schema_to_iceberg(p[0]["fields"])
+
+    load_ecs_schema()
 
     ecs_fields = expand_and_serialize_to_fields(ECS_SCHEMA)
     ecs_fields = [ecs_fields[-1]] + ecs_fields[:-1]  # keep ts at front

@@ -1,0 +1,170 @@
+#!/usr/bin/env python3
+
+import argparse
+import re
+import subprocess
+from concurrent.futures import ThreadPoolExecutor, as_completed
+import os
+
+# Embedded command configurations
+command_config = {
+    "aws_cloudtrail_default": {
+        "flags": {
+            "--log-source": "aws_cloudtrail",
+            "--table-name": "default",
+            "--ecs-data-stream": "aws,cloudtrail",
+            "--exclude-test-sync-pattern": "insight|digest",
+            "--pin-to-log-source": None  # Option without value (flag)
+        }
+    },
+    "aws_cloudtrail_digest": {
+        "flags": {
+            "--log-source": "aws_cloudtrail",
+            "--table-name": "digest",
+            "--ecs-data-stream": "aws,cloudtrail",
+            "--include-test-sync-pattern": "digest",  # Option with value
+            "--pin-to-log-source": None
+
+        }
+    },
+    "aws_cloudtrail_insights": {
+        "flags": {
+            "--log-source": "aws_cloudtrail",
+            "--table-name": "insights",
+            "--ecs-data-stream": "aws,cloudtrail",
+            "--include-test-sync-pattern": "insight",
+            "--pin-to-log-source": None
+        }
+    },
+    "cloudflare_audit": {
+        "flags": {
+            "--log-source": "cloudflare",
+            "--table-name": "audit",
+            "--ecs-data-stream": "cloudflare_logpush,audit",
+        }
+    },
+    "cloudflare_dns": {
+        "flags": {
+            "--log-source": "cloudflare",
+            "--table-name": "dns",
+            "--ecs-data-stream": "cloudflare_logpush,dns",
+        }
+    },
+    "cloudflare_firewall_event": {
+        "flags": {
+            "--log-source": "cloudflare",
+            "--table-name": "firewall_event",
+            "--ecs-data-stream": "cloudflare_logpush,firewall_event",
+        }
+    },
+    "cloudflare_http_request": {
+        "flags": {
+            "--log-source": "cloudflare",
+            "--table-name": "http_request",
+            "--ecs-data-stream": "cloudflare_logpush,http_request",
+        }
+    },
+    "okta_system": {
+        "flags": {
+            "--log-source": "okta",
+            "--table-name": "system",
+            "--ecs-data-stream": "okta,system",
+        }
+    },
+    "zeek_connection": {
+        "flags": {
+            "--log-source": "zeek",
+            "--table-name": "connection",
+            "--ecs-data-stream": "zeek,connection",
+            # "--exclude-test-sync-pattern": "insight|digest",
+            # "--pin-to-log-source": None  # Option without value (flag)
+        }
+    },
+    "panw_traffic": {
+        "flags": {
+            "--log-source": "panw",
+            "--table-name": "traffic",
+            "--ecs-data-stream": "panw,panos",
+            "--include-test-sync-pattern": "traffic",
+            "--pin-to-log-source": None  # Option without value (flag)
+        }
+    },
+}
+
+# Fetch environment variables or set defaults
+ECS_INTEGRATIONS_DIR = os.getenv('ECS_INTEGRATIONS_DIR', 'default_ecs_integrations_dir')
+MATANO_INTEGRATIONS_DIR = os.getenv('MATANO_INTEGRATIONS_DIR', 'default_matano_integrations_dir')
+
+
+def validate_environment():
+    if not ECS_INTEGRATIONS_DIR:
+        raise ValueError("ECS_INTEGRATIONS_DIR environment variable not set.")
+    if not MATANO_INTEGRATIONS_DIR:
+        raise ValueError("MATANO_INTEGRATIONS_DIR environment variable not set.")
+
+
+def execute_command(command, extra_flags):
+    if '|' in command:
+        re_command = re.compile(command)
+        matching_commands = [cmd for cmd in command_config.keys() if re_command.match(cmd)]
+    else:
+        matching_commands = [cmd for cmd in command_config.keys() if cmd.startswith(command)]
+
+    if not matching_commands:
+        return
+
+    parallel_execution = '--parallel' in extra_flags
+    extra_flags = [flag for flag in extra_flags if flag != '--parallel']
+
+    if parallel_execution:
+        with ThreadPoolExecutor(max_workers=len(matching_commands)) as executor:
+            futures = {executor.submit(run_single_command, cmd, extra_flags): cmd for cmd in matching_commands}
+            for future in as_completed(futures):
+                future.result()
+    else:
+        for cmd in matching_commands:
+            run_single_command(cmd, extra_flags)
+
+
+def run_single_command(command, extra_flags):
+    flags = command_config[command]['flags']
+
+    command_flags = []
+    for flag, value in flags.items():
+        command_flags.append(flag)
+        if value is not None:
+            command_flags.append(value)
+
+
+    command_flags.extend(extra_flags)
+
+    # Replace '--ecs-data-stream <pkg>,<data_stream>' with '--ecs-data-stream-dir'
+    if '--ecs-data-stream' in command_flags:
+        index = command_flags.index('--ecs-data-stream')
+        command_flags.pop(index)  # Remove '--ecs-data-stream'
+        pkg, data_stream = command_flags.pop(index).split(',')  # Extract pkg and data_stream values
+        ecs_data_stream_dir = f"{ECS_INTEGRATIONS_DIR}/packages/{pkg}/data_stream/{data_stream}"
+        command_flags.extend(['--ecs-data-stream-dir', ecs_data_stream_dir])
+
+    # Add MATANO_INTEGRATIONS_DIR as --matano-integration-dir option
+    command_flags.extend(['--matano-integrations-dir', MATANO_INTEGRATIONS_DIR])
+
+    # print command being run
+    print(f"Running command: {' '.join(['python3', 'main2.py'] + command_flags)}")
+
+    subprocess.run(['python3', 'main2.py'] + command_flags)
+
+
+def main():
+    validate_environment()
+
+    parser = argparse.ArgumentParser(description='Execute commands with additional flags.')
+    parser.add_argument('command_prefix', help='The command prefix to execute')
+    parser.add_argument('extra_flags', nargs='*', help='Additional flags for the command')
+    args = parser.parse_args()
+
+    execute_command(args.command_prefix, args.extra_flags)
+
+
+if __name__ == "__main__":
+    main()
